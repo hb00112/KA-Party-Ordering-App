@@ -2,8 +2,8 @@
 
 {
     "name": "Ka Party",
-    "short_name": "Ka Oms",
-    "description": "A OMS FOR KAMBESHWAR AGENCIES",
+    "short_name": "Ka Party",
+    "description": "A Retailer FOR KAMBESHWAR AGENCIES",
     "start_url": "/index.html",
     "display": "standalone",
     "background_color": "#ffffff",
