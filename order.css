@@ -58,8 +58,8 @@
 .sizes-container {
     display: flex;
     flex-wrap: wrap;
-    gap: 10px;
-    margin-top: 20px;
+    gap: 5px;
+    margin-top: 10px;
 }
 
 .color-box,
@@ -109,7 +109,7 @@
     .colors-container {
         display: flex;
         flex-wrap: wrap;
-        gap: 10px;
+        gap: 5px;
         padding: 10px;
         justify-content: center; /* Centers items horizontally */
     }
@@ -174,7 +174,7 @@
   }
   @media (max-width: 768px) {
     .color-container {
-    max-width: 110px; /* Increased max-width for better mobile display */
+    max-width: 125px; /* Increased max-width for better mobile display */
       flex: 0 1 100%;
     }
     .colors-container {
