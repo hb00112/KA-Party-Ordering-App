@@ -667,7 +667,19 @@ let items =
         const searchContainer = document.querySelector('.search-container');
         searchContainer.insertAdjacentElement('afterend', itemNameDisplay);
     }
-    itemNameDisplay.textContent = item.name;
+    
+    // Create link element
+    const itemLink = document.createElement('a');
+    itemLink.textContent = item.name;
+    // Create the URL with encoded item name
+    const encodedItemName = encodeURIComponent(item.name);
+    itemLink.href = `https://www.enamor.co.in/search?q=${encodedItemName}&options%5Bprefix%5D=last&type=product`;
+    // Open link in new tab
+    itemLink.target = "_blank";
+    
+    // Clear previous content and add the link
+    itemNameDisplay.innerHTML = '';
+    itemNameDisplay.appendChild(itemLink);
     
     // Update colors container
     const colorsContainer = document.querySelector('.colors-container');
@@ -678,7 +690,6 @@ let items =
         colorsContainer.appendChild(colorContainer);
     });
 }
-
 // Add CSS for the item name display
 const style = document.createElement('style');
 style.textContent = `
@@ -688,7 +699,8 @@ style.textContent = `
         padding: 1rem;
         margin: 0.5rem 0;
         text-align: center;
-        color: #333;
+        color: #0000EE;
+        
     }
 
     .search-container {
