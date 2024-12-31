@@ -187,5 +187,38 @@
   .quantity-control input {
     width: 60px;
     text-align: center;
+    
   }
- 
+
+  .scrollordertext {
+    width: 100%;
+    overflow: hidden;
+    background-color: #f0f0f0;
+    padding: 8px 0;
+    position: relative;
+    height: 25px;
+    display: flex;           /* Added this */
+    align-items: center;
+    margin-bottom: 5px;
+    margin-top: -23px;
+}
+
+.scrollordertext-content {
+    display: inline-block;
+    white-space: nowrap;
+    position: relative;
+    animation: scrollText 12s linear infinite;
+    color: #333;
+    font-size: 14px;
+    padding: 0 50px;
+  
+}
+
+@keyframes scrollText {
+    0% {
+        transform: translateX(100%);
+    }
+    100% {
+        transform: translateX(-100%);
+    }
+}
