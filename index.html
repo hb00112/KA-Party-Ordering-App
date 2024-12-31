@@ -6,6 +6,8 @@
     <title>Kambeshwar Agencies - Order Portal</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="home.css">
+    <link rel="stylesheet" href="order.css">
+    
      <link rel="manifest" href="manifest.json">
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
@@ -123,7 +125,12 @@
             <h2>Place Order</h2>
         </header>
         <main class="section-content">
-            <!-- Content will be added later -->
+            <div class="search-container">
+                <input type="text" class="search-input" placeholder="Search for items...">
+                <div class="suggestions"></div>
+            </div>
+            <div class="colors-container"></div>
+            <div class="sizes-container"></div>
         </main>
     </div>
     
@@ -142,6 +149,8 @@
     <script src="working.js"></script>
     <script src="home.js"></script>
     <script src="section.js"></script>
+    <script src="order.js"></script>
+    
 
 </body>
 </html>
