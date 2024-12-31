@@ -1,8 +1,8 @@
 
 
 {
-    "name": "Ka Party",
-    "short_name": "Ka Party",
+    "name": "Ka E-Retail",
+    "short_name": "Ka E-Retail",
     "description": "A Retailer FOR KAMBESHWAR AGENCIES",
     "start_url": "/index.html",
     "display": "standalone",
@@ -10,12 +10,12 @@
     "theme_color": "#4285f4",
     "icons": [
         {
-            "src": "https://i.postimg.cc/rm9pHg2y/BO-LD.png",
+            "src": "https://i.postimg.cc/Pf6M8CP5/Untitled-design-20241231-183619-0000.png",
             "sizes": "192x192",
             "type": "image/png"
         },
         {
-            "src": "https://i.postimg.cc/vHtp6jLZ/BO-LD-1.png",
+            "src": "https://i.postimg.cc/Pf6M8CP5/Untitled-design-20241231-183619-0000.png",
             "sizes": "512x512",
             "type": "image/png"
         }
