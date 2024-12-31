@@ -174,7 +174,7 @@
   }
   @media (max-width: 768px) {
     .color-container {
-    max-width: 155px; /* Increased max-width for better mobile display */
+    max-width: 150px; /* Increased max-width for better mobile display */
       flex: 0 1 100%;
     }
     .colors-container {
