@@ -112,6 +112,8 @@
         gap: 5px;
         padding: 10px;
         justify-content: center; /* Centers items horizontally */
+         margin-left: -30px;
+        margin-right: -30px;
     }
     
     .color-container {
@@ -176,8 +178,7 @@
     .color-container {
     max-width: 150px; /* Increased max-width for better mobile display */
       flex: 0 1 100%;
-          margin-left: -10px;
-      margin-right: -10px;
+        
     }
     .colors-container {
         padding: 10px 20px; /* Added more horizontal padding for mobile */
