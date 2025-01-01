@@ -1051,24 +1051,70 @@ document.addEventListener('DOMContentLoaded', () => {
     // Initialize cart status
     updateCartButtonsStatus();
     // Handle window resize
-    function adjustContentHeight() {
-        const header = document.querySelector('.section-header');
-        const footer = document.querySelector('.fixed-footer');
-        const content = document.querySelector('.section-content');
-        
-        const headerHeight = header.offsetHeight;
-        const footerHeight = footer.offsetHeight;
-        
-        content.style.height = `calc(100vh - ${headerHeight + footerHeight}px)`;
-        content.style.marginTop = `${headerHeight}px`;
-        content.style.marginBottom = `${footerHeight}px`;
-    }
-
-    // Initial adjustment
-    adjustContentHeight();
     
-    // Adjust on resize
-    window.addEventListener('resize', adjustContentHeight);
+});
+
+function enableMobileScroll() {
+  // Reset any fixed heights that might prevent scrolling
+  const content = document.querySelector('.section-content');
+  if (content) {
+      content.style.height = 'auto';
+      content.style.minHeight = '100vh';
+      content.style.overflowY = 'auto';
+      content.style.webkitOverflowScrolling = 'touch'; // Enable smooth scrolling on iOS
+  }
+
+  // Ensure the body and html can scroll
+  document.body.style.height = 'auto';
+  document.body.style.overflow = 'auto';
+  document.documentElement.style.height = 'auto';
+  document.documentElement.style.overflow = 'auto';
+
+  // Fix for iOS momentum scrolling
+  document.addEventListener('touchmove', function(e) {
+      // Don't prevent default unless specifically needed
+      // e.preventDefault() should only be called on elements that shouldn't scroll
+  }, { passive: false });
+
+  // Adjust viewport for mobile devices
+  const viewport = document.querySelector('meta[name=viewport]');
+  if (!viewport) {
+      const meta = document.createElement('meta');
+      meta.name = 'viewport';
+      meta.content = 'width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no';
+      document.head.appendChild(meta);
+  }
+
+  // Handle fixed header and footer without breaking scroll
+  const header = document.querySelector('.section-header');
+  const footer = document.querySelector('.fixed-footer');
+  
+  if (header) {
+      header.style.position = 'sticky';
+      header.style.top = '0';
+      header.style.zIndex = '1000';
+  }
+  
+  if (footer) {
+      footer.style.position = 'sticky';
+      footer.style.bottom = '0';
+      footer.style.zIndex = '1000';
+  }
+}
+
+// Call on page load
+document.addEventListener('DOMContentLoaded', enableMobileScroll);
+
+// Call on orientation change
+window.addEventListener('orientationchange', () => {
+  setTimeout(enableMobileScroll, 100);
+});
+
+// Call on resize
+let resizeTimer;
+window.addEventListener('resize', () => {
+  clearTimeout(resizeTimer);
+  resizeTimer = setTimeout(enableMobileScroll, 100);
 });
 
 function showOrderSummaryModal() {
