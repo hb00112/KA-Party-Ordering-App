@@ -7,7 +7,13 @@
     min-height: 100vh; /* Changed from height to min-height */
     overflow-y: auto; /* Allow vertical scrolling */
 }
-
+.fixed-footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+}
 .section-header {
     margin-bottom: 30px;
     position: fixed;
