@@ -248,14 +248,25 @@
 /* Scrollable Content Area */
 .section-content {
     position: absolute;
-    top: 0px; /* Adjust based on your header height */
-    bottom: 60px; /* Adjust based on your footer height */
     left: 0;
     right: 0;
+    bottom: 60px;
     overflow-y: scroll;
     -webkit-overflow-scrolling: touch;
     overscroll-behavior: contain;
-}
+ }
+ 
+ @media (min-width: 768px) {
+    .section-content {
+        top: 100px;
+    }
+ }
+ 
+ @media (max-width: 767px) {
+    .section-content {
+        top: 0;
+    }
+ }
 @keyframes scrollText {
     0% {
         transform: translateX(100%);
