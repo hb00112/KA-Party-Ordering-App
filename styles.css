@@ -5,6 +5,7 @@
     --gradient-start: #0062ff;
     --gradient-end: #da62c4;
 }
+
 * {
     margin: 0;
     padding: 0;
@@ -14,16 +15,19 @@
 body {
     font-family: Arial, sans-serif;
     line-height: 1.6;
-    /* Updated gradient to match the image */
     background: white;
     min-height: 100vh;
-    position: relative;
     margin: 0;
     padding: 0;
+    position: static;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior-y: contain;
 }
+
 body::before {
     content: '';
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
     right: 0;
@@ -32,7 +36,9 @@ body::before {
     background-size: 100px 100px;
     opacity: 0.3;
     pointer-events: none;
+    z-index: -1;
 }
+
 .hidden {
     display: none !important;
 }
@@ -46,6 +52,9 @@ body::before {
     background: rgba(255, 255, 255, 0.1);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
+    position: sticky;
+    top: 0;
+    z-index: 100;
 }
 
 .header-left {
@@ -54,29 +63,29 @@ body::before {
     color: white;
 }
 
-Login System CSS
-
 /* Updated datetime styles */
 .header-right {
     color: white;
     font-size: 1.1rem;
     font-weight: 500;
 }
+
 #datetime {
     background: rgba(0, 0, 0, 0.1);
     padding: 5px 10px;
     border-radius: 4px;
 }
+
 /* Login Container */
 .login-container {
     max-width: 400px;
     margin: 2rem auto;
     padding: 2rem;
     background: rgba(255, 255, 255, 0.9);
-   /* backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    */ border-radius: 10px;
+    border-radius: 10px;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    position: relative;
+    z-index: 1;
 }
 
 .login-container h2 {
@@ -112,11 +121,13 @@ Login System CSS
     left: 0;
     bottom: -20px;
 }
+
 .sub-header {
-    font-size: 0.6em;  /* Makes the text smaller than the main header */
+    font-size: 0.6em;
     margin-top: -8px;
-    margin-bottom: 0px;   /* Adds some space between the texts */
+    margin-bottom: 0px;
 }
+
 .invalid-message {
     color: #ff3333;
     text-align: center;
@@ -130,7 +141,8 @@ Login System CSS
 .invalid-message.show {
     opacity: 1;
 }
-.login-btn {
+
+.login-btn, .submit-btn {
     width: 100%;
     padding: 0.8rem;
     background: var(--primary-color);
@@ -141,18 +153,8 @@ Login System CSS
     font-size: 1rem;
     transition: background 0.3s;
 }
-.submit-btn {
-    width: 100%;
-    padding: 0.8rem;
-    background: var(--primary-color);
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 1rem;
-    transition: background 0.3s;
-}
-.login-btn:hover {
+
+.login-btn:hover, .submit-btn:hover {
     background: #357abd;
 }
 
@@ -172,10 +174,10 @@ Login System CSS
     position: fixed;
     bottom: 0;
     width: 100%;
-  background: rgba(255, 255, 255, 0.1);
-/*    backdrop-filter: blur(5px);
-    -webkit-backdrop-filter: blur(5px);*/
+    background: rgba(255, 255, 255, 0.1);
+    z-index: 100;
 }
+
 .header-left, .header-right, .footer {
     color: rgba(255, 255, 255, 0.9);
     text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
@@ -217,6 +219,7 @@ Login System CSS
     align-items: center;
     z-index: 900;
 }
+
 #welcomeMessage {
     font-size: 2rem;
     color: var(--text-color);
@@ -234,35 +237,49 @@ Login System CSS
     animation: fadeIn 1s ease-in;
 }
 
-
-/* KA Logo Animation */
-.ka-logo {
+/* Section Screens */
+.section-screen {
+    height: 100vh;
     display: flex;
-    justify-content: center;
-    gap: 10px;
-    margin-top: 2rem;
+    flex-direction: column;
+    overflow: hidden;
 }
 
-.logo-text {
-    font-size: 4rem;
-    font-weight: bold;
-    color: var(--primary-color);
-    animation: logoAnimation 1.5s ease-in-out;
+.section-content {
+    flex: 1;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    padding: 1rem;
+    position: relative;
 }
 
-@keyframes logoAnimation {
-    0% {
-        transform: scale(0) rotate(-180deg);
-        opacity: 0;
-    }
-    50% {
-        transform: scale(1.2) rotate(0deg);
-        opacity: 0.5;
-    }
-    100% {
-        transform: scale(1) rotate(0deg);
-        opacity: 1;
-    }
+.fixed-footer {
+    position: sticky;
+    bottom: 0;
+    width: 100%;
+    z-index: 10;
+    background: white;
+    padding: 1rem;
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Scroll Container */
+.scroll-container {
+    width: 100%;
+    overflow: hidden;
+    background-color: #f0f0f0;
+    padding: 5px 0;
+    margin-bottom: 10px;
+    margin-top: -5px;
+}
+
+.scroll-text {
+    display: inline-block;
+    white-space: nowrap;
+    animation: scroll-left 20s linear infinite;
+    color: #333;
+    font-size: 14px;
+    font-weight: 500;
 }
 
 /* Modal */
@@ -285,69 +302,12 @@ Login System CSS
     border-radius: 10px;
     width: 90%;
     max-width: 500px;
+    max-height: 90vh;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
 }
 
-/* Animations */
-@keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-}
-
-@keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
-}
-
-/* Mobile Styles */
-@media (max-width: 768px) {
-    .header {
-        flex-direction: column;
-        text-align: center;
-    }
-
-    .header-left {
-        margin-bottom: 0.5rem;
-    }
-
-    .header-right {
-        font-size: 0.9rem;
-    }
-
-    .login-container {
-        margin: 1rem;
- 
-    }
-    
-    .logo-text {
-        font-size: 3rem;
-    }
-}
-.scroll-container {
-    width: 100%;
-    overflow: hidden;
-    background-color: #f0f0f0;
-    padding: 5px 0;
-    margin-bottom: 10px;
-    margin-top: -5px;
-}
-
-.scroll-text {
-    display: inline-block;
-    white-space: nowrap;
-    animation: scroll-left 20s linear infinite;
-    color: #333;
-    font-size: 14px;
-    font-weight: 500;
-}
-
-@keyframes scroll-left {
-    0% {
-        transform: translateX(100%);
-    }
-    100% {
-        transform: translateX(-100%);
-    }
-}
+/* Firm Section */
 .firm-section {
     text-align: center;
     padding: 10px;
@@ -357,18 +317,19 @@ Login System CSS
     font-size: 1.3em;
     color: #333;
     margin-bottom: 20px;
-    margin-top:50px;
+    margin-top: 50px;
 }
 
-/* Add these styles to your existing CSS file */
-
-
+/* Section Header */
 .section-header {
     display: flex;
     align-items: center;
     padding: 1rem;
     background-color: #f5f5f5;
     border-bottom: 1px solid #ddd;
+    position: sticky;
+    top: 0;
+    z-index: 10;
 }
 
 .back-btn {
@@ -384,7 +345,114 @@ Login System CSS
     border-radius: 50%;
 }
 
+/* Animations */
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
 
-.hidden {
-    display: none;
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes scroll-left {
+    0% { transform: translateX(100%); }
+    100% { transform: translateX(-100%); }
+}
+
+@keyframes logoAnimation {
+    0% {
+        transform: scale(0) rotate(-180deg);
+        opacity: 0;
+    }
+    50% {
+        transform: scale(1.2) rotate(0deg);
+        opacity: 0.5;
+    }
+    100% {
+        transform: scale(1) rotate(0deg);
+        opacity: 1;
+    }
+}
+
+/* Mobile Styles */
+@media (max-width: 768px) {
+    .header {
+        flex-direction: column;
+        text-align: center;
+        padding: 0.5rem 1rem;
+    }
+
+    .header-left {
+        margin-bottom: 0.5rem;
+    }
+
+    .header-right {
+        font-size: 0.9rem;
+    }
+
+    .login-container {
+        margin: 1rem;
+        max-height: calc(100vh - 2rem);
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .section-content {
+        padding: 0.5rem;
+        -webkit-user-select: none;
+        user-select: none;
+    }
+
+    .logo-text {
+        font-size: 3rem;
+    }
+
+    .colors-container,
+    .sizes-container,
+    .orders-container {
+        -webkit-overflow-scrolling: touch;
+        overflow-y: auto;
+    }
+
+    .modal-content {
+        margin: 1rem;
+        width: calc(100% - 2rem);
+    }
+
+    .fixed-footer {
+        padding: 0.5rem;
+    }
+}
+
+/* Additional Scrollable Areas */
+.scrollable-content {
+    -webkit-overflow-scrolling: touch;
+    overflow-y: auto;
+    height: 100%;
+}
+
+/* Home Screen Specific */
+.home-screen-container {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.home-main {
+    flex: 1;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    padding: 1rem;
+}
+
+.home-footer {
+    position: sticky;
+    bottom: 0;
+    width: 100%;
+    background: white;
+    padding: 1rem;
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
 }
