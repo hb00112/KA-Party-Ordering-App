@@ -68,11 +68,7 @@ document.addEventListener('keydown', function(event) {
 });
 
 // Prevent pinch zoom on touch devices
-document.addEventListener('touchmove', function(event) {
-    if (event.scale !== 1) {
-        event.preventDefault();
-    }
-}, { passive: false });
+
 // Add this to your existing JavaScript
 // Prevent zoom on desktop
 document.addEventListener('wheel', function(event) {
