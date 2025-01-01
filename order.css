@@ -4,8 +4,8 @@
     padding: 20px;
     font-family: Arial, sans-serif;
     position: relative;
-    height: 100vh;
-    overflow: hidden;
+    min-height: 100vh; /* Changed from height to min-height */
+    overflow-y: auto; /* Allow vertical scrolling */
 }
 
 .section-header {
@@ -113,8 +113,19 @@
         flex: 1 1 calc(33.333% - 10px);
         text-align: center;
     }
+    .section-content {
+        margin-top: 100px; /* Slightly reduced top margin for mobile */
+        padding: 10px;
+    }
+    
+    /* Ensure content doesn't get hidden behind fixed elements */
+    .scrollordertext {
+        margin-top: 50px; /* Adjust based on your header height */
+    }
 }
-
+* {
+    -webkit-overflow-scrolling: touch;
+}
 /*color*/
 
     .colors-container {
@@ -230,14 +241,11 @@
 
 /* Scrollable Content Area */
 .section-content {
-    position: fixed;
-    top: 120px; /* Adjust based on header + scrollordertext height */
-    bottom: 60px; /* Height of footer */
-    left: 0;
-    right: 0;
-    overflow-y: auto;
+    position: relative; /* Changed from fixed to relative */
+    margin-top: 120px; /* Instead of top positioning */
+    margin-bottom: 60px; /* Space for footer */
     padding: 20px;
-    padding-bottom: 180px; /* Extra padding to ensure content is visible */
+    overflow-y: auto;
 }
 @keyframes scrollText {
     0% {
