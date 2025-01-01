@@ -248,7 +248,7 @@
 /* Scrollable Content Area */
 .section-content {
     position: absolute;
-    top: 100px; /* Adjust based on your header height */
+    top: 60px; /* Adjust based on your header height */
     bottom: 60px; /* Adjust based on your footer height */
     left: 0;
     right: 0;
