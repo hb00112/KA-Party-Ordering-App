@@ -34,13 +34,15 @@
     border-radius: 4px;
 }
 
+/* Modified suggestions container to ensure independent scrolling */
 .suggestions {
     position: absolute;
     top: 100%;
     left: 0;
     right: 0;
     background: white;
-    overflow-y: auto;
+    overflow-y: auto !important; /* Force overflow behavior */
+    -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
     z-index: 1000;
     border: 1px solid #ddd;
     border-radius: 0 0 4px 4px;
@@ -49,12 +51,14 @@
     box-shadow: 0 2px 5px rgba(0,0,0,0.2);
 }
 
+/* Ensure suggestion items are properly contained */
 .suggestion-item {
     padding: 12px;
     cursor: pointer;
     border-bottom: 1px solid #eee;
     border-left: none;
     border-right: none;
+    background: white; /* Ensure background is solid */
 }
 
 .suggestion-item:last-child {
@@ -105,6 +109,8 @@
     
     .suggestions {
         max-height: 60vh;
+        overflow-y: auto !important;
+        position: absolute;
     }
     
     .color-box,
