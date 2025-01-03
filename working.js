@@ -236,3 +236,95 @@ document.addEventListener('DOMContentLoaded', () => {
         createOfflineModal();
     }
 });
+
+const modal = document.getElementById('helpModal');
+const issueLink = document.getElementById('issueLink');
+const closeBtn = document.querySelector('.ka-login-help-close');
+const issueForm = document.getElementById('issueForm');
+const issueType = document.getElementById('issueType');
+const otherIssueGroup = document.getElementById('otherIssueGroup');
+
+issueLink.onclick = (e) => {
+    e.preventDefault();
+    modal.style.display = 'block';
+}
+
+closeBtn.onclick = () => {
+    modal.style.display = 'none';
+}
+
+window.onclick = (e) => {
+    if (e.target === modal) {
+        modal.style.display = 'none';
+    }
+}
+
+// Show/hide other issue textarea
+issueType.onchange = () => {
+    otherIssueGroup.style.display = issueType.value === '4' ? 'block' : 'none';
+}
+
+// Form validation and submission
+issueForm.onsubmit = (e) => {
+    e.preventDefault();
+    
+    // Reset error messages
+    document.querySelectorAll('.ka-login-help-error').forEach(err => err.textContent = '');
+    
+    const firmName = document.getElementById('firmName').value.trim();
+    const mobile = document.getElementById('mobile').value.trim();
+    const email = document.getElementById('email').value.trim();
+    const gstin = document.getElementById('gstin').value.trim();
+    const selectedIssue = issueType.value;
+    const otherIssue = document.getElementById('otherIssue').value.trim();
+
+    let isValid = true;
+
+    // Validation
+    if (!firmName) {
+        document.getElementById('firmNameError').textContent = 'Firm name is required';
+        isValid = false;
+    }
+
+    if (!mobile || !/^[0-9]{10}$/.test(mobile)) {
+        document.getElementById('mobileError').textContent = 'Valid 10-digit mobile number is required';
+        isValid = false;
+    }
+
+    if (!email || !/\S+@\S+\.\S+/.test(email)) {
+        document.getElementById('emailError').textContent = 'Valid email is required';
+        isValid = false;
+    }
+
+    if (!selectedIssue) {
+        document.getElementById('issueTypeError').textContent = 'Please select an issue';
+        isValid = false;
+    }
+
+    if (selectedIssue === '4' && !otherIssue) {
+        document.getElementById('otherIssueError').textContent = 'Please describe your issue';
+        isValid = false;
+    }
+
+    if (isValid) {
+        // Prepare WhatsApp message
+        let issueText = selectedIssue === '4' ? otherIssue : issueType.options[issueType.selectedIndex].text;
+        let message = `Issue in KA ORDER\n\n` +
+            `Firm Name: ${firmName}\n` +
+            `Mobile: ${mobile}\n` +
+            `Email: ${email}\n` +
+            `GSTIN: ${gstin}\n` +
+            `Issue Type: ${issueText}`;
+
+        // Encode the message for URL
+        let encodedMessage = encodeURIComponent(message);
+        
+        // Open WhatsApp with the prepared message
+        window.open(`https://wa.me/919284494154?text=${encodedMessage}`, '_blank');
+        
+        // Close the modal and reset form
+        modal.style.display = 'none';
+        issueForm.reset();
+        otherIssueGroup.style.display = 'none';
+    }
+}
