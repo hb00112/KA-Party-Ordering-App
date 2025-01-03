@@ -260,7 +260,7 @@ const validUsers = {
     '30AFGPB6115C1ZF': { password: '30AFGPB6115C1ZF', username: 'ZEE STAR COLLECTION - VASCO' },
     '30AHYPM6262B1ZC': { password: '30AHYPM6262B1ZC', username: 'ZIDANE BOUTIQUE - MAPUSA' },
     '30AATPF5287H1ZJ': { password: '30AATPF5287H1ZJ', username: 'Z SQUAR MENS WEAR - MAPUSA' },
-    '00AABCD1234H1ZX': { password: '00AABCD1234H1ZX', username: 'admin' },
+    '1231': { password: '1231', username: 'admin' },
      '00PQRST5678M1ZY': { password: '00PQRST5678M1ZY', username: 'USER2' }, 
      '00WXYZP9012N1ZW': { password: '00WXYZP9012N1ZW', username: 'USER3' }, 
      '00LMNOP3456K1ZV': { password: '00LMNOP3456K1ZV', username: 'USER4' }, 
