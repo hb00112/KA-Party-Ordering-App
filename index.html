@@ -82,8 +82,49 @@
                 <div id="invalidMessage" class="invalid-message"></div>
                 <button type="submit" class="login-btn">Login</button>
             </form>
-            <a href="https://wa.me/919284494154?text=Issue%20in%20KA%20ORDER%0A%0A(DESCRIBE%20YOUR%20ISSUE%20HERE)" class="help-link">Issue in Login?</a>
-        </main>
+            <a href="#" class="ka-login-help-link" id="issueLink">Issue in Login?</a>
+        
+            <!-- Modal -->
+            <div id="helpModal" class="ka-login-help-modal">
+                <div class="ka-login-help-modal-content">
+                    <span class="ka-login-help-close">&times;</span>
+                    <h3>Report Login Issue</h3>
+                    <form id="issueForm" novalidate>
+                        <div class="ka-login-help-input-group">
+                            <input type="text" id="firmName" placeholder="Firm Name *" required>
+                            <span class="ka-login-help-error" id="firmNameError"></span>
+                        </div>
+                        <div class="ka-login-help-input-group">
+                            <input type="tel" id="mobile" placeholder="Mobile Number *" required>
+                            <span class="ka-login-help-error" id="mobileError"></span>
+                        </div>
+                        <div class="ka-login-help-input-group">
+                            <input type="email" id="email" placeholder="Email ID *" required>
+                            <span class="ka-login-help-error" id="emailError"></span>
+                        </div>
+                        <div class="ka-login-help-input-group">
+                            <input type="text" id="gstin" placeholder="GSTIN">
+                            <span class="ka-login-help-error" id="gstinError"></span>
+                        </div>
+                        <div class="ka-login-help-input-group">
+                            <select id="issueType" required>
+                                <option value="">Select Your Issue</option>
+                                <option value="1">New User ID/Password</option>
+                                <option value="2">Forgot ID/Password</option>
+                                <option value="3">Not able to enter ID/Password</option>
+                                <option value="4">Other Issue</option>
+                            </select>
+                            <span class="ka-login-help-error" id="issueTypeError"></span>
+                        </div>
+                        <div class="ka-login-help-input-group" id="otherIssueGroup" style="display: none;">
+                            <textarea id="otherIssue" placeholder="Please describe your issue"></textarea>
+                            <span class="ka-login-help-error" id="otherIssueError"></span>
+                        </div>
+                        <button type="submit" class="ka-login-help-submit">Submit</button>
+                    </form>
+                </div>
+            </div>
+        
     
         <footer class="footer">
             <p>© Kambeshwara Agencies - Mapusa. All Rights Reserved.</p>
