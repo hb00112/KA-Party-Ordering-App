@@ -260,7 +260,7 @@ const validUsers = {
     '30AFGPB6115C1ZF': { password: '30AFGPB6115C1ZF', username: 'ZEE STAR COLLECTION - VASCO' },
     '30AHYPM6262B1ZC': { password: '30AHYPM6262B1ZC', username: 'ZIDANE BOUTIQUE - MAPUSA' },
     '30AATPF5287H1ZJ': { password: '30AATPF5287H1ZJ', username: 'Z SQUAR MENS WEAR - MAPUSA' },
-'30AAAAA1111AAA': { password: '30AAAAA1111AAA', username: 'ADMIN' }
+'30AAAAA1111AAAA': { password: '30AAAAA1111AAAA', username: 'ADMIN' }
 };
 
 // Add this to your main JavaScript file
