@@ -10,11 +10,11 @@ function initHome() {
         }
         
         // Create firm section
-        const firmSection = document.createElement('div');
+         const firmSection = document.createElement('div');
         firmSection.className = 'firm-section';
         firmSection.innerHTML = `
             <div>${validUsers[userId].username}</div>
-            <div class="gst">GSTIN: ${userId}</div>
+            <div>GSTIN: ${userId}</div>
         `;
         
         // Get the home screen container and the main content
