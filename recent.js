@@ -13,12 +13,18 @@ function initializeRecentOrders() {
         showError('User session not found. Please login again.');
         return;
     }
-
+    
     const username = validUsers[userId].username;
-    document.getElementById('firmName').textContent = username;
+    
+    // Set the firm name in the subheader
+    const headerFirmName = document.getElementById('headerFirmName');
+    if (headerFirmName) {
+        headerFirmName.textContent = `Firm: ${username}`;
+    }
+    
+    // Fetch and display orders
     fetchAndDisplayOrders(username);
 }
-
 // State management
 function showState(stateName) {
     Object.values(STATES).forEach(state => {
