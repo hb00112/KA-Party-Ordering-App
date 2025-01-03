@@ -1,4 +1,4 @@
-// Check for existing user function
+//login.js
 async function checkExistingUser() {
     showLoading();
     const userId = localStorage.getItem('userId');
@@ -20,72 +20,44 @@ async function checkExistingUser() {
     return false;
 }
 
-// GST validation patterns and state codes
-const gstPatterns = {
-    stateCode: /^[0-9]{2}$/,
-    panNumber: /^[A-Z]{5}$/,
-    entityNumber: /^[0-9]{4}$/,
-    lastPortion: /^[A-Z]{1}[0-9]{1}[Z]{1}[A-Z0-9]{1}$/,
-    complete: /^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[0-9]{1}[Z]{1}[A-Z0-9]{1}$/
-};
-
-const validStateCodes = {
-    '27': 'MAHARASHTRA',
-    '29': 'KARNATAKA',
-    '30': 'GOA',
-    '00': 'demo'
-};
-
-// Function to validate GST number
-function validateGST(value) {
-    if (!gstPatterns.complete.test(value)) {
-        return {
-            isValid: false,
-            error: 'Invalid GST format'
-        };
+// Login form submission
+// Update this part in your login.js file
+document.getElementById('loginForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    
+    const userId = document.getElementById('userId').value;
+    const password = document.getElementById('password').value;
+    const invalidMessage = document.getElementById('invalidMessage');
+    
+    // Reset error states
+    resetErrors();
+    
+    // Validate fields
+    if (!userId.trim() || !password.trim()) {
+        if (!userId.trim()) showError(document.getElementById('userId'), 'Please fill out the above field');
+        if (!password.trim()) showError(document.getElementById('password'), 'Please fill out the above field');
+        return;
     }
 
-    const stateCode = value.substring(0, 2);
-    if (!validStateCodes[stateCode]) {
-        return {
-            isValid: false,
-            error: 'Invalid state code (Only MH, KA, GA allowed)'
-        };
+    // Check credentials
+    if (validUsers[userId] && validUsers[userId].password === password) {
+        const username = validUsers[userId].username;
+        // Use the handleLogin function from working.js
+        await handleLogin(userId, username);
+    } else {
+        invalidMessage.textContent = 'INVALID USERNAME OR PASSWORD';
+        invalidMessage.classList.add('show');
+        setTimeout(() => invalidMessage.classList.remove('show'), 4000);
     }
-
-    return {
-        isValid: true,
-        error: ''
-    };
-}
-
-// Function to show loading state
-function showLoading() {
-    const loader = document.getElementById('loader');
-    if (loader) {
-        loader.classList.remove('hidden');
-    }
-}
-
-// Function to hide loading state
-function hideLoading() {
-    const loader = document.getElementById('loader');
-    if (loader) {
-        loader.classList.add('hidden');
-    }
-}
-
-// Function to show error
+});
+// Add these new functions for form validation
 function showError(inputElement, message) {
     inputElement.classList.add('error');
     const errorElement = inputElement.parentElement.querySelector('.error-message');
-    if (errorElement) {
-        errorElement.textContent = message;
-        errorElement.style.display = 'block';
-    }
+    errorElement.textContent = message;
+    errorElement.style.display = 'block';
 }
 
-// Function to reset errors
 function resetErrors() {
     // Reset all error states
     const inputs = document.querySelectorAll('.input-group input');
@@ -105,123 +77,17 @@ function resetErrors() {
     }
 }
 
-// Login form submission
-document.getElementById('loginForm').addEventListener('submit', async (e) => {
-    e.preventDefault();
-    showLoading();
-    
-    const userId = document.getElementById('userId').value.trim().toUpperCase();
-    const password = document.getElementById('password').value.trim().toUpperCase();
-    const invalidMessage = document.getElementById('invalidMessage');
-    
-    // Add console logs for debugging
-    console.log('Login attempt:', { userId, password });
-    console.log('Valid users:', validUsers);
-    console.log('Checking if user exists:', !!validUsers[userId]);
-    
-    // Reset error states
-    resetErrors();
-    
-    // Validate fields are not empty
-    if (!userId || !password) {
-        console.log('Empty fields detected');
-        hideLoading();
-        if (!userId) showError(document.getElementById('userId'), 'Please fill out the above field');
-        if (!password) showError(document.getElementById('password'), 'Please fill out the above field');
-        return;
-    }
-
-    try {
-        // Check if the credentials exist in validUsers
-        if (!validUsers[userId]) {
-            console.log('User not found in validUsers');
-            hideLoading();
-            invalidMessage.textContent = 'INVALID USERNAME OR PASSWORD';
-            invalidMessage.classList.add('show');
-            setTimeout(() => invalidMessage.classList.remove('show'), 4000);
-            return;
-        }
-
-        if (validUsers[userId].password !== password) {
-            console.log('Invalid password');
-            hideLoading();
-            invalidMessage.textContent = 'INVALID USERNAME OR PASSWORD';
-            invalidMessage.classList.add('show');
-            setTimeout(() => invalidMessage.classList.remove('show'), 4000);
-            return;
-        }
-
-        console.log('Valid credentials found:', userId);
-        const username = validUsers[userId].username;
-        
-        // If it's a GST format, validate and get state/keywords
-        if (userId.length === 15) {
-            console.log('Processing GST format login');
-            const userIdValidation = validateGST(userId);
-            if (!userIdValidation.isValid) {
-                console.log('Invalid GST format:', userIdValidation.error);
-                hideLoading();
-                showError(document.getElementById('userId'), userIdValidation.error);
-                return;
-            }
-            
-            const userState = validStateCodes[userId.substring(0, 2)];
-            const keywords = [
-                userState,
-                `ENTITY_${userId.substring(7, 11)}`,
-                userId.charAt(12) === 'R' ? 'REGULAR' : 
-                userId.charAt(12) === 'C' ? 'COMPOSITION' : 'OTHER'
-            ];
-            console.log('GST login successful, proceeding with keywords:', keywords);
-            await handleLogin(userId, username, keywords);
-        } else {
-            // Non-GST format login (like USER1)
-            console.log('Processing non-GST format login');
-            try {
-                console.log('Attempting login with USER1');
-                await handleLogin(userId, username, ['ADMIN']);
-                console.log('Non-GST login successful');
-            } catch (error) {
-                console.error('Error during non-GST login:', error);
-                hideLoading();
-                invalidMessage.textContent = 'LOGIN FAILED. PLEASE TRY AGAIN.';
-                invalidMessage.classList.add('show');
-                setTimeout(() => invalidMessage.classList.remove('show'), 4000);
-            }
-        }
-    } catch (error) {
-        console.error('Login process error:', error);
-        hideLoading();
-        invalidMessage.textContent = 'AN ERROR OCCURRED. PLEASE TRY AGAIN.';
-        invalidMessage.classList.add('show');
-        setTimeout(() => invalidMessage.classList.remove('show'), 4000);
-    }
-});
-
-// Add input event listeners with GST validation
+// Add input event listeners to remove error state when user starts typing
 document.querySelectorAll('.input-group input').forEach(input => {
-    input.addEventListener('input', (e) => {
-        let value = e.target.value.toUpperCase();
-        
-        // Keep the input in uppercase
-        e.target.value = value;
-
-        // Remove error state
+    input.addEventListener('input', () => {
         input.classList.remove('error');
         const errorElement = input.parentElement.querySelector('.error-message');
-        if (errorElement) {
-            errorElement.style.display = 'none';
-        }
-
-        // Only validate GST format if length is 15 (GST number length)
-        if (value.length === 15) {
-            const validation = validateGST(value);
-            if (!validation.isValid) {
-                showError(input, validation.error);
-            }
-        }
+        errorElement.style.display = 'none';
     });
 });
+
+// User details form submission
+
 
 // Install guide modal functionality
 window.addEventListener('load', function() {
