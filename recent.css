@@ -617,7 +617,29 @@ select:disabled {
     color: #ef4444;
     border: 1px solid #fecaca;
 }
+.section-subheader {
+    display: flex;
+    justify-content: center;
+    padding: 12px 20px;
+    background-color: #ffffff;
+    border-bottom: 1px solid #e0e0e0;
+    position: relative;
+    margin-top: 30px; /* Default for PC view */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    align-items: center;
+}
 
+/* For mobile devices */
+@media screen and (max-width: 768px) {
+    .section-subheader {
+        margin-top: 45px;
+    }
+}
+.firm-info {
+    font-weight: 500;
+    color: #505050;
+}
 .install-modal {
     position: fixed;
     top: 0;
