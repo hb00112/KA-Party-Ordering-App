@@ -1,5 +1,3 @@
-
-
 // Check for existing user function
 async function checkExistingUser() {
     showLoading();
@@ -59,42 +57,6 @@ function validateGST(value) {
         isValid: true,
         error: ''
     };
-}
-
-// Function to set input type based on position
-function setInputType(input, position) {
-    // First 2 digits (state code)
-    if (position < 2) {
-        input.setAttribute('inputmode', 'numeric');
-        input.setAttribute('pattern', '[0-9]*');
-        return;
-    }
-    
-    // Next 5 characters (PAN)
-    if (position >= 2 && position < 7) {
-        input.setAttribute('inputmode', 'text');
-        input.setAttribute('pattern', '[A-Z]*');
-        return;
-    }
-    
-    // Next 4 digits (entity number)
-    if (position >= 7 && position < 11) {
-        input.setAttribute('inputmode', 'numeric');
-        input.setAttribute('pattern', '[0-9]*');
-        return;
-    }
-    
-    // Last 4 characters (H1ZJ)
-    if (position === 11) { // H
-        input.setAttribute('inputmode', 'text');
-        input.setAttribute('pattern', '[A-Z]*');
-    } else if (position === 12) { // 1
-        input.setAttribute('inputmode', 'numeric');
-        input.setAttribute('pattern', '[0-9]*');
-    } else if (position >= 13) { // Z and J
-        input.setAttribute('inputmode', 'text');
-        input.setAttribute('pattern', '[A-Z]*');
-    }
 }
 
 // Function to show loading state
@@ -236,17 +198,13 @@ document.getElementById('loginForm').addEventListener('submit', async (e) => {
     }
 });
 
-// Add input event listeners with GST validation and keyboard switching
+// Add input event listeners with GST validation
 document.querySelectorAll('.input-group input').forEach(input => {
     input.addEventListener('input', (e) => {
-        const position = e.target.selectionStart;
         let value = e.target.value.toUpperCase();
         
         // Keep the input in uppercase
         e.target.value = value;
-
-        // Set appropriate input type based on position
-        setInputType(e.target, position);
 
         // Remove error state
         input.classList.remove('error');
@@ -263,12 +221,6 @@ document.querySelectorAll('.input-group input').forEach(input => {
             }
         }
     });
-});
-
-// Set initial input types
-document.addEventListener('DOMContentLoaded', () => {
-    setInputType(document.getElementById('userId'), 0);
-    setInputType(document.getElementById('password'), 0);
 });
 
 // Install guide modal functionality
