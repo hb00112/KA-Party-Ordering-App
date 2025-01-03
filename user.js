@@ -260,9 +260,17 @@ const validUsers = {
     '30AFGPB6115C1ZF': { password: '30AFGPB6115C1ZF', username: 'ZEE STAR COLLECTION - VASCO' },
     '30AHYPM6262B1ZC': { password: '30AHYPM6262B1ZC', username: 'ZIDANE BOUTIQUE - MAPUSA' },
     '30AATPF5287H1ZJ': { password: '30AATPF5287H1ZJ', username: 'Z SQUAR MENS WEAR - MAPUSA' },
-'30AAAAA1111A1AA': { password: '30AAAAA1111A1AA', username: 'ADMIN' }
-};
-
+    '00AABCD1234H1ZX': { password: '00AABCD1234H1ZX', username: 'admin' },
+     '00PQRST5678M1ZY': { password: '00PQRST5678M1ZY', username: 'USER2' }, 
+     '00WXYZP9012N1ZW': { password: '00WXYZP9012N1ZW', username: 'USER3' }, 
+     '00LMNOP3456K1ZV': { password: '00LMNOP3456K1ZV', username: 'USER4' }, 
+     '00DEFGH7890J1ZU': { password: '00DEFGH7890J1ZU', username: 'USER5' }, 
+     '00RSTUV2345P1ZT': { password: '00RSTUV2345P1ZT', username: 'USER6' }, 
+     '00HIJKL6789Q1ZS': { password: '00HIJKL6789Q1ZS', username: 'USER7' }, 
+     '00MNOPQ1234R1ZR': { password: '00MNOPQ1234R1ZR', username: 'USER8' }, 
+     '00UVWXY5678S1ZQ': { password: '00UVWXY5678S1ZQ', username: 'USER9' }, 
+     '00BCDEF9012T1ZP': { password: '00BCDEF9012T1ZP', username: 'USER10' }
+}
 // Add this to your main JavaScript file
 
   // Wait for both DOM content and all resources (images, stylesheets, etc.) to load
