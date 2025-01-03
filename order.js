@@ -2230,3 +2230,112 @@ function updateSuggestions(items) {
       touch-action: pan-y;
   `;
 }
+// Get the specific elements from the section-content
+const sectionContent = document.querySelector('.section-content');
+const searchContainer = sectionContent.querySelector('.search-container');
+
+const suggestions = searchContainer.querySelector('.suggestions');
+
+// Focus animations
+searchInput.addEventListener('focus', (event) => {
+    searchContainer.classList.add('focused');
+    addRippleEffect(event);
+});
+
+searchInput.addEventListener('blur', () => {
+    searchContainer.classList.remove('focused');
+});
+
+// Ripple effect function
+function addRippleEffect(event) {
+    const ripple = document.createElement('span');
+    ripple.classList.add('ripple');
+    
+    const rect = searchContainer.getBoundingClientRect();
+    const size = Math.max(rect.width, rect.height);
+    const x = event.clientX - rect.left - size / 2;
+    const y = event.clientY - rect.top - size / 2;
+    
+    ripple.style.cssText = `
+        width: ${size}px;
+        height: ${size}px;
+        left: ${x}px;
+        top: ${y}px;
+    `;
+    
+    searchContainer.appendChild(ripple);
+    
+    setTimeout(() => {
+        ripple.remove();
+    }, 600);
+}
+
+// Typing animation
+searchInput.addEventListener('input', (e) => {
+    if (!searchContainer.classList.contains('typing')) {
+        searchContainer.classList.add('typing');
+        
+        // Add subtle animation to suggestions container
+        if (e.target.value.length > 0) {
+            suggestions.classList.add('active');
+        } else {
+            suggestions.classList.remove('active');
+        }
+        
+        setTimeout(() => {
+            searchContainer.classList.remove('typing');
+        }, 1000);
+    }
+});
+
+// Smooth hover animation
+let timeout;
+searchContainer.addEventListener('mousemove', (e) => {
+    if (timeout) clearTimeout(timeout);
+    
+    const rect = searchContainer.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    
+    // Subtle tilt effect
+    searchInput.style.transform = `
+        perspective(1000px) 
+        rotateX(${(y - rect.height / 2) * 0.005}deg) 
+        rotateY(${(x - rect.width / 2) * 0.005}deg)
+    `;
+});
+
+searchContainer.addEventListener('mouseleave', () => {
+    timeout = setTimeout(() => {
+        searchInput.style.transform = 'perspective(1000px) rotateX(0) rotateY(0)';
+    }, 100);
+});
+
+// Optional: Scroll animation for search container
+window.addEventListener('scroll', () => {
+    const scrollPosition = window.scrollY;
+    if (scrollPosition > 50) {
+        searchContainer.classList.add('scrolled');
+    } else {
+        searchContainer.classList.remove('scrolled');
+    }
+});
+
+// Prevent form submission on enter
+searchInput.addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') {
+        e.preventDefault();
+    }
+});
+
+// Clean up function to remove classes when needed
+function resetSearchState() {
+    searchContainer.classList.remove('focused', 'typing', 'scrolled');
+    suggestions.classList.remove('active');
+    searchInput.style.transform = '';
+}
+
+// Optional: Add this to window resize event if needed
+window.addEventListener('resize', () => {
+    resetSearchState();
+});
