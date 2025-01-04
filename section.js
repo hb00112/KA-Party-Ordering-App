@@ -252,7 +252,7 @@ function playHapticFeedbackAndSound(type = 'medium') {
     }
 }
 
-// Use playHapticFeedbackAndSound instead of playHapticFeedback in your event listeners
+// Use playHapticFeedbackAndSound instead of playHapticFeedbackAndSound in your event listeners
 
 
 // Add global haptic feedback to all interactive elements
@@ -260,11 +260,11 @@ document.addEventListener('DOMContentLoaded', function() {
     // Function to add haptic feedback to an element
     function addHapticToElement(element) {
         element.addEventListener('touchstart', () => {
-            playHapticFeedback('light');
+            playHapticFeedbackAndSound('light');
         }, { passive: true });
         
         element.addEventListener('click', () => {
-            playHapticFeedback('light');
+            playHapticFeedbackAndSound('light');
         });
     }
 
@@ -304,7 +304,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const forms = document.querySelectorAll('form');
     forms.forEach(form => {
         form.addEventListener('submit', () => {
-            playHapticFeedback('double');
+            playHapticFeedbackAndSound('double');
         });
     });
 
@@ -315,7 +315,7 @@ document.addEventListener('DOMContentLoaded', function() {
             mutations.forEach((mutation) => {
                 if (mutation.type === 'attributes' && mutation.attributeName === 'style') {
                     if (element.style.display !== 'none') {
-                        playHapticFeedback('error');
+                        playHapticFeedbackAndSound('error');
                     }
                 }
             });
@@ -359,14 +359,14 @@ document.addEventListener('DOMContentLoaded', function() {
     const loginForm = document.getElementById('loginForm');
     if (loginForm) {
         loginForm.addEventListener('submit', () => {
-            playHapticFeedback('double');
+            playHapticFeedbackAndSound('double');
         });
     }
 
     const modalCloseBtns = document.querySelectorAll('.close-install-modal, .ka-login-help-close');
     modalCloseBtns.forEach(btn => {
         btn.addEventListener('click', () => {
-            playHapticFeedback('medium');
+            playHapticFeedbackAndSound('medium');
         });
     });
 
@@ -374,7 +374,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const searchInput = document.querySelector('.search-input');
     if (searchInput) {
         searchInput.addEventListener('input', () => {
-            playHapticFeedback('light');
+            playHapticFeedbackAndSound('light');
         });
     }
 
@@ -384,7 +384,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const toggleBtn = card.querySelector('.toggle-btn');
         if (toggleBtn) {
             toggleBtn.addEventListener('click', () => {
-                playHapticFeedback('medium');
+                playHapticFeedbackAndSound('medium');
             });
         }
     });
