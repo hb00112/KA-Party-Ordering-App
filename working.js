@@ -112,7 +112,9 @@ function showWelcomeScreen(username, isNewUser) {
         logoStage.style.opacity = '1';
         
         // Play the welcome sound synchronized with animation
-        playWelcomeSound();
+        if (typeof playWelcomeSound === 'function') {
+            playWelcomeSound();
+        }
     });
 
     // Enhanced parallax effect
@@ -125,7 +127,7 @@ function showWelcomeScreen(username, isNewUser) {
             const { innerWidth, innerHeight } = window;
             
             // Calculate rotation with easing
-            const x = (clientX - innerWidth / 2) / 40;  // Reduced sensitivity
+            const x = (clientX - innerWidth / 2) / 40;
             const y = (clientY - innerHeight / 2) / 40;
             
             // Smooth transition only when mouse starts moving
