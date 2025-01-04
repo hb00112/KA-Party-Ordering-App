@@ -338,11 +338,11 @@ input, textarea {
     position: absolute;
 }
 .frame-top {
-    top: 350px;
+    top: 340px;
 }
 
 .frame-bottom {
-    bottom: 350px;
+    bottom: 300px;
 }
 
 .frame-left {
