@@ -207,51 +207,96 @@ if (document.readyState === 'complete') {
 // Haptic feedback function
 // Haptic feedback and sound function
 function playHapticFeedbackAndSound(type = 'medium') {
-    const audioContext = new (window.AudioContext || window.webkitAudioContext)();
-    let oscillator;
-
+    // Prevent multiple audio contexts from being created
+    if (!window.sharedAudioContext) {
+        window.sharedAudioContext = new (window.AudioContext || window.webkitAudioContext)();
+    }
+    
+    const audioContext = window.sharedAudioContext;
+    
     if ('vibrate' in navigator) {
         switch (type) {
             case 'light':
                 navigator.vibrate(10);
-                playSound(audioContext, 440, 100); // Light sound
+                playSound(300, 50, 0.03); // Higher frequency, shorter duration, lower volume
                 break;
             case 'medium':
                 navigator.vibrate(25);
-                playSound(audioContext, 440, 200); // Medium sound
+                playSound(350, 100, 0.04);
                 break;
             case 'heavy':
                 navigator.vibrate(35);
-                playSound(audioContext, 440, 300); // Heavy sound
+                playSound(400, 150, 0.05);
                 break;
             case 'double':
                 navigator.vibrate([10, 30, 10]);
-                playSound(audioContext, 440, 400); // Double sound
+                playDoubleSound();
                 break;
             case 'error':
                 navigator.vibrate([50, 100, 50]);
-                playSound(audioContext, 200, 500); // Error sound
+                playErrorSound();
                 break;
         }
     }
 
-    function playSound(audioContext, frequency, duration) {
-        oscillator = audioContext.createOscillator();
+    function playSound(frequency, duration, maxVolume) {
+        const oscillator = audioContext.createOscillator();
         const gainNode = audioContext.createGain();
 
-        oscillator.connect(gainNode);
+        // Create a subtle filter for softer sound
+        const filter = audioContext.createBiquadFilter();
+        filter.type = 'lowpass';
+        filter.frequency.value = 2000;
+        filter.Q.value = 0.7;
+
+        // Connect nodes: oscillator -> filter -> gain -> destination
+        oscillator.connect(filter);
+        filter.connect(gainNode);
         gainNode.connect(audioContext.destination);
 
+        oscillator.type = 'sine'; // Use sine wave for softer sound
         oscillator.frequency.value = frequency;
-        gainNode.gain.value = 0.1; // Volume control
 
-        oscillator.start();
-        setTimeout(() => {
-            oscillator.stop();
-        }, duration);
+        // Smooth volume envelope
+        gainNode.gain.setValueAtTime(0, audioContext.currentTime);
+        gainNode.gain.linearRampToValueAtTime(maxVolume, audioContext.currentTime + 0.01);
+        gainNode.gain.linearRampToValueAtTime(0, audioContext.currentTime + duration / 1000);
+
+        oscillator.start(audioContext.currentTime);
+        oscillator.stop(audioContext.currentTime + duration / 1000 + 0.01);
+    }
+
+    function playDoubleSound() {
+        playSound(400, 50, 0.03);
+        setTimeout(() => playSound(450, 50, 0.03), 80);
+    }
+
+    function playErrorSound() {
+        const frequency = 200;
+        const oscillator = audioContext.createOscillator();
+        const gainNode = audioContext.createGain();
+        const filter = audioContext.createBiquadFilter();
+
+        filter.type = 'lowpass';
+        filter.frequency.value = 1000;
+
+        oscillator.connect(filter);
+        filter.connect(gainNode);
+        gainNode.connect(audioContext.destination);
+
+        oscillator.type = 'triangle';
+        oscillator.frequency.value = frequency;
+
+        // Error sound envelope
+        gainNode.gain.setValueAtTime(0, audioContext.currentTime);
+        gainNode.gain.linearRampToValueAtTime(0.04, audioContext.currentTime + 0.01);
+        gainNode.gain.linearRampToValueAtTime(0.02, audioContext.currentTime + 0.2);
+        gainNode.gain.linearRampToValueAtTime(0, audioContext.currentTime + 0.3);
+
+        oscillator.start(audioContext.currentTime);
+        oscillator.stop(audioContext.currentTime + 0.3);
     }
 }
-
 // Use playHapticFeedbackAndSound instead of playHapticFeedbackAndSound in your event listeners
 
 
