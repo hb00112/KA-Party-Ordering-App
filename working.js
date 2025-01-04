@@ -32,71 +32,140 @@ function hideLoading() {
 function playWelcomeSound() {
     const audioContext = new (window.AudioContext || window.webkitAudioContext)();
     const masterGain = audioContext.createGain();
-    masterGain.connect(audioContext.destination);
-    masterGain.gain.setValueAtTime(0.1, audioContext.currentTime); // Adjust volume
+    const reverb = audioContext.createConvolver();
+    const filter = audioContext.createBiquadFilter();
 
-    // Create and configure oscillators for a richer sound
-    const oscillator1 = audioContext.createOscillator();
-    const oscillator2 = audioContext.createOscillator();
-    const oscillator3 = audioContext.createOscillator();
+    // Configure audio chain
+    filter.type = 'lowpass';
+    filter.frequency.setValueAtTime(2500, audioContext.currentTime);
+    filter.Q.setValueAtTime(0.5, audioContext.currentTime);
 
-    oscillator1.type = 'sine';
-    oscillator2.type = 'triangle';
-    oscillator3.type = 'sawtooth';
+    masterGain.connect(filter);
+    filter.connect(audioContext.destination);
+    
+    // Very low master volume
+    masterGain.gain.setValueAtTime(0, audioContext.currentTime);
 
-    oscillator1.frequency.setValueAtTime(440, audioContext.currentTime); // A4
-    oscillator2.frequency.setValueAtTime(220, audioContext.currentTime); // A3
-    oscillator3.frequency.setValueAtTime(880, audioContext.currentTime); // A5
+    // Create gentle ascending arpeggio
+    const notes = [
+        { freq: 261.63, time: 0.0 },     // C4
+        { freq: 329.63, time: 0.2 },     // E4
+        { freq: 392.00, time: 0.4 },     // G4
+        { freq: 523.25, time: 0.6 }      // C5
+    ];
 
-    oscillator1.connect(masterGain);
-    oscillator2.connect(masterGain);
-    oscillator3.connect(masterGain);
+    notes.forEach(note => {
+        const osc = audioContext.createOscillator();
+        const gainNode = audioContext.createGain();
+        
+        // Soft sine wave
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(note.freq, audioContext.currentTime + note.time);
+        
+        // Gentle envelope for each note
+        gainNode.gain.setValueAtTime(0, audioContext.currentTime + note.time);
+        gainNode.gain.linearRampToValueAtTime(0.1, audioContext.currentTime + note.time + 0.1);
+        gainNode.gain.linearRampToValueAtTime(0, audioContext.currentTime + note.time + 1.5);
+        
+        osc.connect(gainNode);
+        gainNode.connect(masterGain);
+        
+        osc.start(audioContext.currentTime + note.time);
+        osc.stop(audioContext.currentTime + note.time + 1.5);
+    });
 
-    oscillator1.start();
-    oscillator2.start();
-    oscillator3.start();
+    // Add soft pad in background
+    const pad = audioContext.createOscillator();
+    const padGain = audioContext.createGain();
+    pad.type = 'sine';
+    pad.frequency.setValueAtTime(523.25 / 2, audioContext.currentTime); // C4
+    padGain.gain.setValueAtTime(0, audioContext.currentTime);
+    padGain.gain.linearRampToValueAtTime(0.05, audioContext.currentTime + 0.5);
+    padGain.gain.linearRampToValueAtTime(0, audioContext.currentTime + 4.5);
+    pad.connect(padGain);
+    padGain.connect(masterGain);
+    pad.start();
+    pad.stop(audioContext.currentTime + 4.5);
 
-    // Gradually increase and decrease the volume for a smooth effect
-    masterGain.gain.setValueAtTime(0.1, audioContext.currentTime);
-    masterGain.gain.linearRampToValueAtTime(0.3, audioContext.currentTime + 1);
-    masterGain.gain.linearRampToValueAtTime(0, audioContext.currentTime + 5);
-
-    setTimeout(() => {
-        oscillator1.stop();
-        oscillator2.stop();
-        oscillator3.stop();
-    }, 5000); // 5 seconds duration
+    // Master volume envelope
+    masterGain.gain.linearRampToValueAtTime(0.2, audioContext.currentTime + 0.1);
+    masterGain.gain.linearRampToValueAtTime(0.2, audioContext.currentTime + 3.5);
+    masterGain.gain.linearRampToValueAtTime(0, audioContext.currentTime + 4.5);
 }
 
 function showWelcomeScreen(username, isNewUser) {
     const welcomeScreen = document.getElementById('welcomeScreen');
+    const logoStage = document.querySelector('.logo-stage');
+    
+    // Hide login page
     document.getElementById('loginPage').classList.add('hidden');
     welcomeScreen.classList.remove('hidden');
     
-    playWelcomeSound(); // Play professional welcome sound
+    // Initial logo position
+    logoStage.style.transform = 'scale(0.95) translateY(10px)';
+    logoStage.style.opacity = '0';
+    
+    // Smooth entrance animation
+    requestAnimationFrame(() => {
+        logoStage.style.transition = 'all 1s cubic-bezier(0.4, 0, 0.2, 1)';
+        logoStage.style.transform = 'scale(1) translateY(0)';
+        logoStage.style.opacity = '1';
+        
+        // Play the welcome sound synchronized with animation
+        playWelcomeSound();
+    });
 
-    // Add parallax effect
-    const logoStage = document.querySelector('.logo-stage');
+    // Enhanced parallax effect
+    let isMouseMoving = false;
+    let mouseTimeout;
+    
     document.addEventListener('mousemove', (e) => {
         if (!welcomeScreen.classList.contains('hidden')) {
             const { clientX, clientY } = e;
             const { innerWidth, innerHeight } = window;
-            const x = (clientX - innerWidth / 2) / 30;
-            const y = (clientY - innerHeight / 2) / 30;
             
-            logoStage.style.transform = `rotateY(${x}deg) rotateX(${-y}deg)`;
+            // Calculate rotation with easing
+            const x = (clientX - innerWidth / 2) / 40;  // Reduced sensitivity
+            const y = (clientY - innerHeight / 2) / 40;
+            
+            // Smooth transition only when mouse starts moving
+            if (!isMouseMoving) {
+                logoStage.style.transition = 'transform 0.3s ease-out';
+                isMouseMoving = true;
+            }
+            
+            // Clear previous timeout
+            clearTimeout(mouseTimeout);
+            
+            // Apply transform
+            logoStage.style.transform = `
+                scale(1)
+                rotateY(${x}deg)
+                rotateX(${-y}deg)
+            `;
+            
+            // Reset transition after mouse stops
+            mouseTimeout = setTimeout(() => {
+                logoStage.style.transition = 'transform 0.6s cubic-bezier(0.4, 0, 0.2, 1)';
+                logoStage.style.transform = 'scale(1) rotateY(0) rotateX(0)';
+                isMouseMoving = false;
+            }, 150);
         }
     });
 
-    // Precise timing for transition
+    // Smooth exit animation
     setTimeout(() => {
-        welcomeScreen.classList.add('hidden');
-        if (isNewUser) {
-            showUserDetailsModal(username);
-        } else {
-            initializeHomeScreen(username);
-        }
-    }, 5000);
+        logoStage.style.transform = 'scale(1.05)';
+        logoStage.style.opacity = '0';
+        setTimeout(() => {
+            welcomeScreen.classList.add('hidden');
+            if (isNewUser) {
+                showUserDetailsModal(username);
+            } else {
+                initializeHomeScreen(username);
+            }
+        }, 500);
+    }, 4500);
 }
 
 
