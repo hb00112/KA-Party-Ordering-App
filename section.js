@@ -205,27 +205,55 @@ if (document.readyState === 'complete') {
 
 // Haptic feedback function
 // Haptic feedback function
-function playHapticFeedback(type = 'medium') {
+// Haptic feedback and sound function
+function playHapticFeedbackAndSound(type = 'medium') {
+    const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+    let oscillator;
+
     if ('vibrate' in navigator) {
-        switch(type) {
+        switch (type) {
             case 'light':
                 navigator.vibrate(10);
+                playSound(audioContext, 440, 100); // Light sound
                 break;
             case 'medium':
                 navigator.vibrate(25);
+                playSound(audioContext, 440, 200); // Medium sound
                 break;
             case 'heavy':
                 navigator.vibrate(35);
+                playSound(audioContext, 440, 300); // Heavy sound
                 break;
             case 'double':
                 navigator.vibrate([10, 30, 10]);
+                playSound(audioContext, 440, 400); // Double sound
                 break;
             case 'error':
                 navigator.vibrate([50, 100, 50]);
+                playSound(audioContext, 200, 500); // Error sound
                 break;
         }
     }
+
+    function playSound(audioContext, frequency, duration) {
+        oscillator = audioContext.createOscillator();
+        const gainNode = audioContext.createGain();
+
+        oscillator.connect(gainNode);
+        gainNode.connect(audioContext.destination);
+
+        oscillator.frequency.value = frequency;
+        gainNode.gain.value = 0.1; // Volume control
+
+        oscillator.start();
+        setTimeout(() => {
+            oscillator.stop();
+        }, duration);
+    }
 }
+
+// Use playHapticFeedbackAndSound instead of playHapticFeedback in your event listeners
+
 
 // Add global haptic feedback to all interactive elements
 document.addEventListener('DOMContentLoaded', function() {
