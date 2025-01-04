@@ -31,19 +31,41 @@ function hideLoading() {
 
 function playWelcomeSound() {
     const audioContext = new (window.AudioContext || window.webkitAudioContext)();
-    const oscillator = audioContext.createOscillator();
-    const gainNode = audioContext.createGain();
+    const masterGain = audioContext.createGain();
+    masterGain.connect(audioContext.destination);
+    masterGain.gain.setValueAtTime(0.1, audioContext.currentTime); // Adjust volume
 
-    oscillator.connect(gainNode);
-    gainNode.connect(audioContext.destination);
+    // Create and configure oscillators for a richer sound
+    const oscillator1 = audioContext.createOscillator();
+    const oscillator2 = audioContext.createOscillator();
+    const oscillator3 = audioContext.createOscillator();
 
-    oscillator.frequency.value = 440; // Frequency in hertz (A4 note)
-    gainNode.gain.value = 0.1; // Volume control
+    oscillator1.type = 'sine';
+    oscillator2.type = 'triangle';
+    oscillator3.type = 'sawtooth';
 
-    oscillator.start();
+    oscillator1.frequency.setValueAtTime(440, audioContext.currentTime); // A4
+    oscillator2.frequency.setValueAtTime(220, audioContext.currentTime); // A3
+    oscillator3.frequency.setValueAtTime(880, audioContext.currentTime); // A5
+
+    oscillator1.connect(masterGain);
+    oscillator2.connect(masterGain);
+    oscillator3.connect(masterGain);
+
+    oscillator1.start();
+    oscillator2.start();
+    oscillator3.start();
+
+    // Gradually increase and decrease the volume for a smooth effect
+    masterGain.gain.setValueAtTime(0.1, audioContext.currentTime);
+    masterGain.gain.linearRampToValueAtTime(0.3, audioContext.currentTime + 1);
+    masterGain.gain.linearRampToValueAtTime(0, audioContext.currentTime + 5);
+
     setTimeout(() => {
-        oscillator.stop();
-    }, 2000); // Sound duration in milliseconds
+        oscillator1.stop();
+        oscillator2.stop();
+        oscillator3.stop();
+    }, 5000); // 5 seconds duration
 }
 
 function showWelcomeScreen(username, isNewUser) {
@@ -51,7 +73,7 @@ function showWelcomeScreen(username, isNewUser) {
     document.getElementById('loginPage').classList.add('hidden');
     welcomeScreen.classList.remove('hidden');
     
-    playWelcomeSound(); // Play welcome sound
+    playWelcomeSound(); // Play professional welcome sound
 
     // Add parallax effect
     const logoStage = document.querySelector('.logo-stage');
@@ -76,6 +98,7 @@ function showWelcomeScreen(username, isNewUser) {
         }
     }, 5000);
 }
+
 
 
 function showUserDetailsModal(username) {
