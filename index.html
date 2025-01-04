@@ -136,39 +136,51 @@
         <div class="mask-container">
             <div class="logo-stage">
                 <!-- Premium Frame -->
-                <div class="frame frame-top" style="top: -100px; left: 50%; transform: translateX(-50%);"></div>
-                <div class="frame frame-bottom" style="bottom: -100px; left: 50%; transform: translateX(-50%);"></div>
-                <div class="frame frame-left" style="left: -150px; top: 50%; transform: translateY(-50%);"></div>
-                <div class="frame frame-right" style="right: -150px; top: 50%; transform: translateY(-50%);"></div>
-                
+                <div class="frame frame-top" style="top: -20px; left: 0; width: 100%;"></div>
+<div class="frame frame-bottom" style="bottom: -20px; left: 0; width: 100%;"></div>
+<div class="frame frame-left" style="left: -20px; top: 0; height: 100%;"></div>
+<div class="frame frame-right" style="right: -20px; top: 0; height: 100%;"></div>
+
                 <!-- Split Logo Text -->
-                <div class="logo-text">
-                    <span class="char">K</span>
-                    <span class="char">A</span>
+                <div class="welcome-screen" id="welcomeScreen">
+                    <div class="mask-container">
+                        <div class="logo-stage">
+                            <div class="logo-text">
+                                <span class="char char-k">K</span>
+                                <span class="char char-a">A</span>
+                                <div class="company-name">
+                                    <span class="char">K</span>
+                                    <span class="char">a</span>
+                                    <span class="char">m</span>
+                                    <span class="char">b</span>
+                                    <span class="char">e</span>
+                                    <span class="char">s</span>
+                                    <span class="char">h</span>
+                                    <span class="char">w</span>
+                                    <span class="char">a</span>
+                                    <span class="char">r</span>
+                                    <span class="char">&nbsp;</span>
+                                    <span class="char">A</span>
+                                    <span class="char">g</span>
+                                    <span class="char">e</span>
+                                    <span class="char">n</span>
+                                    <span class="char">c</span>
+                                    <span class="char">i</span>
+                                    <span class="char">e</span>
+                                    <span class="char">s</span>
+                                </div>
+                            </div>
+                            <div class="frame frame-top"></div>
+                            <div class="frame frame-right"></div>
+                            <div class="frame frame-bottom"></div>
+                            <div class="frame frame-left"></div>
+                        </div>
+                    </div>
+                    <div class="reveal-overlay"></div>
                 </div>
-                
-                <!-- Dynamic Lines -->
-                <div class="dynamic-line" style="top: 30%; left: 20%; width: 100px; height: 1px; 
-                     animation: lineReveal 0.6s cubic-bezier(0.215, 0.61, 0.355, 1) forwards 2s;"></div>
-                <div class="dynamic-line" style="bottom: 30%; right: 20%; width: 100px; height: 1px; 
-                     animation: lineReveal 0.6s cubic-bezier(0.215, 0.61, 0.355, 1) forwards 2.2s;"></div>
-                
-                <!-- Accent Elements -->
-                <div class="accent" style="top: 25%; left: 25%; 
-                     animation: accentFade 0.4s ease forwards 2.4s;"></div>
-                <div class="accent" style="top: 25%; right: 25%; 
-                     animation: accentFade 0.4s ease forwards 2.5s;"></div>
-                <div class="accent" style="bottom: 25%; left: 25%; 
-                     animation: accentFade 0.4s ease forwards 2.6s;"></div>
-                <div class="accent" style="bottom: 25%; right: 25%; 
-                     animation: accentFade 0.4s ease forwards 2.7s;"></div>
             </div>
         </div>
-        
-        <!-- Final Overlay -->
-        <div class="reveal-overlay"></div>
     </div>
-
     
     <!-- User Details Modal -->
     <div id="userDetailsModal" class="modal hidden">
