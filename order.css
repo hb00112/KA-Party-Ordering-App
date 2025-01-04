@@ -326,6 +326,8 @@
     overflow-y: scroll;
     -webkit-overflow-scrolling: touch;
     overscroll-behavior: contain;
+    overflow-x: hidden;
+width: 100%;
  }
  
  @media (min-width: 768px) {
