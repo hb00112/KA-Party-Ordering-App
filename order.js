@@ -794,6 +794,20 @@ function createColorContainer(item, color) {
         input.min = '0';
         input.value = '0';
         
+        // Add focus event listener to clear zero value
+        input.addEventListener('focus', function() {
+            if (this.value === '0') {
+                this.value = '';
+            }
+        });
+
+        // Add blur event listener to restore zero if empty
+        input.addEventListener('blur', function() {
+            if (this.value === '') {
+                this.value = '0';
+            }
+        });
+        
         quantityControl.appendChild(input);
         quantityCell.appendChild(quantityControl);
         row.appendChild(sizeCell);
