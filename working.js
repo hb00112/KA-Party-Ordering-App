@@ -29,11 +29,30 @@ function hideLoading() {
     document.getElementById('loadingScreen').classList.add('hidden');
 }
 
+function playWelcomeSound() {
+    const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+    const oscillator = audioContext.createOscillator();
+    const gainNode = audioContext.createGain();
+
+    oscillator.connect(gainNode);
+    gainNode.connect(audioContext.destination);
+
+    oscillator.frequency.value = 440; // Frequency in hertz (A4 note)
+    gainNode.gain.value = 0.1; // Volume control
+
+    oscillator.start();
+    setTimeout(() => {
+        oscillator.stop();
+    }, 2000); // Sound duration in milliseconds
+}
+
 function showWelcomeScreen(username, isNewUser) {
     const welcomeScreen = document.getElementById('welcomeScreen');
     document.getElementById('loginPage').classList.add('hidden');
     welcomeScreen.classList.remove('hidden');
     
+    playWelcomeSound(); // Play welcome sound
+
     // Add parallax effect
     const logoStage = document.querySelector('.logo-stage');
     document.addEventListener('mousemove', (e) => {
@@ -57,6 +76,7 @@ function showWelcomeScreen(username, isNewUser) {
         }
     }, 5000);
 }
+
 
 function showUserDetailsModal(username) {
     console.log('Attempting to show user details modal'); // Debug log
