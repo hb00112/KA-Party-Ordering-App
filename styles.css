@@ -169,21 +169,45 @@ body::before {
 
 /* Footer */
 .footer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     text-align: center;
     padding: 1rem;
     color: rgb(0, 0, 0)!important;
     position: fixed;
     bottom: 0;
+    left: 0; /* Add explicit left positioning */
     width: 100%;
     background: rgba(255, 255, 255, 0.1);
     z-index: 100;
 }
 
+/* Remove any potential right margin/padding */
+.footer * {
+    margin-right: 0;
+    padding-right: 0;
+}
 .header-left, .header-right, .footer {
     color: rgba(255, 255, 255, 0.9);
     text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
 }
+* {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
 
+input, textarea {
+    -webkit-user-select: text;
+    -khtml-user-select: text;
+    -moz-user-select: text;
+    -ms-user-select: text;
+    user-select: text;
+}
 /* Loading Screen */
 .loading-screen {
     position: fixed;
