@@ -47,6 +47,12 @@
             margin-top: 27px;
             height: 100px;
 }
+
+.firm-section:hover {
+    background-color: #2563eb;
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+}
+
 .gst{
     color: #4b5563;
             margin-top: 0.25rem;
