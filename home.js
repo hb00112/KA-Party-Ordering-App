@@ -13,8 +13,8 @@ function initHome() {
          const firmSection = document.createElement('div');
         firmSection.className = 'firm-section';
         firmSection.innerHTML = `
-            <div>${validUsers[userId].username}</div>
-            <div>GSTIN: ${userId}</div>
+            <div class="username">${validUsers[userId].username}</div>
+            <div class="gst">GSTIN: ${userId}</div>
         `;
         
         // Get the home screen container and the main content
