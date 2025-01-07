@@ -48,11 +48,16 @@
             margin-right: 20px;
             margin-top: 27px;
             height: 100px;
+            transform: translateY(0);
+            transition: transform 0.3s ease-in-out,
+            box-shadow 0.3s ease-in-out;
+
 }
 
 .firm-section:hover {
     background-color: #f3f4f6;
     box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+    transform: translateY(-2px);
 }
 
 .gst{
