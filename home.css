@@ -3,25 +3,10 @@
     display: flex;
     flex-direction: column;
     min-height: 100vh;
-     background: linear-gradient(45deg, rgba(255,214,251,1) 0%, rgba(255,255,255,1) 49%, rgba(255,214,251,1) 100%);
-  background-size: 400% 400%; /* Larger gradient size for smoother animation */
-  animation: movingGradient 10s ease infinite; /* Animation for the gradient */
+     background-color: #ffffff;
      font-family: 'Poppins', sans-serif;
 }
-}
 
-/* Keyframes for the gradient movement */
-@keyframes movingGradient {
-  0% {
-    background-position: 0% 0%;
-  }
-  50% {
-    background-position: 100% 100%;
-  }
-  100% {
-    background-position: 0% 0%;
-  }
-}
    
 
 .home-header {
