@@ -4,7 +4,7 @@
     flex-direction: column;
     min-height: 100vh;
 background: rgb(255,255,255);
-background: linear-gradient(0deg, rgba(255,255,255,1) 0%, rgba(255,255,255,1) 14%, rgba(241,242,251,1) 24%, rgba(238,233,252,1) 42%, rgba(224,215,255,0.8071603641456583) 70%, rgba(250,212,250,0.8883928571428571) 100%);
+background: linear-gradient(0deg, rgba(255,255,255,1) 0%, rgba(255,255,255,1) 14%, rgba(241,242,251,1) 24%, rgba(238,233,252,1) 42%, rgba(227,220,251,0.8071603641456583) 70%, rgba(252,220,252,0.8883928571428571) 100%);
      font-family: 'Poppins', sans-serif;
 }
 
