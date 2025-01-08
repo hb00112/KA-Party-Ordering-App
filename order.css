@@ -32,12 +32,16 @@
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     text-transform: uppercase;
-    
-    
+   transform: translateY(0);
+    transition: transform 0.3s ease-in-out,
+    box-shadow 0.3s ease-in-out;
+
+
 }
 
 .section-header h2:hover {
     box-shadow: 0 10px 16px rgba(0, 0, 0, 0.08); 
+    transform: translateY(0px);
 }
 
 
@@ -334,13 +338,17 @@
     /*margin-top: -23px;*/
     z-index: 999;
     margin-top: 60px
-    
-    
+   transform: translateY(0);
+    transition: transform 0.3s ease-in-out,
+    box-shadow 0.3s ease-in-out;
+
 
 }
 
 .scrollordertext:hover {
-    box-shadow: 0 10px 16px rgba(0, 0, 0, 0.12);
+background-color: #fce8e8;
+box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+transform: translateY(0px);
 }
 
 
