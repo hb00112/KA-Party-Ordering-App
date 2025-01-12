@@ -125,3 +125,5 @@ window.addEventListener('load', function() {
         }
     });
 });
+
+function validateMobileNumber() { const mobile = document.getElementById('mobile').value; const mobileError = document.getElementById('mobileError'); const mobilePattern = /^[0-9]{10}$/; if (mobilePattern.test(mobile)) { mobileError.textContent = ''; return true; } else { mobileError.textContent = 'Please enter a valid 10-digit mobile number.'; return false; } }
