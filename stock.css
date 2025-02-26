@@ -1,0 +1,193 @@
+.stock-list-container {
+    padding: 15px;
+    overflow-y: auto;
+    max-height: calc(100vh - 140px);
+    background-color: #f5f5f5;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.stock-item-btn {
+    width: calc(50% - 8px);
+    padding: 15px;
+    margin-bottom: 15px;
+    background-color: #ffffff;
+    color: #333;
+    border: none;
+    border-radius: 8px;
+    text-align: center;
+    font-size: 16px;
+    font-weight: 500;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: all 0.2s ease;
+}
+
+/* Keep two items per row even on small screens */
+@media (max-width: 480px) {
+    .stock-item-btn {
+        width: calc(50% - 8px);
+        font-size: 14px;
+        padding: 12px 8px;
+    }
+}
+
+.stock-item-btn:hover {
+    background-color: #f8f9fa;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.stock-item-btn:active {
+    background-color: #e9ecef;
+    transform: translateY(1px);
+}
+
+/* Modal Styles */
+.stock-modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden; /* Changed from auto to hidden */
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.stock-modal-content {
+    position: relative;
+    background-color: #fff;
+    margin: 5% auto; /* Changed from 10% to 5% to give more space */
+    padding: 20px;
+    border-radius: 10px;
+    width: 90%;
+    max-width: 500px;
+    max-height: 80vh; /* Limit height to 80% of viewport height */
+    overflow-y: auto; /* Enable vertical scrolling */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.close:hover,
+.close:focus {
+    color: #000;
+    text-decoration: none;
+}
+
+#modalItemName {
+    text-align: center;
+    margin-top: 5px;
+    margin-bottom: 20px;
+    font-size: 22px;
+    color: #333;
+    font-weight: 600;
+}
+
+.stock-table-container {
+    margin-top: 15px;
+    width: 100%;
+    overflow-x: auto;
+}
+
+.stock-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+.stock-table th,
+.stock-table td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid #eee;
+}
+
+.stock-table th {
+    background-color: #f8f9fa;
+    font-weight: 600;
+    color: #333;
+    text-transform: uppercase;
+    font-size: 14px;
+}
+
+.stock-table tr:last-child td {
+    border-bottom: none;
+}
+
+.stock-table tr:hover {
+    background-color: #f9f9f9;
+}
+
+.stock-footer {
+    padding: 5px;
+    text-align: center;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    background-color: #fff;
+    border-top: 1px solid #ddd;
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.05);
+}
+
+.stock-footer-btn {
+    padding: 10px 30px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+}
+
+.stock-footer-btn:hover {
+    background-color: #0069d9;
+}
+
+.stock-footer-btn:active {
+    background-color: #0062cc;
+    transform: translateY(1px);
+}
+
+/* Top header styles */
+.stock-header {
+    background-color: #003366;
+    color: #fff;
+    text-align: center;
+    padding: 10px 0;
+    font-size: 18px;
+    font-weight: 600;
+    position: relative;
+    z-index: 10;
+}
+
+/* Update marquee styling - fix the visibility issue */
+marquee {
+    background-color: #87044c !important;
+    color: white;
+    padding: 8px 5px;
+    margin-bottom: 15px;
+    margin-top: 50px;
+    border-radius: 0;
+    font-weight: 500;
+    width: 100%;
+    position: relative;
+    z-index: 5;
+    display: block;
+}
+
+.stock-note {
+    font-size: 12.7px;
+    color: #ff0000;
+    margin-top: 15px;
+    text-align: center;
+    width: 100%;
+    padding: 10px 0;
+    background-color: #fff;
+    border-top: 1px solid #ddd;
+    position: sticky;
+    bottom: 0; /* Keep it at the bottom of the scrollable area */
+}
