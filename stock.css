@@ -180,13 +180,13 @@ marquee {
 }
 
 .stock-note {
-    font-size: 12.7px;
+    font-size: 14px;
     color: #ff0000;
     margin-top: 15px;
     text-align: center;
     width: 100%;
     padding: 10px 0;
-    background-color: #fff;
+    background-color: rgba(255, 255, 255, 0.7); /* 70% opacity white background */
     border-top: 1px solid #ddd;
     position: sticky;
     bottom: 0; /* Keep it at the bottom of the scrollable area */
