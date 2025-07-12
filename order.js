@@ -2240,7 +2240,8 @@ function showUserConfirmationModal() {
   
   // Updated order handling function
   // Updated handlePlaceOrder function
-  async function handlePlaceOrder() {
+  // Updated handlePlaceOrder function with WhatsApp integration for specific user
+async function handlePlaceOrder() {
     const placeOrderBtn = document.getElementById("placeOrderBtn");
     if (!placeOrderBtn) {
         console.error("Place order button not found");
@@ -2332,6 +2333,34 @@ function showUserConfirmationModal() {
             partyName: partyName,
             dateTime: dateTime
         }, imgData);
+
+        // SPECIAL LOGIC FOR SPECIFIC USER
+        if (userId === '30AAEFM6750F1ZM') {
+            // Format the order details for WhatsApp
+            let whatsappMessage = `Kindly find the attached order of ${partyName}\n\n`;
+            
+            cart.forEach(item => {
+                whatsappMessage += `${item.name}\n`;
+                
+                Object.entries(item.colors).forEach(([color, sizes]) => {
+                    Object.entries(sizes).forEach(([size, qty]) => {
+                        if (qty > 0) {
+                            whatsappMessage += `${color} - ${size} / ${qty}\n`;
+                        }
+                    });
+                });
+                
+                whatsappMessage += '\n';
+            });
+            
+            whatsappMessage += `TOTAL: ${totalQuantity}`;
+            
+            // Encode the message for WhatsApp URL
+            const encodedMessage = encodeURIComponent(whatsappMessage);
+            
+            // Open WhatsApp with the pre-filled message
+            window.open(`https://wa.me/919284494154?text=${encodedMessage}`, '_blank');
+        }
 
     } catch (error) {
         console.error("Error in order placement process:", error);
