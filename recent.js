@@ -97,6 +97,319 @@ function displayOrders(orders) {
     });
 }
 
+function findOrderByReference(referenceNumber) {
+    // Get current orders from the displayed container
+    const userId = localStorage.getItem('userId');
+    const username = validUsers[userId].username;
+    
+    return new Promise((resolve, reject) => {
+        firebase.database().ref('unapprovedorders')
+            .orderByChild('partyName')
+            .equalTo(username)
+            .once('value')
+            .then(snapshot => {
+                let foundOrder = null;
+                snapshot.forEach(child => {
+                    const order = child.val();
+                    if (order.referenceNumber === referenceNumber) {
+                        foundOrder = {
+                            id: child.key,
+                            ...order
+                        };
+                    }
+                });
+                resolve(foundOrder);
+            })
+            .catch(reject);
+    });
+}
+
+// Main PDF download function
+async function downloadOrderPDF(referenceNumber) {
+    try {
+        const order = await findOrderByReference(referenceNumber);
+        if (!order) {
+            alert('Order not found');
+            return;
+        }
+        
+        generatePDF(order);
+    } catch (error) {
+        console.error('Error downloading PDF:', error);
+        alert('Error generating PDF. Please try again.');
+    }
+}
+
+// Generate PDF using jsPDF
+function generatePDF(order) {
+    // Load jsPDF if not already loaded
+    if (typeof jsPDF === 'undefined') {
+        const script = document.createElement('script');
+        script.src = 'https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js';
+        script.onload = () => generatePDF(order);
+        document.head.appendChild(script);
+        return;
+    }
+
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF();
+    
+    // Colors
+    const primaryColor = [41, 128, 185];
+    const secondaryColor = [52, 73, 94];
+    const lightGray = [240, 240, 240];
+    
+    let yPosition = 20;
+    
+    // Company Header
+    doc.setFillColor(...primaryColor);
+    doc.rect(0, 0, 210, 40, 'F');
+    
+    doc.setTextColor(255, 255, 255);
+    doc.setFontSize(24);
+    doc.setFont('helvetica', 'bold');
+    doc.text('KAMBESHWAR AGENCIES', 105, 20, { align: 'center' });
+    
+    doc.setFontSize(12);
+    doc.setFont('helvetica', 'normal');
+    doc.text('MAPUSA, GOA', 105, 30, { align: 'center' });
+    
+    yPosition = 50;
+    
+    // Order Information Header
+    doc.setTextColor(...secondaryColor);
+    doc.setFontSize(18);
+    doc.setFont('helvetica', 'bold');
+    doc.text('ORDER DETAILS', 20, yPosition);
+    
+    yPosition += 15;
+    
+    // Order details in two columns
+    doc.setFontSize(11);
+    doc.setFont('helvetica', 'normal');
+    
+    // Left column
+    doc.setFont('helvetica', 'bold');
+    doc.text('Order Reference:', 20, yPosition);
+    doc.setFont('helvetica', 'normal');
+    doc.text(`#${order.referenceNumber}`, 65, yPosition);
+    
+    doc.setFont('helvetica', 'bold');
+    doc.text('Order Date:', 20, yPosition + 8);
+    doc.setFont('helvetica', 'normal');
+    doc.text(formatDateTime(order.dateTime), 65, yPosition + 8);
+    
+    doc.setFont('helvetica', 'bold');
+    doc.text('Party Name:', 20, yPosition + 16);
+    doc.setFont('helvetica', 'normal');
+    doc.text(order.partyName, 65, yPosition + 16);
+    
+    // Right column
+    doc.setFont('helvetica', 'bold');
+    doc.text('Status:', 120, yPosition);
+    doc.setFont('helvetica', 'normal');
+    doc.text(order.status, 145, yPosition);
+    
+    if (order.approvedby) {
+        doc.setFont('helvetica', 'bold');
+        doc.text('Approved By:', 120, yPosition + 8);
+        doc.setFont('helvetica', 'normal');
+        doc.text(order.approvedby, 145, yPosition + 8);
+    }
+    
+    const totalQuantity = order.items.reduce((total, item) => {
+        const itemTotal = Object.values(item.colors).reduce((colorTotal, sizes) => {
+            return colorTotal + Object.values(sizes).reduce((a, b) => a + b, 0);
+        }, 0);
+        return total + itemTotal;
+    }, 0);
+    
+    doc.setFont('helvetica', 'bold');
+    doc.text('Total Quantity:', 120, yPosition + 16);
+    doc.setFont('helvetica', 'normal');
+    doc.text(`${totalQuantity} Pcs`, 145, yPosition + 16);
+    
+    yPosition += 35;
+    
+    // Items Section
+    doc.setTextColor(...primaryColor);
+    doc.setFontSize(14);
+    doc.setFont('helvetica', 'bold');
+    doc.text('ORDERED ITEMS', 20, yPosition);
+    
+    yPosition += 10;
+    
+    // Items table
+    doc.setTextColor(...secondaryColor);
+    doc.setFontSize(10);
+    
+    // Process items for the table
+    order.items.forEach((item, index) => {
+        // Check if we need a new page
+        if (yPosition > 250) {
+            doc.addPage();
+            yPosition = 20;
+        }
+        
+        // Item header
+        doc.setFillColor(...lightGray);
+        doc.rect(20, yPosition, 170, 8, 'F');
+        
+        doc.setFont('helvetica', 'bold');
+        doc.text(`${index + 1}. ${item.name}`, 22, yPosition + 6);
+        
+        yPosition += 15;
+        
+        // Color and size details
+        doc.setFont('helvetica', 'normal');
+        
+        Object.entries(item.colors).forEach(([color, sizes]) => {
+            // Check if we need a new page
+            if (yPosition > 270) {
+                doc.addPage();
+                yPosition = 20;
+            }
+            
+            doc.setFont('helvetica', 'bold');
+            doc.text(`Color: ${color}`, 25, yPosition);
+            yPosition += 6;
+            
+            doc.setFont('helvetica', 'normal');
+            let sizeText = '';
+            Object.entries(sizes).forEach(([size, quantity]) => {
+                if (quantity > 0) {
+                    sizeText += `${size}: ${quantity} pcs, `;
+                }
+            });
+            
+            // Remove trailing comma and space
+            sizeText = sizeText.slice(0, -2);
+            
+            // Split long text into multiple lines
+            const maxWidth = 160;
+            const lines = doc.splitTextToSize(sizeText, maxWidth);
+            
+            lines.forEach(line => {
+                if (yPosition > 280) {
+                    doc.addPage();
+                    yPosition = 20;
+                }
+                doc.text(line, 30, yPosition);
+                yPosition += 5;
+            });
+            
+            yPosition += 3;
+        });
+        
+        yPosition += 5;
+    });
+    
+    // Order note if exists
+    if (order.orderNote) {
+        if (yPosition > 250) {
+            doc.addPage();
+            yPosition = 20;
+        }
+        
+        doc.setTextColor(...primaryColor);
+        doc.setFontSize(12);
+        doc.setFont('helvetica', 'bold');
+        doc.text('ORDER NOTE:', 20, yPosition);
+        
+        yPosition += 10;
+        
+        doc.setTextColor(...secondaryColor);
+        doc.setFontSize(10);
+        doc.setFont('helvetica', 'normal');
+        
+        const noteLines = doc.splitTextToSize(order.orderNote, 170);
+        noteLines.forEach(line => {
+            if (yPosition > 280) {
+                doc.addPage();
+                yPosition = 20;
+            }
+            doc.text(line, 20, yPosition);
+            yPosition += 5;
+        });
+    }
+    
+    // Footer
+    const pageCount = doc.internal.getNumberOfPages();
+    for (let i = 1; i <= pageCount; i++) {
+        doc.setPage(i);
+        doc.setFontSize(8);
+        doc.setTextColor(128, 128, 128);
+        doc.text(`Generated on ${new Date().toLocaleDateString()} | Page ${i} of ${pageCount}`, 105, 290, { align: 'center' });
+    }
+    
+    // Save the PDF
+    doc.save(`Order_${order.referenceNumber}.pdf`);
+}
+
+// Add CSS styles for the PDF button
+const pdfButtonStyles = `
+    .order-header-content {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+    }
+    
+    .order-header-left {
+        flex: 1;
+    }
+    
+    .order-header-right {
+        margin-left: 1rem;
+    }
+    
+    .download-pdf-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.5rem 1rem;
+        background: #3b82f6;
+        color: white;
+        border: none;
+        border-radius: 0.375rem;
+        font-size: 0.875rem;
+        cursor: pointer;
+        transition: background-color 0.2s;
+    }
+    
+    .download-pdf-btn:hover {
+        background: #2563eb;
+    }
+    
+    .download-pdf-btn svg {
+        width: 16px;
+        height: 16px;
+    }
+    
+    @media (max-width: 768px) {
+        .order-header-content {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 0.75rem;
+        }
+        
+        .order-header-right {
+            margin-left: 0;
+            width: 100%;
+        }
+        
+        .download-pdf-btn {
+            width: 100%;
+            justify-content: center;
+        }
+    }
+`;
+
+// Add the PDF button styles to the document
+const pdfStyleSheet = document.createElement('style');
+pdfStyleSheet.textContent = pdfButtonStyles;
+document.head.appendChild(pdfStyleSheet);
+
 function getOrderStatus(status, approvedBy = '', ardate = '') {
     let statusText = '';
     switch (status) {
@@ -130,8 +443,20 @@ function createOrderCard(order, template) {
     
     const headerContent = orderCard.querySelector('.order-header-content');
     headerContent.innerHTML = `
-        <h3 class="order-reference">Order #${order.referenceNumber}</h3>
-        <span class="total-quantity">Total Quantity: ${totalQuantity} Pcs</span>
+        <div class="order-header-left">
+            <h3 class="order-reference">Order #${order.referenceNumber}</h3>
+            <span class="total-quantity">Total Quantity: ${totalQuantity} Pcs</span>
+        </div>
+        <div class="order-header-right">
+            <button class="download-pdf-btn" onclick="downloadOrderPDF('${order.referenceNumber}')">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                    <polyline points="7,10 12,15 17,10"/>
+                    <line x1="12" y1="15" x2="12" y2="3"/>
+                </svg>
+                Download PDF
+            </button>
+        </div>
     `;
     
     const statusBadge = orderCard.querySelector('.order-status-badge');
@@ -169,6 +494,7 @@ function createOrderCard(order, template) {
     createItemsList(orderCard, order);
     return card;
 }
+
 function createTimeline(orderCard, order) {
     const timelineItems = orderCard.querySelector('.timeline-items');
     const events = [
