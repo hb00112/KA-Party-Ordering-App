@@ -211,7 +211,7 @@ function generatePDF(order) {
     doc.setFont('helvetica', 'bold');
     doc.text('Status:', 120, yPosition);
     doc.setFont('helvetica', 'normal');
-    doc.text(order.status, 145, yPosition);
+    doc.text(order.status, 155, yPosition);
     
     if (order.approvedby) {
         doc.setFont('helvetica', 'bold');
