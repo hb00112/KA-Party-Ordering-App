@@ -215,9 +215,9 @@ function generatePDF(order) {
     
     if (order.approvedby) {
         doc.setFont('helvetica', 'bold');
-        doc.text('Approved By:', 120, yPosition + 8);
+        doc.text('Action By:', 120, yPosition + 8);
         doc.setFont('helvetica', 'normal');
-        doc.text(order.approvedby, 145, yPosition + 8);
+        doc.text(order.approvedby, 155, yPosition + 8);
     }
     
     const totalQuantity = order.items.reduce((total, item) => {
@@ -230,7 +230,7 @@ function generatePDF(order) {
     doc.setFont('helvetica', 'bold');
     doc.text('Total Quantity:', 120, yPosition + 16);
     doc.setFont('helvetica', 'normal');
-    doc.text(`${totalQuantity} Pcs`, 145, yPosition + 16);
+    doc.text(`${totalQuantity} Pcs`, 155, yPosition + 16);
     
     yPosition += 35;
     
