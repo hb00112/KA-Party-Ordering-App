@@ -143,10 +143,13 @@ async function downloadOrderPDF(referenceNumber) {
 // Generate PDF using jsPDF
 function generatePDF(order) {
     // Load jsPDF if not already loaded
-    if (typeof jsPDF === 'undefined') {
+    if (typeof window.jspdf === 'undefined') {
         const script = document.createElement('script');
         script.src = 'https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js';
-        script.onload = () => generatePDF(order);
+        script.onload = () => {
+            // Wait a moment for the script to fully initialize
+            setTimeout(() => generatePDF(order), 100);
+        };
         document.head.appendChild(script);
         return;
     }
@@ -410,6 +413,12 @@ const pdfStyleSheet = document.createElement('style');
 pdfStyleSheet.textContent = pdfButtonStyles;
 document.head.appendChild(pdfStyleSheet);
 
+// Initialize PDF library when page loads
+document.addEventListener('DOMContentLoaded', () => {
+    initializePDFLibrary();
+});
+
+
 function getOrderStatus(status, approvedBy = '', ardate = '') {
     let statusText = '';
     switch (status) {
@@ -427,6 +436,17 @@ function getOrderStatus(status, approvedBy = '', ardate = '') {
     }
     return statusText;
 }
+
+function initializePDFLibrary() {
+    if (typeof window.jspdf === 'undefined') {
+        const script = document.createElement('script');
+        script.src = 'https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js';
+        script.async = true;
+        document.head.appendChild(script);
+    }
+}
+
+
 
 function createOrderCard(order, template) {
     const card = template.content.cloneNode(true);
@@ -494,6 +514,7 @@ function createOrderCard(order, template) {
     createItemsList(orderCard, order);
     return card;
 }
+
 
 function createTimeline(orderCard, order) {
     const timelineItems = orderCard.querySelector('.timeline-items');
