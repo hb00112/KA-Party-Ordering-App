@@ -93,85 +93,9 @@ function playWelcomeSound() {
     masterGain.gain.linearRampToValueAtTime(0, audioContext.currentTime + 4.5);
 }
 
-function showWelcomeScreen(username, isNewUser) {
-    const welcomeScreen = document.getElementById('welcomeScreen');
-    const logoStage = document.querySelector('.logo-stage');
-    
-    // Hide login page
-    document.getElementById('loginPage').classList.add('hidden');
-    welcomeScreen.classList.remove('hidden');
-    
-    // Initial logo position
-    logoStage.style.transform = 'scale(0.95) translateY(10px)';
-    logoStage.style.opacity = '0';
-    
-    // Smooth entrance animation
-    requestAnimationFrame(() => {
-        logoStage.style.transition = 'all 1s cubic-bezier(0.4, 0, 0.2, 1)';
-        logoStage.style.transform = 'scale(1) translateY(0)';
-        logoStage.style.opacity = '1';
-        
-        // Play the welcome sound synchronized with animation
-        if (typeof playWelcomeSound === 'function') {
-            playWelcomeSound();
-        }
-    });
-
-    // Enhanced parallax effect
-    let isMouseMoving = false;
-    let mouseTimeout;
-    
-    document.addEventListener('mousemove', (e) => {
-        if (!welcomeScreen.classList.contains('hidden')) {
-            const { clientX, clientY } = e;
-            const { innerWidth, innerHeight } = window;
-            
-            // Calculate rotation with easing
-            const x = (clientX - innerWidth / 2) / 40;
-            const y = (clientY - innerHeight / 2) / 40;
-            
-            // Smooth transition only when mouse starts moving
-            if (!isMouseMoving) {
-                logoStage.style.transition = 'transform 0.3s ease-out';
-                isMouseMoving = true;
-            }
-            
-            // Clear previous timeout
-            clearTimeout(mouseTimeout);
-            
-            // Apply transform
-            logoStage.style.transform = `
-                scale(1)
-                rotateY(${x}deg)
-                rotateX(${-y}deg)
-            `;
-            
-            // Reset transition after mouse stops
-            mouseTimeout = setTimeout(() => {
-                logoStage.style.transition = 'transform 0.6s cubic-bezier(0.4, 0, 0.2, 1)';
-                logoStage.style.transform = 'scale(1) rotateY(0) rotateX(0)';
-                isMouseMoving = false;
-            }, 150);
-        }
-    });
-
-    // Smooth exit animation
-    setTimeout(() => {
-        logoStage.style.transform = 'scale(1.05)';
-        logoStage.style.opacity = '0';
-        setTimeout(() => {
-            welcomeScreen.classList.add('hidden');
-            if (isNewUser) {
-                showUserDetailsModal(username);
-            } else {
-                initializeHomeScreen(username);
-            }
-        }, 500);
-    }, 4500);
-}
 
 
-
+//WORKING.JS
 function showUserDetailsModal(username) {
     console.log('Attempting to show user details modal'); // Debug log
     const modal = document.getElementById('userDetailsModal');
@@ -191,57 +115,187 @@ function showUserDetailsModal(username) {
 }
 
 // Modified login handler
-async function handleLogin(userId, username) {
-    console.log('Handling login for:', username); // Debug log
+// working.js - Updated for OTP Authentication System
+
+function showWelcomeScreen(businessName) {
+    console.log('Showing welcome screen for:', businessName);
     
-    try {
-        // Check if user exists in Firebase
-        const snapshot = await database.ref(`users/${userId}`).once('value');
-        const userData = snapshot.val();
-        
-        // Store userId in localStorage
-        localStorage.setItem('userId', userId);
-        
-        // Show welcome screen with isNewUser flag
-        showWelcomeScreen(username, !userData);
-        
-    } catch (error) {
-        console.error('Error during login:', error);
-        alert('An error occurred during login. Please try again.');
-    }
+    // Hide login page
+    document.getElementById('loginPage').classList.add('hidden');
+    
+    // Show welcome animation
+    const welcomeScreen = document.getElementById('welcomeScreen');
+    welcomeScreen.classList.remove('hidden');
+    
+    // Trigger animation
+    setTimeout(() => {
+        welcomeScreen.classList.add('active');
+    }, 100);
+    
+    // After animation, show home screen
+    setTimeout(() => {
+        welcomeScreen.classList.add('hidden');
+        welcomeScreen.classList.remove('active');
+        initializeHomeScreen(businessName);
+    }, 3000);
 }
 
-function initializeHomeScreen(username) {
-    console.log('Initializing home screen for:', username); // Debug log
+function initializeHomeScreen(businessName, city = '') {
+    console.log('Initializing home screen for:', businessName);
     
     const homeScreen = document.getElementById('homeScreen');
-    const ka = document.getElementById('ka');
     
+    // Update header if needed
+    const ka = document.getElementById('ka');
     if (ka) {
         ka.textContent = 'KAMBESHWAR AGENCIES';
     }
     
-    const userId = localStorage.getItem('userId');
-    if (userId && validUsers[userId]) {
-        const existingFirmSection = document.querySelector('.firm-section');
-        if (existingFirmSection) {
-            existingFirmSection.remove();
-        }
-        
-        const firmSection = document.createElement('div');
-        firmSection.className = 'firm-section';
-        firmSection.innerHTML = `FIRM: ${validUsers[userId].username}`;
-        
-        const homeScreenContainer = document.querySelector('.home-screen-container');
-        const homeMain = document.querySelector('.home-main');
-        if (homeScreenContainer && homeMain) {
-            homeScreenContainer.insertBefore(firmSection, homeMain);
-        }
+    // Get session data
+    const sessionData = JSON.parse(localStorage.getItem('sessionData') || '{}');
+    
+    // Remove existing firm section if present
+    const existingFirmSection = document.querySelector('.firm-section');
+    if (existingFirmSection) {
+        existingFirmSection.remove();
     }
     
+    // Add firm section
+    const firmSection = document.createElement('div');
+    firmSection.className = 'firm-section';
+    firmSection.innerHTML = `FIRM: ${businessName}`;
+    
+    const homeScreenContainer = document.querySelector('.home-screen-container');
+    const homeMain = document.querySelector('.home-main');
+    if (homeScreenContainer && homeMain) {
+        homeScreenContainer.insertBefore(firmSection, homeMain);
+    }
+    
+    // Store current user info globally for other parts of the app
+    window.currentUser = {
+        businessName: businessName,
+        city: city || sessionData.city,
+        email: sessionData.email
+    };
+    
+    // Show home screen
     homeScreen.classList.remove('hidden');
     updateDateTime();
 }
+
+// Handle login (called from login.js after OTP verification)
+async function handleLogin(email, businessName) {
+    console.log('Handling login for:', businessName);
+    showWelcomeScreen(businessName);
+}
+
+// Update date and time display
+function updateDateTime() {
+    const now = new Date();
+    const options = { 
+        weekday: 'short', 
+        year: 'numeric', 
+        month: 'short', 
+        day: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit'
+    };
+    const dateTimeString = now.toLocaleDateString('en-US', options);
+    
+    const datetimeEl = document.getElementById('datetime');
+    if (datetimeEl) {
+        datetimeEl.textContent = dateTimeString;
+    }
+    
+    const homeDateTimeEl = document.getElementById('homeDateTime');
+    if (homeDateTimeEl) {
+        homeDateTimeEl.textContent = dateTimeString;
+    }
+    
+    // Update every minute
+    setTimeout(updateDateTime, 60000);
+}
+
+// Check if user is logged in (for protecting routes)
+function isUserLoggedIn() {
+    const sessionData = JSON.parse(localStorage.getItem('sessionData') || '{}');
+    
+    if (!sessionData.email || !sessionData.sessionToken || !sessionData.sessionExpiry) {
+        return false;
+    }
+    
+    const expiryDate = new Date(sessionData.sessionExpiry);
+    const now = new Date();
+    
+    return now < expiryDate;
+}
+
+// Protect sections - redirect to login if not authenticated
+function protectSection() {
+    if (!isUserLoggedIn()) {
+        const homeScreen = document.getElementById('homeScreen');
+        const loginPage = document.getElementById('loginPage');
+        
+        if (homeScreen) homeScreen.classList.add('hidden');
+        if (loginPage) loginPage.classList.remove('hidden');
+        
+        alert('Your session has expired. Please login again.');
+        return false;
+    }
+    return true;
+}
+
+// Get current user info
+function getCurrentUser() {
+    if (window.currentUser) {
+        return window.currentUser;
+    }
+    
+    const sessionData = JSON.parse(localStorage.getItem('sessionData') || '{}');
+    return {
+        businessName: sessionData.businessName || 'Unknown',
+        city: sessionData.city || '',
+        email: sessionData.email || ''
+    };
+}
+
+// Format date for display
+function formatDate(dateString) {
+    const date = new Date(dateString);
+    const options = { 
+        year: 'numeric', 
+        month: 'short', 
+        day: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit'
+    };
+    return date.toLocaleDateString('en-US', options);
+}
+
+// Initialize on page load
+window.addEventListener('load', function() {
+    updateDateTime();
+    
+    // Set up logout functionality if logout button exists
+    const logoutBtn = document.getElementById('logoutBtn');
+    if (logoutBtn) {
+        logoutBtn.addEventListener('click', function() {
+            if (confirm('Are you sure you want to logout?')) {
+                logout();
+            }
+        });
+    }
+});
+
+// Export functions for use in other files
+window.showWelcomeScreen = showWelcomeScreen;
+window.initializeHomeScreen = initializeHomeScreen;
+window.handleLogin = handleLogin;
+window.isUserLoggedIn = isUserLoggedIn;
+window.protectSection = protectSection;
+window.getCurrentUser = getCurrentUser;
+window.formatDate = formatDate;
+
 
 // User details form submission
 document.getElementById('userDetailsForm').addEventListener('submit', async (e) => {
@@ -272,7 +326,6 @@ document.getElementById('userDetailsForm').addEventListener('submit', async (e) 
 document.addEventListener('DOMContentLoaded', () => {
     updateDateTime();
     setInterval(updateDateTime, 1000);
-    checkExistingUser();
 });
 
 // Add this at the top with your other functions
@@ -327,7 +380,6 @@ function createOfflineModal() {
 document.addEventListener('DOMContentLoaded', () => {
     updateDateTime();
     setInterval(updateDateTime, 1000);
-    checkExistingUser();
 
     // Add offline detection
     window.addEventListener('offline', () => {
@@ -351,94 +403,75 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
-const modal = document.getElementById('helpModal');
-const issueLink = document.getElementById('issueLink');
-const closeBtn = document.querySelector('.ka-login-help-close');
-const issueForm = document.getElementById('issueForm');
-const issueType = document.getElementById('issueType');
-const otherIssueGroup = document.getElementById('otherIssueGroup');
+document.addEventListener('DOMContentLoaded', function() {
+    const issueLink = document.getElementById('issueLink');
+    const helpModal = document.getElementById('helpModal');
+    const closeBtn = document.querySelector('.ka-login-help-close');
+    const issueForm = document.getElementById('issueForm');
+    const issueTypeSelect = document.getElementById('issueType');
+    const otherIssueGroup = document.getElementById('otherIssueGroup');
 
-issueLink.onclick = (e) => {
-    e.preventDefault();
-    modal.style.display = 'block';
-}
-
-closeBtn.onclick = () => {
-    modal.style.display = 'none';
-}
-
-window.onclick = (e) => {
-    if (e.target === modal) {
-        modal.style.display = 'none';
-    }
-}
-
-// Show/hide other issue textarea
-issueType.onchange = () => {
-    otherIssueGroup.style.display = issueType.value === '4' ? 'block' : 'none';
-}
-
-// Form validation and submission
-issueForm.onsubmit = (e) => {
-    e.preventDefault();
-    
-    // Reset error messages
-    document.querySelectorAll('.ka-login-help-error').forEach(err => err.textContent = '');
-    
-    const firmName = document.getElementById('firmName').value.trim();
-    const mobile = document.getElementById('mobile').value.trim();
-    const email = document.getElementById('email').value.trim();
-    const gstin = document.getElementById('gstin').value.trim();
-    const selectedIssue = issueType.value;
-    const otherIssue = document.getElementById('otherIssue').value.trim();
-
-    let isValid = true;
-
-    // Validation
-    if (!firmName) {
-        document.getElementById('firmNameError').textContent = 'Firm name is required';
-        isValid = false;
+    if (issueLink) {
+        issueLink.addEventListener('click', function(e) {
+            e.preventDefault();
+            helpModal.style.display = 'block';
+        });
     }
 
-    if (!mobile || !/^[0-9]{10}$/.test(mobile)) {
-        document.getElementById('mobileError').textContent = 'Valid 10-digit mobile number is required';
-        isValid = false;
+    if (closeBtn) {
+        closeBtn.addEventListener('click', function() {
+            helpModal.style.display = 'none';
+        });
     }
 
-    if (!email || !/\S+@\S+\.\S+/.test(email)) {
-        document.getElementById('emailError').textContent = 'Valid email is required';
-        isValid = false;
+    window.addEventListener('click', function(e) {
+        if (e.target === helpModal) {
+            helpModal.style.display = 'none';
+        }
+    });
+
+    if (issueTypeSelect) {
+        issueTypeSelect.addEventListener('change', function() {
+            if (this.value === '5') {
+                otherIssueGroup.style.display = 'block';
+            } else {
+                otherIssueGroup.style.display = 'none';
+            }
+        });
     }
 
-    if (!selectedIssue) {
-        document.getElementById('issueTypeError').textContent = 'Please select an issue';
-        isValid = false;
+    if (issueForm) {
+        issueForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const firmName = document.getElementById('firmName').value;
+            const mobile = document.getElementById('mobile').value;
+            const email = document.getElementById('helpEmail').value;
+            const city = document.getElementById('city').value;
+            const issueType = document.getElementById('issueType');
+            const issueText = issueType.options[issueType.selectedIndex].text;
+            const otherIssue = document.getElementById('otherIssue').value;
+            
+            // Validate required fields
+            if (!firmName || !mobile || !email || !issueType.value) {
+                alert('Please fill all required fields');
+                return;
+            }
+            
+            // Create WhatsApp message
+            let message = `*Login Help Request - Kambeshwar Agencies*\n\n`;
+            message += `*Business Name:* ${firmName}\n`;
+            message += `*Mobile:* ${mobile}\n`;
+            message += `*Email:* ${email}\n`;
+            if (city) message += `*City:* ${city}\n`;
+            message += `*Issue:* ${issueText}\n`;
+            if (otherIssue) message += `*Details:* ${otherIssue}\n`;
+            
+            const whatsappURL = `https://wa.me/919284494154?text=${encodeURIComponent(message)}`;
+            window.open(whatsappURL, '_blank');
+            
+            helpModal.style.display = 'none';
+            issueForm.reset();
+        });
     }
-
-    if (selectedIssue === '4' && !otherIssue) {
-        document.getElementById('otherIssueError').textContent = 'Please describe your issue';
-        isValid = false;
-    }
-
-    if (isValid) {
-        // Prepare WhatsApp message
-        let issueText = selectedIssue === '4' ? otherIssue : issueType.options[issueType.selectedIndex].text;
-        let message = `Issue in KA ORDER\n\n` +
-            `Firm Name: ${firmName}\n` +
-            `Mobile: ${mobile}\n` +
-            `Email: ${email}\n` +
-            `GSTIN: ${gstin}\n` +
-            `Issue Type: ${issueText}`;
-
-        // Encode the message for URL
-        let encodedMessage = encodeURIComponent(message);
-        
-        // Open WhatsApp with the prepared message
-        window.open(`https://wa.me/919284494154?text=${encodedMessage}`, '_blank');
-        
-        // Close the modal and reset form
-        modal.style.display = 'none';
-        issueForm.reset();
-        otherIssueGroup.style.display = 'none';
-    }
-}
+});

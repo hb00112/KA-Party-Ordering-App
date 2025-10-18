@@ -745,3 +745,344 @@ input, textarea {
 .ka-login-help-link:hover {
     text-decoration: underline;
 }
+
+/* OTP Screen Styles - Add to your styles.css or create separate file */
+
+/* OTP Container */
+.otp-container {
+    position: relative;
+    width: 100%;
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 20px;
+    animation: slideInUp 0.3s ease-out;
+}
+
+/* Back Button */
+.back-btn {
+    position: absolute;
+    top: -10px;
+    left: 0;
+    background: transparent;
+    border: none;
+    color: #667eea;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    padding: 8px 12px;
+    transition: all 0.3s ease;
+}
+
+.back-btn:hover {
+    background: rgba(102, 126, 234, 0.1);
+    border-radius: 8px;
+}
+
+/* OTP Info */
+.otp-info {
+    text-align: center;
+    color: #666;
+    font-size: 14px;
+    margin: 10px 0;
+}
+
+.business-name {
+    text-align: center;
+    color: #667eea;
+    font-size: 18px;
+    font-weight: 600;
+    margin: 15px 0;
+}
+
+/* OTP Input Group */
+.otp-input-group {
+    position: relative;
+    margin: 30px 0;
+}
+
+.otp-input-group input {
+    width: 100%;
+    padding: 18px 20px;
+    font-size: 24px;
+    text-align: center;
+    letter-spacing: 8px;
+    font-weight: 600;
+    border: 2px solid #e0e0e0;
+    border-radius: 12px;
+    transition: all 0.3s ease;
+    font-family: 'Courier New', monospace;
+}
+
+.otp-input-group input:focus {
+    outline: none;
+    border-color: #667eea;
+    box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
+}
+
+.otp-input-group input.error {
+    border-color: #e74c3c;
+    animation: shake 0.4s ease;
+}
+
+/* OTP Attempts Display */
+.otp-attempts {
+    text-align: center;
+    font-size: 13px;
+    color: #666;
+    margin: 10px 0;
+    min-height: 20px;
+}
+
+/* Resend Container */
+.resend-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.resend-btn {
+    background: transparent;
+    border: 2px solid #667eea;
+    color: #667eea;
+    padding: 12px 30px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.resend-btn:hover:not(:disabled) {
+    background: #667eea;
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+}
+
+.resend-btn:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+}
+
+.resend-timer {
+    font-size: 12px;
+    color: #999;
+    text-align: center;
+}
+
+/* Success Message */
+.success-message {
+    animation: slideInRight 0.3s ease-out;
+}
+
+@keyframes slideInRight {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes slideOutRight {
+    from {
+        transform: translateX(0);
+        opacity: 1;
+    }
+    to {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+}
+
+@keyframes slideInUp {
+    from {
+        transform: translateY(30px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+    20%, 40%, 60%, 80% { transform: translateX(5px); }
+}
+
+/* Invalid Message Updates */
+#otpInvalidMessage {
+    text-align: center;
+    line-height: 1.6;
+}
+
+#otpInvalidMessage a {
+    color: #667eea;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+#otpInvalidMessage a:hover {
+    text-decoration: underline;
+}
+
+/* Firm Section in Home Screen */
+.firm-section {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 15px 20px;
+    text-align: center;
+    font-weight: 600;
+    font-size: 16px;
+    letter-spacing: 0.5px;
+    margin: 10px 0;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+}
+
+/* Logout Button (if you want to add one) */
+.logout-btn {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: #e74c3c;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    z-index: 1000;
+    transition: all 0.3s ease;
+}
+
+.logout-btn:hover {
+    background: #c0392b;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(231, 76, 60, 0.3);
+}
+
+/* Mobile Responsive */
+@media (max-width: 480px) {
+    .otp-container {
+        padding: 15px;
+    }
+    
+    .otp-input-group input {
+        font-size: 20px;
+        letter-spacing: 6px;
+        padding: 15px;
+    }
+    
+    .business-name {
+        font-size: 16px;
+    }
+    
+    .firm-section {
+        font-size: 14px;
+        padding: 12px 15px;
+    }
+}
+
+/* Loading Animation Enhancement */
+.loading-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.95);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    backdrop-filter: blur(5px);
+}
+
+.loader {
+    width: 50px;
+    height: 50px;
+    border: 4px solid #f3f3f3;
+    border-top: 4px solid #667eea;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Hidden utility class */
+.hidden {
+    display: none !important;
+}
+/* Additional styles for updated login screen */
+.login-subtitle {
+    text-align: center;
+    color: #666;
+    font-size: 14px;
+    margin-top: -10px;
+    margin-bottom: 25px;
+}
+
+.login-info {
+    margin-top: 20px;
+    padding: 15px;
+    background: #f8f9fa;
+    border-radius: 8px;
+    border-left: 4px solid #667eea;
+}
+
+.login-info p {
+    margin: 8px 0;
+    font-size: 13px;
+    color: #555;
+}
+
+.login-info code {
+    background: #667eea;
+    color: white;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-weight: 600;
+    font-family: 'Courier New', monospace;
+}
+
+.direct-contact {
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid #e0e0e0;
+    text-align: center;
+}
+
+.direct-contact p {
+    margin: 8px 0;
+    font-size: 14px;
+}
+
+.direct-contact a {
+    color: #667eea;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.direct-contact a:hover {
+    text-decoration: underline;
+}
+
+/* Update input to look like email input */
+#userId {
+    text-transform: lowercase;
+}
+
+/* Scroll text animation update */
+.scroll-text {
+    font-weight: 500;
+}

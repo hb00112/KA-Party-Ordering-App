@@ -1,65 +1,391 @@
-//login.js
-async function checkExistingUser() {
+// login.js - Updated for OTP Authentication
+
+// **IMPORTANT: Replace this with your actual Apps Script Web App URL**
+const API_URL = 'https://script.google.com/macros/s/AKfycbwLtEPYhkoKpcWX5b-i41ZExoiydVB245-RaIOD_4L3B86HhdH3qNaFqX9IoKgWhFnsJw/exec';
+
+let otpAttempts = 0;
+const MAX_OTP_ATTEMPTS = 5;
+
+// Check existing session on page load
+async function checkExistingSession() {
     showLoading();
-    const userId = localStorage.getItem('userId');
-    if (userId) {
-        try {
-            const snapshot = await database.ref(`users/${userId}`).once('value');
-            const userData = snapshot.val();
-            if (userData) {
-                hideLoading();
-                document.getElementById('loginPage').classList.add('hidden');
-                document.getElementById('homeScreen').classList.remove('hidden');
-                return true;
+    
+    const sessionData = JSON.parse(localStorage.getItem('sessionData') || '{}');
+    
+    if (sessionData.email && sessionData.sessionToken && sessionData.sessionExpiry) {
+        const expiryDate = new Date(sessionData.sessionExpiry);
+        const now = new Date();
+        
+        // Check if session is still valid
+        if (now < expiryDate) {
+            try {
+                const response = await fetch(API_URL, {
+                    method: 'POST',
+                    body: JSON.stringify({
+                        action: 'checkSession',
+                        email: sessionData.email,
+                        sessionToken: sessionData.sessionToken
+                    })
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    hideLoading();
+                    initializeHomeScreen(result.data.businessName, result.data.city);
+                    return true;
+                }
+            } catch (error) {
+                console.error('Session check error:', error);
             }
-        } catch (error) {
-            console.error('Error checking existing user:', error);
         }
+        
+        // Clear expired session
+        localStorage.removeItem('sessionData');
     }
+    
     hideLoading();
     return false;
 }
 
-// Login form submission
-// Update this part in your login.js file
+// Email login form submission
 document.getElementById('loginForm').addEventListener('submit', async (e) => {
     e.preventDefault();
     
-    const userId = document.getElementById('userId').value;
-    const password = document.getElementById('password').value;
+    const email = document.getElementById('userId').value.trim();
     const invalidMessage = document.getElementById('invalidMessage');
     
-    // Reset error states
     resetErrors();
     
-    // Validate fields
-    if (!userId.trim() || !password.trim()) {
-        if (!userId.trim()) showError(document.getElementById('userId'), 'Please fill out the above field');
-        if (!password.trim()) showError(document.getElementById('password'), 'Please fill out the above field');
+    if (!email) {
+        showError(document.getElementById('userId'), 'Please enter your email address');
         return;
     }
-
-    // Check credentials
-    if (validUsers[userId] && validUsers[userId].password === password) {
-        const username = validUsers[userId].username;
-        // Use the handleLogin function from working.js
-        await handleLogin(userId, username);
-    } else {
-        invalidMessage.textContent = 'INVALID USERNAME OR PASSWORD';
+    
+    // Admin bypass check
+    if (email === '1231') {
+        showOTPScreen(email, true);
+        return;
+    }
+    
+    // Basic email validation
+    if (!isValidEmail(email) && email !== '1231') {
+        showError(document.getElementById('userId'), 'Please enter a valid email address');
+        return;
+    }
+    
+    showLoading();
+    
+    try {
+        const response = await fetch(API_URL, {
+            method: 'POST',
+            body: JSON.stringify({
+                action: 'generateOTP',
+                email: email
+            })
+        });
+        
+        const result = await response.json();
+        
+        hideLoading();
+        
+        if (result.success) {
+            if (result.data && result.data.isAdmin) {
+                // Admin - show OTP screen directly
+                showOTPScreen(email, true);
+            } else {
+                // Regular user - OTP sent
+                showOTPScreen(email, false, result.data.businessName);
+                showSuccessMessage('OTP sent to your email!');
+            }
+        } else {
+            invalidMessage.textContent = result.message;
+            invalidMessage.classList.add('show');
+            setTimeout(() => invalidMessage.classList.remove('show'), 5000);
+        }
+        
+    } catch (error) {
+        hideLoading();
+        console.error('Login error:', error);
+        invalidMessage.textContent = 'Connection error. Please check your internet and try again.';
         invalidMessage.classList.add('show');
-        setTimeout(() => invalidMessage.classList.remove('show'), 4000);
+        setTimeout(() => invalidMessage.classList.remove('show'), 5000);
     }
 });
-// Add these new functions for form validation
+
+// Show OTP input screen
+function showOTPScreen(email, isAdmin = false, businessName = '') {
+    document.getElementById('loginForm').style.display = 'none';
+    
+    const otpScreen = document.createElement('div');
+    otpScreen.id = 'otpScreen';
+    otpScreen.innerHTML = `
+        <div class="otp-container">
+            <button class="back-btn" onclick="backToLogin()">← Back</button>
+            <h2>Enter OTP</h2>
+            ${!isAdmin ? `<p class="otp-info">OTP sent to ${email}</p>` : `<p class="otp-info">Admin Login</p>`}
+            ${!isAdmin && businessName ? `<p class="business-name">${businessName}</p>` : ''}
+            
+            <form id="otpForm" novalidate>
+                <div class="otp-input-group">
+                    <input type="text" id="otpInput" placeholder="Enter 6-digit OTP" maxlength="6" pattern="[0-9]{6}" required>
+                    <span class="error-message" id="otpError"></span>
+                </div>
+                <div class="otp-attempts" id="otpAttempts"></div>
+                <div id="otpInvalidMessage" class="invalid-message"></div>
+                <button type="submit" class="login-btn">Verify OTP</button>
+            </form>
+            
+            ${!isAdmin ? `
+            <div class="resend-container">
+                <button class="resend-btn" id="resendBtn" onclick="resendOTP('${email}')">
+                    Resend OTP
+                </button>
+                <span class="resend-timer" id="resendTimer"></span>
+            </div>
+            ` : ''}
+        </div>
+    `;
+    
+    document.querySelector('.login-container').appendChild(otpScreen);
+    
+    // Store email for verification
+    window.currentLoginEmail = email;
+    window.isAdminLogin = isAdmin;
+    
+    // Reset attempts counter
+    otpAttempts = 0;
+    updateAttemptsDisplay();
+    
+    // Start resend timer if not admin
+    if (!isAdmin) {
+        startResendTimer();
+    }
+    
+    // OTP form submission
+    document.getElementById('otpForm').addEventListener('submit', handleOTPSubmit);
+    
+    // Auto-focus OTP input
+    document.getElementById('otpInput').focus();
+}
+
+// Handle OTP verification
+async function handleOTPSubmit(e) {
+    e.preventDefault();
+    
+    const otpInput = document.getElementById('otpInput');
+    const otp = otpInput.value.trim();
+    const otpInvalidMessage = document.getElementById('otpInvalidMessage');
+    
+    if (!otp || otp.length !== 6) {
+        showError(otpInput, 'Please enter a 6-digit OTP');
+        return;
+    }
+    
+    if (otpAttempts >= MAX_OTP_ATTEMPTS) {
+        otpInvalidMessage.innerHTML = `Maximum attempts exceeded. Please contact admin:<br>
+            📧 hemantpb123@gmail.com<br>
+            📱 <a href="https://wa.me/919284494154" target="_blank">+91 9284494154</a>`;
+        otpInvalidMessage.classList.add('show');
+        return;
+    }
+    
+    otpAttempts++;
+    updateAttemptsDisplay();
+    
+    showLoading();
+    
+    try {
+        const response = await fetch(API_URL, {
+            method: 'POST',
+            body: JSON.stringify({
+                action: 'verifyOTP',
+                email: window.currentLoginEmail,
+                otp: otp
+            })
+        });
+        
+        const result = await response.json();
+        
+        hideLoading();
+        
+        if (result.success) {
+            // Save session data
+            const sessionData = {
+                email: result.data.email,
+                businessName: result.data.businessName,
+                city: result.data.city,
+                sessionToken: result.data.sessionToken,
+                sessionExpiry: result.data.sessionExpiry
+            };
+            
+            localStorage.setItem('sessionData', JSON.stringify(sessionData));
+            
+            // Show welcome screen
+            showWelcomeScreen(result.data.businessName);
+            
+        } else {
+            otpInput.value = '';
+            otpInput.focus();
+            
+            if (otpAttempts >= MAX_OTP_ATTEMPTS) {
+                otpInvalidMessage.innerHTML = `Maximum attempts exceeded. Please contact admin:<br>
+                    📧 hemantpb123@gmail.com<br>
+                    📱 <a href="https://wa.me/919284494154" target="_blank">+91 9284494154</a>`;
+            } else {
+                otpInvalidMessage.textContent = result.message;
+            }
+            
+            otpInvalidMessage.classList.add('show');
+            setTimeout(() => otpInvalidMessage.classList.remove('show'), 5000);
+        }
+        
+    } catch (error) {
+        hideLoading();
+        console.error('OTP verification error:', error);
+        otpInvalidMessage.textContent = 'Connection error. Please try again.';
+        otpInvalidMessage.classList.add('show');
+        setTimeout(() => otpInvalidMessage.classList.remove('show'), 5000);
+    }
+}
+
+// Resend OTP
+async function resendOTP(email) {
+    const resendBtn = document.getElementById('resendBtn');
+    const otpInvalidMessage = document.getElementById('otpInvalidMessage');
+    
+    if (resendBtn.disabled) return;
+    
+    showLoading();
+    
+    try {
+        const response = await fetch(API_URL, {
+            method: 'POST',
+            body: JSON.stringify({
+                action: 'generateOTP',
+                email: email
+            })
+        });
+        
+        const result = await response.json();
+        
+        hideLoading();
+        
+        if (result.success) {
+            showSuccessMessage('New OTP sent to your email!');
+            otpAttempts = 0;
+            updateAttemptsDisplay();
+            document.getElementById('otpInput').value = '';
+            startResendTimer();
+        } else {
+            otpInvalidMessage.textContent = result.message;
+            otpInvalidMessage.classList.add('show');
+            setTimeout(() => otpInvalidMessage.classList.remove('show'), 5000);
+        }
+        
+    } catch (error) {
+        hideLoading();
+        console.error('Resend OTP error:', error);
+        otpInvalidMessage.textContent = 'Connection error. Please try again.';
+        otpInvalidMessage.classList.add('show');
+        setTimeout(() => otpInvalidMessage.classList.remove('show'), 5000);
+    }
+}
+
+// Start resend timer (30 minutes)
+function startResendTimer() {
+    const resendBtn = document.getElementById('resendBtn');
+    const resendTimer = document.getElementById('resendTimer');
+    
+    if (!resendBtn || !resendTimer) return;
+    
+    resendBtn.disabled = true;
+    resendBtn.style.opacity = '0.5';
+    
+    let timeLeft = 30 * 60; // 30 minutes in seconds
+    
+    const timerInterval = setInterval(() => {
+        const minutes = Math.floor(timeLeft / 60);
+        const seconds = timeLeft % 60;
+        
+        resendTimer.textContent = `Resend available in ${minutes}:${seconds.toString().padStart(2, '0')}`;
+        
+        timeLeft--;
+        
+        if (timeLeft < 0) {
+            clearInterval(timerInterval);
+            resendBtn.disabled = false;
+            resendBtn.style.opacity = '1';
+            resendTimer.textContent = '';
+        }
+    }, 1000);
+}
+
+// Update attempts display
+function updateAttemptsDisplay() {
+    const attemptsEl = document.getElementById('otpAttempts');
+    if (attemptsEl && otpAttempts > 0) {
+        const remaining = MAX_OTP_ATTEMPTS - otpAttempts;
+        attemptsEl.textContent = `${otpAttempts} attempt(s) used. ${remaining} remaining.`;
+        attemptsEl.style.color = remaining <= 2 ? '#e74c3c' : '#666';
+    }
+}
+
+// Back to login
+function backToLogin() {
+    const otpScreen = document.getElementById('otpScreen');
+    if (otpScreen) {
+        otpScreen.remove();
+    }
+    document.getElementById('loginForm').style.display = 'block';
+    document.getElementById('userId').value = '';
+    resetErrors();
+    otpAttempts = 0;
+}
+
+// Email validation
+function isValidEmail(email) {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+}
+
+// Show success message
+function showSuccessMessage(message) {
+    const successDiv = document.createElement('div');
+    successDiv.className = 'success-message';
+    successDiv.textContent = message;
+    successDiv.style.cssText = `
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background: #27ae60;
+        color: white;
+        padding: 15px 25px;
+        border-radius: 8px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        z-index: 10000;
+        animation: slideInRight 0.3s ease-out;
+    `;
+    
+    document.body.appendChild(successDiv);
+    
+    setTimeout(() => {
+        successDiv.style.animation = 'slideOutRight 0.3s ease-out';
+        setTimeout(() => successDiv.remove(), 300);
+    }, 3000);
+}
+
+// Form validation helpers
 function showError(inputElement, message) {
     inputElement.classList.add('error');
     const errorElement = inputElement.parentElement.querySelector('.error-message');
-    errorElement.textContent = message;
-    errorElement.style.display = 'block';
+    if (errorElement) {
+        errorElement.textContent = message;
+        errorElement.style.display = 'block';
+    }
 }
 
 function resetErrors() {
-    // Reset all error states
     const inputs = document.querySelectorAll('.input-group input');
     inputs.forEach(input => {
         if (!input) return;
@@ -70,55 +396,64 @@ function resetErrors() {
         }
     });
     
-    // Reset invalid message
     const invalidMessage = document.getElementById('invalidMessage');
     if (invalidMessage) {
         invalidMessage.classList.remove('show');
     }
 }
 
-// Add input event listeners to remove error state when user starts typing
+// Add input event listeners
 document.querySelectorAll('.input-group input').forEach(input => {
     input.addEventListener('input', () => {
         input.classList.remove('error');
         const errorElement = input.parentElement.querySelector('.error-message');
-        errorElement.style.display = 'none';
+        if (errorElement) {
+            errorElement.style.display = 'none';
+        }
     });
 });
 
-// User details form submission
+// Loading screen functions
+function showLoading() {
+    const loadingScreen = document.getElementById('loadingScreen');
+    if (loadingScreen) {
+        loadingScreen.classList.remove('hidden');
+    }
+}
 
+function hideLoading() {
+    const loadingScreen = document.getElementById('loadingScreen');
+    if (loadingScreen) {
+        loadingScreen.classList.add('hidden');
+    }
+}
 
-// Install guide modal functionality
-window.addEventListener('load', function() {
+// Initialize on page load
+window.addEventListener('load', async function() {
+    await checkExistingSession();
+    
+    // Install guide modal functionality
     const modal = document.getElementById('installGuideModal');
-    if (!modal) return; // Guard clause in case modal doesn't exist
+    if (!modal) return;
     
     const closeBtn = modal.querySelector('.close-install-modal');
     const gotItBtn = modal.querySelector('.got-it-btn');
 
-    // Show modal after 2-second delay
     setTimeout(() => {
         modal.classList.remove('hidden');
-        // Add fade-in animation
         modal.style.animation = 'fadeIn 0.3s ease-out';
     }, 2000);
 
-    // Close modal function
     const closeModal = () => {
-        // Add fade-out animation
         modal.style.animation = 'fadeOut 0.3s ease-out';
-        // Wait for animation to complete before hiding
         setTimeout(() => {
             modal.classList.add('hidden');
         }, 300);
     };
 
-    // Add event listeners for closing modal
     if (closeBtn) closeBtn.addEventListener('click', closeModal);
     if (gotItBtn) gotItBtn.addEventListener('click', closeModal);
 
-    // Close when clicking outside the modal
     modal.addEventListener('click', (e) => {
         if (e.target === modal) {
             closeModal();
@@ -126,4 +461,8 @@ window.addEventListener('load', function() {
     });
 });
 
-function validateMobileNumber() { const mobile = document.getElementById('mobile').value; const mobileError = document.getElementById('mobileError'); const mobilePattern = /^[0-9]{10}$/; if (mobilePattern.test(mobile)) { mobileError.textContent = ''; return true; } else { mobileError.textContent = 'Please enter a valid 10-digit mobile number.'; return false; } }
+// Logout function (to be called from other parts of the app)
+function logout() {
+    localStorage.removeItem('sessionData');
+    location.reload();
+}
