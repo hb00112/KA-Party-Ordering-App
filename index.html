@@ -26,92 +26,76 @@
     </div>
 
     <!-- Login Page -->
-    <div id="loginPage">
-        <!-- Install Guide Modal -->
-        <div id="installGuideModal" class="install-modal hidden">
-            <div class="install-modal-content">
-                <div class="install-modal-header">
-                    <h2>📱 Install Our App!</h2>
-                    <button class="close-install-modal">×</button>
-                </div>
-                <div class="install-steps">
-                    <div class="step">
-                        <div class="step-number">1</div>
-                        <div class="step-icon">⋮</div>
-                        <p>Click the three dots menu in your browser</p>
-                    </div>
-                    <div class="step">
-                        <div class="step-number">2</div>
-                        <div class="step-icon">🏠</div>
-                        <p>Select "Add to Home Screen"</p>
-                    </div>
-                    <div class="step">
-                        <div class="step-number">3</div>
-                        <div class="step-icon">✨</div>
-                        <p>Tap "Install" and enjoy quick access!</p>
-                    </div>
-                </div>
-                <button class="got-it-btn">Got it!</button>
-            </div>
+    <!-- LOGIN PAGE -->
+<div id="loginPage">
+    <!-- Header -->
+    <header class="header">
+        <div class="header-left">
+            <h1>KAMBESHWAR AGENCIES</h1>
+            <div class="sub-header">ENAMOR ORDER PORTAL</div>
         </div>
-    
-        <!-- Main Login Content -->
-        <header class="header">
-            <div class="header-left">
-                KAMBESHWAR AGENCIES
-                <div class="sub-header">ENAMOR ORDER PORTAL</div>
-            </div>
-            <div class="header-right" id="datetime"></div>
-        </header>
-        
-        
-<div class="scroll-container">
-    <div class="scroll-text">
-        🔐 Secure Login with Email OTP - No Password Required!
-    </div>
-</div>
-
-<main class="login-container">
-    <h2>Login</h2>
-    <p class="login-subtitle">Enter your registered email to receive OTP</p>
-    
-    <form id="loginForm" novalidate>
-        <div class="input-group">
-            <input type="email" id="userId" placeholder="Email Address" required autocomplete="email">
-            <span class="error-message" id="userIdError"></span>
+        <div class="header-right">
+            <div id="datetime"></div>
         </div>
-        <div id="invalidMessage" class="invalid-message"></div>
-        <button type="submit" class="login-btn">Send OTP</button>
-    </form>
+    </header>
     
-    <div class="login-info">
-        <p>💡 <strong>First time user?</strong> Contact admin to get registered</p>
-    </div>
-    
-    <a href="#" class="ka-login-help-link" id="issueLink">Need Help?</a>
+  
 
-    <!-- Help Modal - Updated -->
+    <!-- Login Form -->
+    <main class="login-container">
+        <h2>Welcome Back</h2>
+        <p class="login-subtitle">Enter your registered email to receive OTP</p>
+        
+        <form id="loginForm" novalidate>
+            <div class="input-group">
+                <input 
+                    type="email" 
+                    id="userId" 
+                    placeholder="Email Address" 
+                    required 
+                    autocomplete="email"
+                >
+                <span class="error-message" id="userIdError">Please enter a valid email</span>
+            </div>
+            
+            <div id="invalidMessage" class="invalid-message"></div>
+            
+            <button type="submit" class="login-btn">Send OTP</button>
+        </form>
+        
+        <div class="login-info">
+            <p>💡 <strong>First time user?</strong><br> Contact admin to register your account</p>
+        </div>
+        
+        <a href="#" class="ka-login-help-link" id="issueLink">Need Help?</a>
+    </main>
+
+    <!-- Help Modal -->
     <div id="helpModal" class="ka-login-help-modal">
         <div class="ka-login-help-modal-content">
             <span class="ka-login-help-close">&times;</span>
             <h3>Need Assistance?</h3>
+            
             <form id="issueForm" novalidate>
                 <div class="ka-login-help-input-group">
                     <input type="text" id="firmName" placeholder="Business Name *" required>
                     <span class="ka-login-help-error" id="firmNameError"></span>
                 </div>
+                
                 <div class="ka-login-help-input-group">
                     <input type="tel" id="mobile" placeholder="Mobile Number *" required>
                     <span class="ka-login-help-error" id="mobileError"></span>
                 </div>
+                
                 <div class="ka-login-help-input-group">
                     <input type="email" id="helpEmail" placeholder="Email ID *" required>
                     <span class="ka-login-help-error" id="emailError"></span>
                 </div>
+                
                 <div class="ka-login-help-input-group">
                     <input type="text" id="city" placeholder="City">
-                    <span class="ka-login-help-error" id="cityError"></span>
                 </div>
+                
                 <div class="ka-login-help-input-group">
                     <select id="issueType" required>
                         <option value="">Select Your Issue</option>
@@ -123,10 +107,11 @@
                     </select>
                     <span class="ka-login-help-error" id="issueTypeError"></span>
                 </div>
+                
                 <div class="ka-login-help-input-group" id="otherIssueGroup" style="display: none;">
-                    <textarea id="otherIssue" placeholder="Please describe your issue"></textarea>
-                    <span class="ka-login-help-error" id="otherIssueError"></span>
+                    <textarea id="otherIssue" placeholder="Describe your issue"></textarea>
                 </div>
+                
                 <button type="submit" class="ka-login-help-submit">Submit via WhatsApp</button>
             </form>
             
@@ -137,13 +122,74 @@
             </div>
         </div>
     </div>
-</main>
-        
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>© 2025 Kambeshwar Agencies - Mapusa. All Rights Reserved.</p>
+    </footer>
+</div>
+
+<!-- OTP VERIFICATION PAGE -->
+<div id="otpPage" class="hidden">
+    <!-- Header -->
+    <header class="header">
+        <div class="header-left">
+            <h1>KAMBESHWAR AGENCIES</h1>
+            <div class="sub-header">ENAMOR ORDER PORTAL</div>
+        </div>
+        <div class="header-right">
+            <div id="datetime"></div>
+        </div>
+    </header>
     
-        <footer class="footer">
-            <p>© Kambeshwara Agencies - Mapusa. All Rights Reserved.</p>
-        </footer>
+    <!-- Scroll Banner -->
+    <div class="scroll-container">
+        <div class="scroll-text">
+            🔒 Enter the 6-digit OTP sent to your email
+        </div>
     </div>
+
+    <!-- OTP Form -->
+    <main class="login-container">
+        <div class="otp-container">
+            <button class="back-btn" onclick="backToLogin()">← Back to Login</button>
+            
+            <h2>Verify OTP</h2>
+            <p class="otp-info">OTP sent to</p>
+            <p class="business-name" id="otpBusinessName"></p>
+            
+            <form id="otpForm" novalidate>
+                <div class="otp-input-group">
+                    <input 
+                        type="text" 
+                        id="otpInput" 
+                        placeholder="000000" 
+                        maxlength="6" 
+                        required
+                        autocomplete="one-time-code"
+                        inputmode="numeric"
+                    >
+                    <span class="error-message" id="otpError">Invalid OTP</span>
+                </div>
+                
+                <div class="otp-attempts" id="otpAttempts"></div>
+                <div id="otpInvalidMessage" class="invalid-message"></div>
+                
+                <button type="submit" class="login-btn">Verify OTP</button>
+            </form>
+            
+            <div class="resend-container">
+                <button class="resend-btn" id="resendOtpBtn" disabled>Resend OTP</button>
+                <p class="resend-timer" id="resendTimer"></p>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>© 2025 Kambeshwar Agencies - Mapusa. All Rights Reserved.</p>
+    </footer>
+</div>
 
     <!-- Welcome Animation -->
     <div id="welcomeScreen" class="welcome-screen hidden">
