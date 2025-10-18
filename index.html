@@ -25,227 +25,226 @@
         <div class="loader"></div>
     </div>
 
-    <!-- Login Page -->
     <!-- LOGIN PAGE -->
-<div id="loginPage">
-    <!-- Header -->
-    <header class="header">
-        <div class="header-left">
-            <h1>KAMBESHWAR AGENCIES</h1>
-            <div class="sub-header">ENAMOR ORDER PORTAL</div>
-        </div>
-        <div class="header-right">
-            <div id="datetime"></div>
-        </div>
-    </header>
-    
-  
-
-    <!-- Login Form -->
-    <main class="login-container">
-        <h2>Welcome Back</h2>
-        <p class="login-subtitle">Enter your registered email to receive OTP</p>
-        
-        <form id="loginForm" novalidate>
-            <div class="input-group">
-                <input 
-                    type="email" 
-                    id="userId" 
-                    placeholder="Email Address" 
-                    required 
-                    autocomplete="email"
-                >
-                <span class="error-message" id="userIdError">Please enter a valid email</span>
+    <div id="loginPage">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-left">
+                <h1>KAMBESHWAR AGENCIES</h1>
+                <div class="sub-header">ENAMOR ORDER PORTAL</div>
             </div>
-            
-            <div id="invalidMessage" class="invalid-message"></div>
-            
-            <button type="submit" class="login-btn">Send OTP</button>
-        </form>
-        
-        <div class="login-info">
-            <p>💡 <strong>First time user?</strong><br> Contact admin to register your account</p>
-        </div>
-        
-        <a href="#" class="ka-login-help-link" id="issueLink">Need Help?</a>
-    </main>
-
-    <!-- Help Modal -->
-    <div id="helpModal" class="ka-login-help-modal">
-        <div class="ka-login-help-modal-content">
-            <span class="ka-login-help-close">&times;</span>
-            <h3>Need Assistance?</h3>
-            
-            <form id="issueForm" novalidate>
-                <div class="ka-login-help-input-group">
-                    <input type="text" id="firmName" placeholder="Business Name *" required>
-                    <span class="ka-login-help-error" id="firmNameError"></span>
-                </div>
-                
-                <div class="ka-login-help-input-group">
-                    <input type="tel" id="mobile" placeholder="Mobile Number *" required>
-                    <span class="ka-login-help-error" id="mobileError"></span>
-                </div>
-                
-                <div class="ka-login-help-input-group">
-                    <input type="email" id="helpEmail" placeholder="Email ID *" required>
-                    <span class="ka-login-help-error" id="emailError"></span>
-                </div>
-                
-                <div class="ka-login-help-input-group">
-                    <input type="text" id="city" placeholder="City">
-                </div>
-                
-                <div class="ka-login-help-input-group">
-                    <select id="issueType" required>
-                        <option value="">Select Your Issue</option>
-                        <option value="1">New User Registration</option>
-                        <option value="2">Email Not Registered</option>
-                        <option value="3">Not Receiving OTP</option>
-                        <option value="4">Account Inactive</option>
-                        <option value="5">Other Issue</option>
-                    </select>
-                    <span class="ka-login-help-error" id="issueTypeError"></span>
-                </div>
-                
-                <div class="ka-login-help-input-group" id="otherIssueGroup" style="display: none;">
-                    <textarea id="otherIssue" placeholder="Describe your issue"></textarea>
-                </div>
-                
-                <button type="submit" class="ka-login-help-submit">Submit via WhatsApp</button>
-            </form>
-            
-            <div class="direct-contact">
-                <p><strong>Or Contact Directly:</strong></p>
-                <p>📧 <a href="mailto:hemantpb123@gmail.com">hemantpb123@gmail.com</a></p>
-                <p>📱 <a href="https://wa.me/919284494154" target="_blank">+91 9284494154</a></p>
+            <div class="header-right">
+                <div id="datetime"></div>
             </div>
-        </div>
-    </div>
+        </header>
+        
+     
 
-    <!-- Footer -->
-    <footer class="footer">
-        <p>© 2025 Kambeshwar Agencies - Mapusa. All Rights Reserved.</p>
-    </footer>
-</div>
-
-<!-- OTP VERIFICATION PAGE -->
-<div id="otpPage" class="hidden">
-    <!-- Header -->
-    <header class="header">
-        <div class="header-left">
-            <h1>KAMBESHWAR AGENCIES</h1>
-            <div class="sub-header">ENAMOR ORDER PORTAL</div>
-        </div>
-        <div class="header-right">
-            <div id="datetime"></div>
-        </div>
-    </header>
-    
-    <!-- Scroll Banner -->
-    <div class="scroll-container">
-        <div class="scroll-text">
-            🔒 Enter the 6-digit OTP sent to your email
-        </div>
-    </div>
-
-    <!-- OTP Form -->
-    <main class="login-container">
-        <div class="otp-container">
-            <button class="back-btn" onclick="backToLogin()">← Back to Login</button>
+        <!-- Login Form -->
+        <main class="login-container">
+            <h2>Welcome Back</h2>
+            <p class="login-subtitle">Enter your registered email to receive OTP</p>
             
-            <h2>Verify OTP</h2>
-            <p class="otp-info">OTP sent to</p>
-            <p class="business-name" id="otpBusinessName"></p>
-            
-            <form id="otpForm" novalidate>
-                <div class="otp-input-group">
+            <form id="loginForm" novalidate>
+                <div class="input-group">
                     <input 
-                        type="text" 
-                        id="otpInput" 
-                        placeholder="000000" 
-                        maxlength="6" 
-                        required
-                        autocomplete="one-time-code"
-                        inputmode="numeric"
+                        type="email" 
+                        id="userId" 
+                        placeholder="Email Address" 
+                        required 
+                        autocomplete="email"
                     >
-                    <span class="error-message" id="otpError">Invalid OTP</span>
+                    <span class="error-message" id="userIdError">Please enter a valid email</span>
                 </div>
                 
-                <div class="otp-attempts" id="otpAttempts"></div>
-                <div id="otpInvalidMessage" class="invalid-message"></div>
+                <div id="invalidMessage" class="invalid-message"></div>
                 
-                <button type="submit" class="login-btn">Verify OTP</button>
+                <button type="submit" class="login-btn">Send OTP</button>
             </form>
             
-            <div class="resend-container">
-                <button class="resend-btn" id="resendOtpBtn" disabled>Resend OTP</button>
-                <p class="resend-timer" id="resendTimer"></p>
+            <div class="login-info">
+                <p>💡 <strong>First time user?</strong><br> Contact admin to register your account</p>
+            </div>
+            
+            <a href="#" class="ka-login-help-link" id="issueLink">Need Help?</a>
+        </main>
+
+        <!-- Help Modal -->
+        <div id="helpModal" class="ka-login-help-modal">
+            <div class="ka-login-help-modal-content">
+                <span class="ka-login-help-close">&times;</span>
+                <h3>Need Assistance?</h3>
+                
+                <form id="issueForm" novalidate>
+                    <div class="ka-login-help-input-group">
+                        <input type="text" id="firmName" placeholder="Business Name *" required>
+                        <span class="ka-login-help-error" id="firmNameError"></span>
+                    </div>
+                    
+                    <div class="ka-login-help-input-group">
+                        <input type="tel" id="mobile" placeholder="Mobile Number *" required>
+                        <span class="ka-login-help-error" id="mobileError"></span>
+                    </div>
+                    
+                    <div class="ka-login-help-input-group">
+                        <input type="email" id="helpEmail" placeholder="Email ID *" required>
+                        <span class="ka-login-help-error" id="emailError"></span>
+                    </div>
+                    
+                    <div class="ka-login-help-input-group">
+                        <input type="text" id="city" placeholder="City">
+                    </div>
+                    
+                    <div class="ka-login-help-input-group">
+                        <select id="issueType" required>
+                            <option value="">Select Your Issue</option>
+                            <option value="1">New User Registration</option>
+                            <option value="2">Email Not Registered</option>
+                            <option value="3">Not Receiving OTP</option>
+                            <option value="4">Account Inactive</option>
+                            <option value="5">Other Issue</option>
+                        </select>
+                        <span class="ka-login-help-error" id="issueTypeError"></span>
+                    </div>
+                    
+                    <div class="ka-login-help-input-group" id="otherIssueGroup" style="display: none;">
+                        <textarea id="otherIssue" placeholder="Describe your issue"></textarea>
+                    </div>
+                    
+                    <button type="submit" class="ka-login-help-submit">Submit via WhatsApp</button>
+                </form>
+                
+                <div class="direct-contact">
+                    <p><strong>Or Contact Directly:</strong></p>
+                    <p>📧 <a href="mailto:hemantpb123@gmail.com">hemantpb123@gmail.com</a></p>
+                    <p>📱 <a href="https://wa.me/919284494154" target="_blank">+91 9284494154</a></p>
+                </div>
             </div>
         </div>
-    </main>
 
-    <!-- Footer -->
-    <footer class="footer">
-        <p>© 2025 Kambeshwar Agencies - Mapusa. All Rights Reserved.</p>
-    </footer>
-</div>
+        <!-- Footer -->
+        <footer class="footer">
+            <p>© 2025 Kambeshwar Agencies - Mapusa. All Rights Reserved.</p>
+        </footer>
+    </div>
+
+    <!-- OTP VERIFICATION PAGE -->
+    <div id="otpPage" class="hidden">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-left">
+                <h1>KAMBESHWAR AGENCIES</h1>
+                <div class="sub-header">ENAMOR ORDER PORTAL</div>
+            </div>
+            <div class="header-right">
+                <div id="datetimeOtp"></div>
+            </div>
+        </header>
+        
+        <!-- Scroll Banner -->
+        <div class="scroll-container">
+            <div class="scroll-text">
+                🔒 Enter the 6-digit OTP sent to your email
+            </div>
+        </div>
+
+        <!-- OTP Form Container - ONLY OTP ELEMENTS -->
+        <main class="otp-main-container">
+            <div class="otp-container">
+                <button class="back-btn" onclick="backToLogin()">← Back to Login</button>
+                
+                <h2>Verify OTP</h2>
+                <p class="otp-info">OTP sent to</p>
+                <p class="business-name" id="otpBusinessName">ADMIN</p>
+                
+                <form id="otpForm" novalidate>
+                    <div class="otp-input-group">
+                        <input 
+                            type="text" 
+                            id="otpInput" 
+                            placeholder="000000" 
+                            maxlength="6" 
+                            required
+                            autocomplete="one-time-code"
+                            inputmode="numeric"
+                        >
+                        <span class="error-message" id="otpError">Invalid OTP</span>
+                    </div>
+                    
+                    <div class="otp-attempts" id="otpAttempts"></div>
+                    <div id="otpInvalidMessage" class="invalid-message"></div>
+                    
+                    <button type="submit" class="login-btn">Verify OTP</button>
+                </form>
+                
+                <div class="resend-container">
+                    <button class="resend-btn" id="resendOtpBtn" disabled>Resend OTP</button>
+                    <p class="resend-timer" id="resendTimer"></p>
+                </div>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>© 2025 Kambeshwar Agencies - Mapusa. All Rights Reserved.</p>
+        </footer>
+    </div>
 
     <!-- Premium Welcome Screen -->
-<div id="welcomeScreen" class="welcome-screen hidden">
-    <!-- Carbon Fiber Background -->
-    <div class="carbon-background"></div>
+    <div id="welcomeScreen" class="welcome-screen hidden">
+        <!-- Carbon Fiber Background -->
+        <div class="carbon-background"></div>
 
-    <!-- Elegant Light Rays -->
-    <div class="light-rays">
-        <div class="ray"></div>
-        <div class="ray"></div>
-        <div class="ray"></div>
-        <div class="ray"></div>
-        <div class="ray"></div>
-    </div>
+        <!-- Elegant Light Rays -->
+        <div class="light-rays">
+            <div class="ray"></div>
+            <div class="ray"></div>
+            <div class="ray"></div>
+            <div class="ray"></div>
+            <div class="ray"></div>
+        </div>
 
-    <!-- Pink Particles -->
-    <div class="particles">
-        <div class="particle"></div>
-        <div class="particle"></div>
-        <div class="particle"></div>
-        <div class="particle"></div>
-        <div class="particle"></div>
-        <div class="particle"></div>
-    </div>
+        <!-- Pink Particles -->
+        <div class="particles">
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+        </div>
 
-    <!-- Center Stage -->
-    <div class="center-stage">
-        <!-- Logo Container -->
-        <div class="logo-container">
-            <!-- KA Large Text -->
-            <div class="ka-text">KA</div>
+        <!-- Center Stage -->
+        <div class="center-stage">
+            <!-- Logo Container -->
+            <div class="logo-container">
+                <!-- KA Large Text -->
+                <div class="ka-text">KA</div>
 
-            <!-- Company Name with Letter Animation -->
-            <div class="company-name">
-                <span class="char">K</span><span class="char">a</span><span class="char">m</span><span class="char">b</span><span class="char">e</span><span class="char">s</span><span class="char">h</span><span class="char">w</span><span class="char">a</span><span class="char">r</span><span class="char"> </span><span class="char">A</span><span class="char">g</span><span class="char">e</span><span class="char">n</span><span class="char">c</span><span class="char">i</span><span class="char">e</span><span class="char">s</span>
+                <!-- Company Name with Letter Animation -->
+                <div class="company-name">
+                    <span class="char">K</span><span class="char">a</span><span class="char">m</span><span class="char">b</span><span class="char">e</span><span class="char">s</span><span class="char">h</span><span class="char">w</span><span class="char">a</span><span class="char">r</span><span class="char"> </span><span class="char">A</span><span class="char">g</span><span class="char">e</span><span class="char">n</span><span class="char">c</span><span class="char">i</span><span class="char">e</span><span class="char">s</span>
+                </div>
+
+                <!-- Tagline -->
+                <div class="tagline">Premium Quality • Trust • Excellence</div>
             </div>
 
-            <!-- Tagline -->
-            <div class="tagline">Premium Quality • Trust • Excellence</div>
-        </div>
+            <!-- Premium Geometric Frame -->
+            <div class="premium-frame">
+                <div class="frame-line frame-top"></div>
+                <div class="frame-line frame-bottom"></div>
+                <div class="frame-line frame-left"></div>
+                <div class="frame-line frame-right"></div>
 
-        <!-- Premium Geometric Frame -->
-        <div class="premium-frame">
-            <div class="frame-line frame-top"></div>
-            <div class="frame-line frame-bottom"></div>
-            <div class="frame-line frame-left"></div>
-            <div class="frame-line frame-right"></div>
-
-            <!-- Corner Accents -->
-            <div class="corner-accent corner-tl"></div>
-            <div class="corner-accent corner-tr"></div>
-            <div class="corner-accent corner-bl"></div>
-            <div class="corner-accent corner-br"></div>
+                <!-- Corner Accents -->
+                <div class="corner-accent corner-tl"></div>
+                <div class="corner-accent corner-tr"></div>
+                <div class="corner-accent corner-bl"></div>
+                <div class="corner-accent corner-br"></div>
+            </div>
         </div>
     </div>
-</div>
     
     <!-- User Details Modal -->
     <div id="userDetailsModal" class="modal hidden">
@@ -298,6 +297,8 @@
             </footer>
         </div>
     </div>
+
+    <!-- Problem Report Modal -->
     <div id="problemModal" class="problem-modal">
         <div class="modal-content">
             <span class="close-btn">&times;</span>
@@ -323,6 +324,7 @@
         </div>
     </div>
     
+    <!-- Place Order Screen -->
     <div id="placeOrderScreen" class="section-screen">
         <header class="section-header">
             <h2>Place Order</h2>
@@ -341,7 +343,6 @@
             </div>
             <div class="colors-container"></div>
             <div class="sizes-container"></div>
-            <!-- Add more scrollable content here -->
         </main>
     
         <footer class="fixed-footer">
@@ -454,6 +455,7 @@
     </div>
     
     <script src="firebase-config.js"></script>
+    <script src="page-transitions.js"></script>
     <script src="login.js"></script>
     <script src="user.js"></script>
     <script src="working.js"></script>

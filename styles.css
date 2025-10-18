@@ -523,8 +523,6 @@ body {
     font-size: 0.9rem;
     font-weight: 600;
     cursor: pointer;
-    padding: 0.5rem 0;
-    margin-bottom: 1rem;
     transition: all 0.3s ease;
 }
 
@@ -544,7 +542,7 @@ body {
     color: var(--enamor-pink);
     font-size: 1.1rem;
     font-weight: 600;
-    margin-bottom: 1.5rem;
+    margin-bottom: 0.5rem;
 }
 
 .otp-input-group {
@@ -554,10 +552,9 @@ body {
 
 .otp-input-group input {
     width: 100%;
-    padding: 1rem;
+    padding: 0.5rem;
     font-size: 1.5rem;
     text-align: center;
-    letter-spacing: 8px;
     font-weight: 600;
     background: var(--enamor-light-gray);
     border: 2px solid transparent;
@@ -589,8 +586,7 @@ body {
 .resend-container {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    gap: 0.5rem;
+    align-items: center;    
     margin-top: 1.5rem;
 }
 

@@ -338,8 +338,6 @@
     /*margin-top: -23px;*/
     z-index: 999;
     margin-top: 60px
-   transform: translateY(0);
-    transition: transform 0.3s ease-in-out,
     box-shadow 0.3s ease-in-out;
 
 
