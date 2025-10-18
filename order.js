@@ -1,905 +1,383 @@
-let items=
-[
-  {
-    "name": "A014",
-    "sizes": ["34B","34C","34D","34Z","36B","36C","36D","36Z","38B","38C","38D","38Z","40C","40D","40Z","42D","42Z"],
-    "colors": ["BLACK","MASAI","PEARL","SKIN"],
-    "colorname": ["BLACK : BLACK, 1029,1049,1099","MASAI : MASAI, 1029,1049,1099","PEARL : PEARL, 1029,1049,1099","SKIN : SKIN, 1029,1049,1099"]
-  },
-  {
-    "name": "A017",
-    "sizes": ["32B","32C","32D","34B","34C","34D","36B","36C","36D","38B","38C"],
-    "colors": ["BLACK","CPM","ODM","SKIN","WHITE"],
-    "colorname": ["BLACK : BLACK, 899,949","CPM : CAPRI MELANGE, 899,949","ODM : ORCHID MELANGE, 899,949","SKIN : SKIN, 899,949","WHITE : WHITE, 899,949"]
-  },
-  {
-    "name": "A019",
-    "sizes": ["32B","32C","34B","34C","36B","36C","38B","38C"],
-    "colors": ["BLACK","SKIN","RSBLSH"],
-    "colorname": ["BLACK : BLACK, 949","SKIN : SKIN, 949","RSBLSH : ROSE BLUSH, 949"]
-  },
-  {
-    "name": "A022",
-    "sizes": ["S","M","L","XL","2XL"],
-    "colors": ["BLACK","GRYMRL","PEARL","SKIN","WHITE"],
-    "colorname": ["BLACK : BLACK, 479,499","SKIN : SKIN, 479,499","WHITE : WHITE, 479,499","PEARL : PEARL, 479,499","GRYMRL : GREY MELANGE, 479,499"]
-  },
-  {
-    "name": "A027",
-    "sizes": ["32B","32C","32D","34B","34C","34D","36B","36C","36D","38B","38C","38D"],
-    "colors": ["GRYMEL","BLACK","BDE","GRW","PLS","WHITE","ROD","LBLU"],
-    "colorname": ["GRYMEL : GREY MELANGE, 799,819","BLACK : BLACK, 799,819","BDE : BLUSHING BRIDE, 799,819","PLS : PALE SKIN, 799,819","GRW : GRAPE WINE, 799,819","WHITE : WHITE, 799,819","ROD : ROSE ORCHID, 799,819","LBLU : LAPIS BLUE, 799,819"]
-  },
-  {
-    "name": "A032",
-    "sizes": ["32B","32C","34B","34C","36B","36C","38B","38C"],
-    "colors": ["CHYBLS","ECL","SLI","BLACK","RTE","WHITE"],
-    "colorname": ["CHYBLS : CHERRY BLOSSOM, 1049","ECL : ECLIPSE, 1049","SLI : SILVER LILAC, 1049","BLACK : BLACK, 1049","RTE : ROSETTE, 1049","WHITE : WHITE, 1049"]
-  },
-  {
-    "name": "A039",
-    "sizes": ["32B","32C","32D","34B","34C","34D","36B","36C","36D","38B","38C","38D"],
-    "colors": ["BLACK","EVEBLU","GRYMRL","GRW","PEARL","SKIN","WHITE","LILAST","LIMAPR"],
-    "colorname": ["BLACK : BLACK, 849,899","EVEBLU : EVENING BLUE, 849,899","GRYMRL : GREY MELANGE, 849,899","GRW : GRAPE WINE, 849,899","PEARL : PEARL, 849,899","SKIN : SKIN, 849,899","WHITE : WHITE, 849,899","LILAST : LILAC ASTER, 899,949","LIMAPR : LILAC MARBLE, 849,899"]
-  },
-  {
-    "name": "A042",
-    "sizes": ["32B","32C","32D","34B","34C","34D","34Z","36B","36C","36D","36Z","38B","38C","38D","38Z","40B","40C","40D","42C"],
-    "colors": ["BLACK","PURPLE","SKIN","WHITE","CMG","GSP","ODM","PEARL","RVL","TMG"],
-    "colorname": ["BLACK : BLACK, 749,779,819","PURPLE : PURPLE, 749,779,819","SKIN : SKIN, 749,779,819","WHITE : WHITE, 749,779,819","CMG : CHAMBRAY MELANGE, 749,779,819","GSP : GINKOSCATTERED PRINT, 799,829,879","ODM : ORCHID MELANGE, 749,779,819","PEARL : PEARL, 749,779,819","RVL : REVELLO PRINT, 799,829,879","TMG : TOMATO MELANGE, 749,779,819"]
-  },
-  {
-    "name": "A055",
-    "sizes": ["32B","32C","34B","34C","36B","36C","38B","38C"],
-    "colors": ["GRW","BLACK","PEARL","SKIN","WHITE"],
-    "colorname": ["GRW : GRAPE WINE, 599","BLACK : BLACK, 599","PEARL : PEARL, 599","SKIN : SKIN, 599","WHITE : WHITE, 599"]
-  },
-  {
-    "name": "A058",
-    "sizes": ["32B","32C","32D","34B","34C","34D","36B","36C","36D","38B","38C","38D"],
-    "colors": ["BLACK","PLS","PHB","WHITE"],
-    "colorname": ["BLACK : BLACK, 929,979","PLS : PALE SKIN, 929,979","PHB : PEACH BLOSSOM, 929,979","WHITE : WHITE, 929,979"]
-  },
-  {
-    "name": "A064",
-    "sizes": ["32C","32D","34B","34C","34D","36B","36C","36D","38B","38C","38D"],
-    "colors": ["BLACK","RTE","GRW"],
-    "colorname": ["BLACK : BLACK, 1299,1349","RTE : ROSETTE, 1299,1349","GRW : GRAPE WINE, 1299,1349"]
-  },
-  {
-    "name": "A072",
-    "sizes": ["32B","32C","34B","34C","36B","36C","38B","38C"],
-    "colors": ["BLACK","PHB","PLS"],
-    "colorname": ["BLACK : BLACK, 549","PHB : PEACH BLOSSOM, 549","PLS : PALE SKIN, 549"]
-  },
-  {
-    "name": "A077",
-    "sizes": ["32B","32C","32D","34B","34C","34D","36B","36C","36D","38B","38C"],
-    "colors": ["ECL","OLT","RSBLSH","GRW","HOB"],
-    "colorname": ["ECL : ECLIPSE, 1099","OLT : PEARL BLUSH, 1099","RSBLSH : ROSE BLUSH, 1099","GRW : GRAPE WINE, 1099","HOB : HONEY BEIGE, 1099"]
-  },
-  {
-    "name": "A078",
-    "sizes": ["32B","32C","32D","34B","34C","34D","36B","36C","36D"],
-    "colors": ["BLACK","PLS"],
-    "colorname": ["BLACK : BLACK, 1049,1069","PLS : PALE SKIN, 1049,1069"]
-  },
-  {
-    "name": "A106",
-    "sizes": ["XS","S","M","L","XL","2XL"],
-    "colors": ["BLACK","BDE","SKIN","WHITE"],
-    "colorname": ["BLACK : BLACK, 699,719","SKIN : SKIN, 699,719","BDE : BLUSHING BRIDE, 699,719","WHITE : WHITE, 699,719,669"]
-  },
-  {
-    "name": "A112",
-    "sizes": ["34B","34C","34D","34Z","36B","36C","36D","36Z","38B","38C","38D","38Z","40C","40D","40Z","42C","42D","42Z"," 32B"," 32C"," 32D"," 32Z"],
-    "colors": ["BLACK","CMG","GRW","PLS","PBH","RTE","WHITE"],
-    "colorname": ["BLACK : BLACK, 1049,1079,1099","CMG : CHAMBRAY MELANGE, 1049,1079,1099","GRW : GRAPE WINE, 1049,1079,1099","PLS : PALE SKIN, 999,1029,1049,1079,1099","PBH : PEACH BLUSH, 999,1029,1049,1079,1099","RTE : ROSETTE, 1049,1079,1099","WHITE : WHITE, 1049,1079,1099"]
-  },
-  {
-    "name": "A125",
-    "sizes": ["S","M","L","XL"],
-    "colors": ["WHITE","GRYMEL","CHAMEL","BLACK","SKIN"],
-    "colorname": ["WHITE : WHITE, 549","GRYMEL : GREY MELANGE, 549","CHAMEL : CHARCOAL MELANGE, 549","BLACK : BLACK, 549","SKIN : SKIN, 549"]
-  },
-  {
-    "name": "A132",
-    "sizes": ["32B","32C","32D","32Z","34B","34C","34D","34Z","36B","36C","36D","36Z","38B","38C","38D"],
-    "colors": ["PLS","CBP","BLACK"],
-    "colorname": ["PLS : PALE SKIN, 1299,1449","CBP : CHERRY BLOSSOM PRINT, 1299,1449","BLACK : BLACK, 1299,1449"]
-  },
-  {
-    "name": "A142",
-    "sizes": ["34D","34F","34Z","36D","36F","36Z","38D","38F","38Z","40D","40F","40Z"],
-    "colors": ["PLS","WHITE","BLACK"],
-    "colorname": ["PLS : PALE SKIN, 849","WHITE : WHITE, 849","BLACK : BLACK, 849"]
-  },
-  {
-    "name": "A165",
-    "sizes": ["32B","32C","32D","34B","34C","34D","36B","36C","36D","38B","38C"],
-    "colors": ["BLACK","PLS","TSE"],
-    "colorname": ["BLACK : BLACK, 1149","PLS : PALE SKIN, 1149","TSE : TIBETAN STONE, 1149"]
-  },
-  {
-    "name": "A202",
-    "sizes": ["S","M","L","XL","2XL"],
-    "colors": ["NAVY","JETBLK","LILAS","NUTMEG","CHOCOF","CLGR","GOBBLU"],
-    "colorname": ["NAVY : NAVY, 949,1049","JETBLK : JET BLACK, 949,1049","LILAS : LILAS, 949,1049","NUTMEG : NUTMEG, 949,1049","CHOCOF : Choco Fudge, 949,1049","CLGR : CLOUD GREY, 949,1049","GOBBLU : Goblin Blue, 949,1049"]
-  },
-  {
-    "name": "A204",
-    "sizes": ["S","M","L","XL","2XL","Xl","2Xl"],
-    "colors": ["PFPGCO","HTMBCO","STBRPR","GASPPR"],
-    "colorname": ["PFPGCO : PAINTED FLOWERPASTEL GREEN COMBO, 1149,1249","HTMBCO : HALFTONE MEDIEVAL BLUE COMBO, 1149,1249","STBRPR : STEP BRUSH PRINT, 1149,1249","GASPPR : GALAXY SPLATTER PRT, 1149,1249"]
-  },
-  {
-    "name": "A205",
-    "sizes": ["S","M","L","XL","2XL"],
-    "colors": ["LILAS","NUTMEG","NAVY","JETBLK"],
-    "colorname": ["LILAS : LILAS, 1299,1399","NUTMEG : NUTMEG, 1299,1399","NAVY : NAVY, 1299,1399","JETBLK : JET BLACK, 1299,1399"]
-  },
-  {
-    "name": "A206",
-    "sizes": ["S","M","L","XL","2XL"],
-    "colors": ["LILAS","CHOCOF","NAVY","JETBLK"],
-    "colorname": ["LILAS : LILAS, 1049,1149","CHOCOF : Choco Fudge, 1049,1149","NAVY : NAVY, 1049,1149","JETBLK : JET BLACK, 1049,1149"]
-  },
-  {
-    "name": "A301",
-    "sizes": ["S","M","L","XL","2XL"],
-    "colors": ["BRWHEX","LILEGY","CHWHST","NVYEXP","JBLKEX"],
-    "colorname": ["BRWHEX : BRIGHT WHITE EXPLORE�, 999,1099","LILEGY : LILAS NEW ENERGY, 999,1099","CHWHST : CHALKY WHITE STRONGEST, 999,1099","NVYEXP : NAVY EXPLORE, 999,1099","JBLKEX : JET BLACK DREAMS, 999,1099"]
-  },
-  {
-    "name": "A308",
-    "sizes": ["S","M","L","XL","2XL"],
-    "colors": ["CYLIME","POBLME","BLKMLG","NVYAR","PSMARG"],
-    "colorname": ["CYLIME : CYBER LIME MEL, 599,649","POBLME : POOL BLUE MEL, 599,649","BLKMLG : BLACK MELANGE - ACTIVE REFLECTIVE, 599,649","NVYAR : NAVY MELANGE - ACTIVE REFLECTIVE, 599,649","PSMARG : PASTEL TURQOISEMELANGE/ACTIVE REFLECTIVEGRAPHIC, 599,649"]
-  },
-  {
-    "name": "A309",
-    "sizes": ["S","M","L","XL","2XL"],
-    "colors": ["CYLIME","POBLME","NVYAR","BLKMLG"],
-    "colorname": ["CYLIME : CYBER LIME MEL, 699,749","POBLME : POOL BLUE MEL, 699,749","NVYAR : NAVY MELANGE - ACTIVE REFLECTIVE, 699,749","BLKMLG : BLACK MELANGE - ACTIVE REFLECTIVE, 699,749"]
-  },
-  {
-    "name": "A311",
-    "sizes": ["S","M","L","XL","2XL"],
-    "colors": ["LVCAGR","JBFEGR","LIRUFA","CPKMIP","NAMIPO","JERUFA"],
-    "colorname": ["LVCAGR : LAVENDER CALM GRAPHIC, 649,699","JBFEGR : JET BLACK FOREVER GRAPHIC, 649,699","LIRUFA : LILAS-RUN FASTER, 649,699","CPKMIP : CORAL PINK-MIND POSITIVE, 649,699","NAMIPO : NAVY-MIND POSITIVE, 649,699","JERUFA : JETBLK-RUN FASTER, 649,699"]
-  },
-  {
-    "name": "A313",
-    "sizes": ["S","M","L","XL","2XL"],
-    "colors": ["NAVY","JETBLK","ORCBLM","PLBLUE"],
-    "colorname": ["NAVY : NAVY, 749,799","JETBLK : JET BLACK, 749,799","ORCBLM : ORCHID BLOOM, 749,799","PLBLUE : POOL BLUE, 749,799"]
-  },
-  {
-    "name": "A314",
-    "sizes": ["S","M","L","XL","2XL"],
-    "colors": ["LILAS","CLGR","NAVY","JETBLK"],
-    "colorname": ["LILAS : LILAS, 749,799","CLGR : CLOUD GREY, 749,799","NAVY : NAVY, 749,799","JETBLK : JET BLACK, 749,799"]
-  },
-  {
-    "name": "A402",
-    "sizes": ["S","M","L","XL","2XL"],
-    "colors": ["NAVY","JETBLK","CHOCOF","NUTMEG","CLGR"],
-    "colorname": ["NAVY : NAVY, 1499,1649","JETBLK : JET BLACK, 1499,1649","CHOCOF : Choco Fudge, 1499,1649","NUTMEG : NUTMEG, 1499,1649","CLGR : CLOUD GREY, 1499,1649"]
-  },
-  {
-    "name": "A605",
-    "sizes": ["S","M","L","XL","2XL"],
-    "colors": ["NAVY","JETBLK","OLVNT","ROUGE","CHIVIO","CHOCOF","NUTMEG","CLGR"],
-    "colorname": ["NAVY : NAVY, 1049,1099","JETBLK : JET BLACK, 1049,1099","OLVNT : OLIVE NIGHT, 1049,1099","ROUGE : ROUGE, 1049,1099","CHIVIO : CHINESE VIOLET, 1049","CHOCOF : Choco Fudge, 1049,1099","NUTMEG : NUTMEG, 1049,1099","CLGR : CLOUD GREY, 1049,1099"]
-  },
-  {
-    "name": "A606",
-    "sizes": ["S","M","L","XL","2XL"],
-    "colors": ["LIRUFA","NARUFA","JBRUFA"],
-    "colorname": ["LIRUFA : LILAS-RUN FASTER, 1399,1549","NARUFA : NAVY RUN FASTER, 1399,1549","JBRUFA : JETBLACK RUN FASTER, 1399,1549"]
-  },
-  {
-    "name": "A607",
-    "sizes": ["S","M","L","XL","2XL"],
-    "colors": ["STBRPR","GASPPR"],
-    "colorname": ["STBRPR : STEP BRUSH PRINT, 1299,1429","GASPPR : GALAXY SPLATTER PRT, 1299,1429"]
-  },
-  {
-    "name": "A610",
-    "sizes": ["S","M","L","XL","2XL"],
-    "colors": ["JETBLK","NAVY","LILAS","NUTMEG"],
-    "colorname": ["JETBLK : JET BLACK, 1399,1549","NAVY : NAVY, 1399,1549","LILAS : LILAS, 1399,1549","NUTMEG : NUTMEG, 1399,1549"]
-  },
-  {
-    "name": "A703",
-    "sizes": ["S","M","L","XL","2XL"],
-    "colors": ["CHOCOF","NAVY","JETBLK"],
-    "colorname": ["CHOCOF : Choco Fudge, 949,1049","NAVY : NAVY, 949,1049","JETBLK : JET BLACK, 949,1049"]
-  },
-  {
-    "name": "A714",
-    "sizes": ["S","M","L","XL","2XL"],
-    "colors": ["JETBLK","NAVY","CLGR","LILAS"],
-    "colorname": ["JETBLK : JET BLACK, 749,799","NAVY : NAVY, 749,799","CLGR : CLOUD GREY, 749,799","LILAS : LILAS, 749,799"]
-  },
-  {
-    "name": "AB75",
-    "sizes": ["34B","34C","34D","36B","36C","36D","38B","38C","38D","40B","40C","40D"],
-    "colors": ["PEARL","BLACK","PLS","PURPLE","WHITE","ODM"],
-    "colorname": ["PEARL : PEARL, 849,929","BLACK : BLACK, 849,929","PLS : PALE SKIN, 849,929","PURPLE : PURPLE, 849,929","WHITE : WHITE, 849,929","ODM : ORCHID MELANGE, 849,929"]
-  },
-  {
-    "name": "BB01",
-    "sizes": ["XS","S","M","2xs"],
-    "colors": ["SKIN","WHITE"],
-    "colorname": ["SKIN : SKIN, 379","WHITE : WHITE, 379"]
-  },
-  {
-    "name": "BB02",
-    "sizes": ["XS","S","M","2xs"],
-    "colors": ["BLACK","PEARL","WHITE"],
-    "colorname": ["BLACK : BLACK, 379","PEARL : PEARL, 379","WHITE : WHITE, 379"]
-  },
-  {
-    "name": "BR08",
-    "sizes": ["M","L","XL","2XL"],
-    "colors": ["BLACK","BUFF"],
-    "colorname": ["BLACK : BLACK, 1299","BUFF : BUFF, 1299"]
-  },
-  {
-    "name": "BR11",
-    "sizes": ["S","M","L","XL","2XL"],
-    "colors": ["BLACK","HOB"],
-    "colorname": ["HOB : HONEY BEIGE, 1999","BLACK : BLACK, 1999"]
-  },
-  {
-    "name": "CB07",
-    "sizes": [" S"," M"," L"," XL"," 2XL"],
-    "colors": ["MCP","MCS"],
-    "colorname": ["MCP : MULTICOLORPRINT, 729,759","MCS : MULTICOLORSOLID, 659,689"]
-  },
-  {
-    "name": "CB09",
-    "sizes": [" S"," M"," L"," XL"," 2XL"],
-    "colors": ["MCS","MCP"],
-    "colorname": ["MCS : MULTICOLORSOLID, 499,529","MCP : MULTICOLORPRINT, 549,579"]
-  },
-  {
-    "name": "CB17",
-    "sizes": [" S"," M"," L"," XL"," 2XL"],
-    "colors": ["MCP","MCS"],
-    "colorname": ["MCP : MULTICOLORPRINT, 649,679","MCS : MULTICOLORSOLID, 599,629"]
-  },
-  {
-    "name": "CH03",
-    "sizes": ["S","M","L","XL","2XL"],
-    "colors": ["MCP","MCS"],
-    "colorname": ["MCP : MULTICOLORPRINT, 549,579","MCS : MULTICOLORSOLID, 499,529"]
-  },
-  {
-    "name": "CH07",
-    "sizes": [" S"," M"," L"," XL"," 2XL"],
-    "colors": ["MCP","MCS"],
-    "colorname": ["MCP : MULTICOLORPRINT, 729,759","MCS : MULTICOLORSOLID, 659,689"]
-  },
-  {
-    "name": "CH09",
-    "sizes": [" S"," M"," L"," XL"," 2XL"],
-    "colors": ["MCS","MCP"],
-    "colorname": ["MCS : MULTICOLORSOLID, 499,529","MCP : MULTICOLORPRINT, 549,579"]
-  },
-  {
-    "name": "CR17",
-    "sizes": ["S","M","L","XL","2XL"," 2XL"," L"," M"," S"," XL"],
-    "colors": ["MCD","MCM","MCP","MCR"],
-    "colorname": ["MCM : MULTICOLORMEDIUM, 629,599","MCP : MULTICOLORPRINT, 679,649","MCD : MULTICOLORDARK, 629,599,1048,998","MCR : MULTICOLORS, 1108,1048"]
-  },
-  {
-    "name": "CW01",
-    "sizes": [" S"," M"," L"," XL"," 2XL"],
-    "colors": ["STI","PLMWIN","JETBLK","ORIONB","SKIN"],
-    "colorname": ["STI : STRAWBERRY ICE, 329,339","PLMWIN : PLUM WINE, 329,339","JETBLK : JET BLACK, 329,339","ORIONB : ORION BLUE, 329,339","SKIN : SKIN, 329,339"]
-  },
-  {
-    "name": "CW17",
-    "sizes": [" S"," M"," L"," XL"," 2XL"],
-    "colors": ["MCS"],
-    "colorname": ["MCS : MULTICOLORSOLID, 499,519"]
-  },
-  {
-    "name": "E001",
-    "sizes": ["S","M","L","XL"],
-    "colors": ["BLACK","SKIN","WHITE"],
-    "colorname": ["BLACK : BLACK, 299","SKIN : SKIN, 299","WHITE : WHITE, 299"]
-  },
-  {
-    "name": "E003",
-    "sizes": ["S","M","L","XL"],
-    "colors": ["BLACK","SKIN","WHITE"],
-    "colorname": ["BLACK : BLACK, 449","SKIN : SKIN, 449","WHITE : WHITE, 449"]
-  },
-  {
-    "name": "E007",
-    "sizes": ["S","M","L","XL"],
-    "colors": ["SKIN","WHITE","BLACK"],
-    "colorname": ["SKIN : SKIN, 399","WHITE : WHITE, 399","BLACK : BLACK, 399"]
-  },
-  {
-    "name": "E014",
-    "sizes": ["S","M","L","XL","2XL"],
-    "colors": ["CCM","JETBLK","MGM","NAVY","TGTCA","CHOCOF","CLGR"],
-    "colorname": ["CCM : CHARCOALMELANGE, 999,1099","JETBLK : JET BLACK, 999,1099","MGM : MEDIUMGREY MELANGE, 999,1099","NAVY : NAVY, 999,1099","TGTCA : THAIGRNCIR\TERRACOT, 999,1099","CHOCOF : Choco Fudge, 999,1099","CLGR : CLOUD GREY, 999,1099"]
-  },
-  {
-    "name": "E016",
-    "sizes": ["S","M","L","XL","2XL"],
-    "colors": ["JETBLK","BTWH","SKIN","HLMLLC","HTRRSE","HBSCS","LGM","LTBM"],
-    "colorname": ["JETBLK : JET BLACK, 289,299","BTWH : BRIGHT WHITE, 289,299","SKIN : SKIN, 289,299","HLMLLC : HEIRLOOM LILAC, 289,299","HTRRSE : HEATHER ROSE, 289,299","HBSCS : HIBISCUS, 289,299","LGM : LIGHT GREY MELANGE, 289,299","LTBM : LIGHT BLUE MELANGE, 289,299"]
-  },
-  {
-    "name": "E018",
-    "sizes": ["S","M","L","XL","2XL"],
-    "colors": ["CCM","JETBLK","MGM","NAVY","CLGR","CHOCOF"],
-    "colorname": ["CCM : CHARCOALMELANGE, 899,989","JETBLK : JET BLACK, 899,989","MGM : MEDIUMGREY MELANGE, 899,989","NAVY : NAVY, 899,989","CLGR : CLOUD GREY, 899,989","CHOCOF : Choco Fudge, 899,989"]
-  },
-  {
-    "name": "E025",
-    "sizes": ["S","M","L","XL"],
-    "colors": ["BLACK","WHITE","NAVY","PHP"],
-    "colorname": ["BLACK : BLACK, 299","WHITE : WHITE, 299","NAVY : NAVY, 299","PHP : PEACH PINK, 299"]
-  },
-  {
-    "name": "E032",
-    "sizes": ["S","M","L","XL"],
-    "colors": ["BLACK","SKIN","WHITE"],
-    "colorname": ["BLACK : BLACK, 299","SKIN : SKIN, 299","WHITE : WHITE, 299"]
-  },
-  {
-    "name": "E044",
-    "sizes": ["S","M","L","XL","2XL"],
-    "colors": ["CCM","JETBLK","MGM","NAVY","CLGR","CHOCOF"],
-    "colorname": ["CCM : CHARCOALMELANGE, 799,879","MGM : MEDIUMGREY MELANGE, 799,879","NAVY : NAVY, 799,879","JETBLK : JET BLACK, 799,879","CLGR : CLOUD GREY, 799,879","CHOCOF : Choco Fudge, 799,879"]
-  },
-  {
-    "name": "E047",
-    "sizes": ["S","M","L","XL","2XL"],
-    "colors": ["NAVY","MGM","JBK","RSPBRRY","ORCBLM","PLBLUE"],
-    "colorname": ["NAVY : NAVY, 599,649","MGM : MEDIUMGREY MELANGE, 599","JBK : JETBLACK, 599,649","RSPBRRY : RASPBERRY, 599,649","ORCBLM : ORCHID BLOOM, 599,649","PLBLUE : POOL BLUE, 599,649"]
-  },
-  {
-    "name": "E048",
-    "sizes": ["S","M","L","XL","2XL"],
-    "colors": ["JETBLK","RAIFOR","NAVY","DRKSLT","DARPUR","NUTMEG","CVFPRT","SGBPRT","CLGPRT","NAAPRT","ELMGRN","PRPLDA","CBPAOP","MBTAOP"],
-    "colorname": ["JETBLK : JET BLACK, 1049,1159","RAIFOR : RAIN FOREST, 1049,1159","NAVY : NAVY, 1049,1159","DRKSLT : DARK SLATE, 1049,1159","DARPUR : Dark Purple, 1049,1159","NUTMEG : NUTMEG, 1049,1159","CVFPRT : CHALKY VIOLET FLOWER PRT, 1149,1249","SGBPRT : SAP GREEN BLOOM PRT, 1149,1249","CLGPRT : CLOUND GREY PETAL PRT, 1149,1249","NAAPRT : NAVY ABSTRACT ALLURE PRT, 1149,1249","ELMGRN : ELM GREEN, 1049,1159","PRPLDA : PURPLE DASH AOP, 1149,1299","CBPAOP : CORNFLOWER BLUEPOPPY AOP, 1149,1299","MBTAOP : MEDIEVAL BLUETIE DYE AOP, 1149,1299"]
-  },
-  {
-    "name": "E057",
-    "sizes": ["S","M","L","XL","2XL"],
-    "colors": ["NAVY","JETBLK"],
-    "colorname": ["NAVY : NAVY, 699,769","JETBLK : JET BLACK, 699"]
-  },
-  {
-    "name": "E060",
-    "sizes": ["S","M","L","XL","2XL"],
-    "colors": ["MDB","JETBLK","JADE","CHOCOF","NVMEL","MGM"],
-    "colorname": ["MDB : MEDIEVAL BLUE, 1249,1349","JETBLK : JET BLACK, 1249,1349","JADE : JADE, 1249,1349","CHOCOF : Choco Fudge, 1249,1349","NVMEL : NAVY MELANGE, 1249,1349","MGM : MEDIUMGREY MELANGE, 1249,1349"]
-  },
-  {
-    "name": "E062",
-    "sizes": ["S","M","L","XL","2XL"],
-    "colors": ["JETBLK","NAVY","DPTL","MRBLUE","CKVT","LFBPRT","NYZPRT","LCRPRT","JABPRT","BLPPRT"],
-    "colorname": ["JETBLK : JET BLACK, 679,749","NAVY : NAVY, 679,749","DPTL : DEEP TEAL, 679,749","MRBLUE : MARINE BLUE, 679,749","CKVT : Chalky Violet, 679,749","LFBPRT : LAVENDER FLOWER BLOOM PRT, 749,799","NYZPRT : NAVY ZIGZAG PRT, 749,799","LCRPRT : LILAS CREEPER PRT, 749,799","JABPRT : JADE ABSTRACT PRT, 749,799","BLPPRT : BLACK POPPY PRT, 749,799"]
-  },
-  {
-    "name": "E064",
-    "sizes": ["S","M","L","XL","2XL"],
-    "colors": ["NUTMEG","DARPUR","DRKSLT","DBY"],
-    "colorname": ["NUTMEG : NUTMEG, 1299,1399","DARPUR : Dark Purple, 1299,1399","DRKSLT : DARK SLATE, 1299,1399","DBY : DEEP RUBY, 1299"]
-  },
-  {
-    "name": "E068",
-    "sizes": ["S","M","L","XL","2XL"],
-    "colors": ["ROUGE","JETBLK","OLVNT","NAVY","NUTMEG","CLGR","CHOCOF"],
-    "colorname": ["ROUGE : ROUGE, 1849,1999","JETBLK : JET BLACK, 1849,1999","OLVNT : OLIVE NIGHT, 1849,1999","NAVY : NAVY, 1849,1999","NUTMEG : NUTMEG, 1849,1999","CLGR : CLOUD GREY, 1849,1999","CHOCOF : Choco Fudge, 1849,1999"]
-  },
-  {
-    "name": "E078",
-    "sizes": ["S","M","L","XL","2XL"],
-    "colors": ["NAVY","JETBLK"],
-    "colorname": ["NAVY : NAVY, 749,829","JETBLK : JET BLACK, 749,829"]
-  },
-  {
-    "name": "E080",
-    "sizes": ["S","M","L","XL"],
-    "colors": ["JETBLK"],
-    "colorname": ["JETBLK : JET BLACK, 849"]
-  },
-  {
-    "name": "E089",
-    "sizes": ["S","M","L","XL","2XL"],
-    "colors": ["RASMEL","CHCOME","CVOMEL","GGMMRG","BLMMRG"],
-    "colorname": ["RASMEL : RASPBERRY MELANGE, 699,749","CHCOME : CHOCOFUDGE MEL, 699,749","CVOMEL : CHALKY VIOLET MEL, 699,749","GGMMRG : GULL GREYMELANGE/MATRIX REFLECTIVEGRAPHIC, 699","BLMMRG : BLACKMELANGE/MATRIX REFLECTIVEGRAPHIC, 699"]
-  },
-  {
-    "name": "E095",
-    "sizes": ["S","M","L","XL"],
-    "colors": ["WHITE","SKIN"],
-    "colorname": ["WHITE : WHITE, 399","SKIN : SKIN, 399"]
-  },
-  {
-    "name": "E147",
-    "sizes": ["S","M","L","XL","2XL"],
-    "colors": ["CFBDDG","ELGDDG","CHVLEG","CORFAB","NVYFAB","PBGOTH","OBGOTH"],
-    "colorname": ["CFBDDG : CBLUE DREAMER GRAPHICS, 699","ELGDDG : ELGR DAY DREAMER GR, 699","CHVLEG : CHIVIOLET LMT EDT GR, 699","CORFAB : CORAL FABULOUS, 699,769","NVYFAB : NAVY FABULOUS, 699,769","PBGOTH : POOLBLUE GOOD THINGS, 699,769","OBGOTH : Orchid BLM GTHS, 699,769"]
-  },
-  {
-    "name": "E247",
-    "sizes": ["S","M","L","XL"],
-    "colors": ["LCDA","LIWA","PSBAOP"],
-    "colorname": ["LCDA : LEMON CREAM DEER AOP, 729","LIWA : LILAC IRIS WHALE AOP, 729","PSBAOP : PURPLE SLATEBIRD AOP, 729"]
-  },
-  {
-    "name": "E306",
-    "sizes": ["S","M","L","XL","2XL"],
-    "colors": ["EBMELB","MGMBLK","ROMROU","DFMDUF","MABMEL","CVOMEL"],
-    "colorname": ["EBMELB : ELEMENTAL BLUE MEL/ ELEMENTAL BLUE, 579,629","MGMBLK : MEDIUM GREY MEL/ BLACK, 579,629","ROMROU : ROUGE MEL/ ROUGE, 579,629","DFMDUF : DULL FOREST MELANGE/DULL FOREST, 579,629","MABMEL : MARINE BLUE MEL, 579,629","CVOMEL : CHALKY VIOLET MEL, 579,629"]
-  },
-  {
-    "name": "E310",
-    "sizes": ["S","M","L","XL","2XL"],
-    "colors": ["JETBLK","MRBLUE","DARPUR"],
-    "colorname": ["JETBLK : JET BLACK, 899,949","MRBLUE : MARINE BLUE, 899,949","DARPUR : Dark Purple, 899,949"]
-  },
-  {
-    "name": "E311",
-    "sizes": ["S","M","L","XL","2XL"],
-    "colors": ["CHIVIO","LILAS","NAVY","JETBLK"],
-    "colorname": ["CHIVIO : CHINESE VIOLET, 699,749","LILAS : LILAS, 699,749","NAVY : NAVY, 699,749","JETBLK : JET BLACK, 699,749"]
-  },
-  {
-    "name": "E3G5",
-    "sizes": ["S","M","L","XL","2XL"],
-    "colors": ["LAVEGR","ROUEGR","MAREGR","REOEGR","COPKSR","BLBESR","PISPOS","JBLKMG","BWHTMG"],
-    "colorname": ["LAVEGR : LAVENDER EXPECT GRAPHIC, 799","ROUEGR : ROUGE EASY GRAPHIC, 799,849","MAREGR : MARMALADE EXPECT GRAPHIC, 799,849","REOEGR : RED OCHRE EASY GRAPHIC, 799","COPKSR : CORALPINK SUNRISE, 799,849","BLBESR : BLUEBELL SUNRISE, 799,849","PISPOS : PISTAGREEN POSITIVE, 799,849","JBLKMG : JET BLACK MAGICAL, 799,849","BWHTMG : BRIGHT WHITE MAGICAL, 799,849"]
-  },
-  {
-    "name": "E3G7",
-    "sizes": ["S","M","L","XL","2XL"],
-    "colors": ["RARIUP","SAKGRW","MBEYRS","JBKFLG","BWTBAL"],
-    "colorname": ["RARIUP : RASPBERRY RISE UP, 799,849","SAKGRW : SAFFRON KEEP GROWING, 799,849","MBEYRS : MARINE BLUE BE YOURSELF, 799,849","JBKFLG : JETBLACK FEELING, 799,849","BWTBAL : BRIGHT WHITE BALANCE, 799,849"]
-  },
-  {
-    "name": "E3S5",
-    "sizes": ["S","M","L","XL","2XL"],
-    "colors": ["LPBSTP","BWPBSP","PBSBSP","JBKRSP"],
-    "colorname": ["LPBSTP : LILAS/POOL BLUE STRIPS, 749,799","BWPBSP : BRT WHITE/POOL BLUE STRIPS, 749,799","PBSBSP : POOL BLUE/SEA BLUE STRIPS, 749,799","JBKRSP : JET BLACK/ RED STRIPS, 749,799"]
-  },
-  {
-    "name": "E404",
-    "sizes": ["S","M","L","XL","2XL"],
-    "colors": ["JETBLK","NAVY","DRKSLT","DARPUR","NUTMEG"],
-    "colorname": ["JETBLK : JET BLACK, 1049,1149","NAVY : NAVY, 1049,1149","DRKSLT : DARK SLATE, 1049,1149","DARPUR : Dark Purple, 1049,1149","NUTMEG : NUTMEG, 1049,1149"]
-  },
-  {
-    "name": "E406",
-    "sizes": ["S","M","L","XL","2XL"],
-    "colors": ["MDB","OLIVE","DUSOR","JETBLK"],
-    "colorname": ["MDB : MEDIEVAL BLUE, 1499,1649","OLIVE : OLIVE, 1499,1649","DUSOR : DUSKY ORCHID, 1499","JETBLK : JET BLACK, 1499,1649"]
-  },
-  {
-    "name": "E407",
-    "sizes": ["S","M","L","XL","2XL"],
-    "colors": ["DAROLI","JETBLK","MODING"],
-    "colorname": ["DAROLI : DARK OLIVE, 1349,1499","JETBLK : JET BLACK, 1349,1499","MODING : MOOD INDIGO, 1349,1499"]
-  },
-  {
-    "name": "E4A4",
-    "sizes": ["S","M","L","XL","2XL"],
-    "colors": ["JNGLAO","DCHKCA","OLPSLA","PRPLIN","BKSPRA"],
-    "colorname": ["JNGLAO : JUNGLE GREEN LEAFY AOP, 1149","DCHKCA : DARK CHOCOLATE CHAIN AOP, 1149,1249","OLPSLA : OLIVE PAISLEY AOP, 1149,1249","PRPLIN : PURPEL INDIE AOP, 1149","BKSPRA : BLACK SPRAY AOP, 1149,1249"]
-  },
-  {
-    "name": "E4A5",
-    "sizes": ["S","M","L","XL","2XL"],
-    "colors": ["FPGAOP","PBTAOP","BLWHCH","GRNCHK","LIBLCK","BLBOPR","VIBLPR","BFT"],
-    "colorname": ["FPGAOP : FND PINK GARDEN FLR AOP, 999,1049","PBTAOP : PBLUE TROPICAL LVS AOP, 999,1049","BLWHCH : Black / White Checks, 999,1049","GRNCHK : Green Checks, 999,1049","LIBLCK : LIGHT BLUE CHECKS, 999,1049","BLBOPR : BLUE BOTANICAL PRINT, 999,1049","VIBLPR : VINTAGE BLOOM PRINT, 999,1049","BFT : BLACK FLORAL PRINT, 999,1049"]
-  },
-  {
-    "name": "E702",
-    "sizes": ["S","M","L","XL","2XL"],
-    "colors": ["MDB","JETBLK","CHIVIO","JADE"],
-    "colorname": ["MDB : MEDIEVAL BLUE, 899,949","JETBLK : JET BLACK, 899,949","CHIVIO : CHINESE VIOLET, 899,949","JADE : JADE, 899,949"]
-  },
-  {
-    "name": "E7A1",
-    "sizes": ["S","M","L","XL","2XL"],
-    "colors": ["BLWHCH","GRNCHK","LIBLCK","VIBLPR","BLBOPR","BFT"],
-    "colorname": ["BLWHCH : Black / White Checks, 749,799","GRNCHK : Green Checks, 749,799","LIBLCK : LIGHT BLUE CHECKS, 749,799","VIBLPR : VINTAGE BLOOM PRINT, 749,799","BLBOPR : BLUE BOTANICAL PRINT, 749,799","BFT : BLACK FLORAL PRINT, 749,799"]
-  },
-  {
-    "name": "EA64",
-    "sizes": ["S","M","L","XL","2XL"],
-    "colors": ["JBKABT","NVYABT","OLVFLO"],
-    "colorname": ["JBKABT : JBK ABSTRACT ALCHEMY, 1399,1499","NVYABT : NAVY ABSTRACT, 1399,1499","OLVFLO : OLIVE FLORAL, 1399,1499"]
-  },
-  {
-    "name": "F023",
-    "sizes": ["32B","32C","32D","34B","34C","34D","36B","36C","36D","38B","38C"],
-    "colors": ["BLACK","PWL","SIL","SOR","FRHPRT","NSTLGR","IGY"],
-    "colorname": ["BLACK : BLACK, 1099","PWL : PINK WILD LACE PRINT, 1199","SIL : SILVER ROSE PRINT, 1199","SOR : SORRENTO PRINT, 1199","FRHPRT : FRINGED HIBISCUS PRINT, 1199","NSTLGR : NOSTALGIA ROSE, 1099","IGY : INK GREY, 1099"]
-  },
-  {
-    "name": "F037",
-    "sizes": ["S","M","L","XL"],
-    "colors": ["ALS","BLACK","OCH","LSBNBL","PSTLIL","WHITE"],
-    "colorname": ["ALS : ALMOND SKIN, 1399","BLACK : BLACK, 1399","OCH : ORCHID SMOKE, 1399","LSBNBL : LISBON BLUE, 1399","PSTLIL : PASTEL LILAC, 1399","WHITE : WHITE, 1399"]
-  },
-  {
-    "name": "F048",
-    "sizes": ["34C","34D","34F","34Z","36C","36D","36F","36Z","38C","38D","38F","38Z","40C","40D","40F","40Z"],
-    "colors": ["PLUM","TSK"],
-    "colorname": ["PLUM : PLUM, 1249,1379","TSK : TAN SKIN, 1249,1379"]
-  },
-  {
-    "name": "F057",
-    "sizes": ["32B","32C","32D","34B","34C","34D","36B","36C","36D","38B","38C"],
-    "colors": ["HOB","IGY","BLACK"],
-    "colorname": ["HOB : HONEY BEIGE, 1499","IGY : INK GREY, 1499","BLACK : BLACK, 1499"]
-  },
-  {
-    "name": "F065",
-    "sizes": ["32B","32C","32D","34B","34C","34D","36B","36C","36D","38B","38C"],
-    "colors": ["BLACK","ARO","AUM","CLM","WFM","HOB","BRDAPC"],
-    "colorname": ["BLACK : BLACK, 1299","AUM : AUTUMN MELODY PRINT, 1399","CLM : PINK CHAMPAGNE, 1299","WFM : WILDFLOWER MELODY, 1399","ARO : AMARANTO PRINT, 1399","HOB : HONEY BEIGE, 1299","BRDAPC : BRANDIED APRICOT, 1299"]
-  },
-  {
-    "name": "F074",
-    "sizes": ["32B","32C","32D","32Z","34B","34C","34D","34Z","36B","36C","36D","36Z","38B","38C","38D","38Z"],
-    "colors": ["BLACK","BUFF"],
-    "colorname": ["BLACK : BLACK, 1499,1649","BUFF : BUFF, 1499,1649"]
-  },
-  {
-    "name": "F084",
-    "sizes": ["S","M","L","XL"],
-    "colors": ["BLACK","NUDE","STI"],
-    "colorname": ["BLACK : BLACK, 1599","NUDE : NUDE, 1599","STI : STRAWBERRY ICE, 1599"]
-  },
-  {
-    "name": "F091",
-    "sizes": ["32B","32C","32D","34B","34C","34D","36B","36C","36D","38B","38C"],
-    "colors": ["FRVRR","LBLU","PLUM"],
-    "colorname": ["FRVRR : FOREVER ROSE, 1949","LBLU : LAPIS BLUE, 1949","PLUM : PLUM, 1949"]
-  },
-  {
-    "name": "F096",
-    "sizes": ["34F","34Z","36C","36F","36Z","38C","38F","38G","38Z","40C","40F","40Z","42F","42G","42Z","44D","44Z","34C","34D","36D","38D","40D","42D"],
-    "colors": ["BLACK","IGY","PEARL"],
-    "colorname": ["IGY : INK GREY, 1549,1599","PEARL : PEARL, 1549,1599","BLACK : BLACK, 1599,1549"]
-  },
-  {
-    "name": "F097",
-    "sizes": ["34C","34D","34Z","36C","36D","36Z","38C","38D","38Z","40C","40D","40Z","42C","42D"],
-    "colors": ["MNPP","PEARL","BLACK","VIFP"],
-    "colorname": ["MNPP : MIDNIGHT PEONY PRINT, 1599,1649","PEARL : PEARL, 1499,1549","BLACK : BLACK, 1499,1549","VIFP : Vintage Floral print, 1599,1649"]
-  },
-  {
-    "name": "F114",
-    "sizes": ["32B","32C","34B","34C","36B","36C","38B","38C"],
-    "colors": ["BLACK","NSTLGR","HOB"],
-    "colorname": ["BLACK : BLACK, 1599","NSTLGR : NOSTALGIA ROSE, 1599","HOB : HONEY BEIGE, 1599"]
-  },
-  {
-    "name": "F118",
-    "sizes": ["32B","32C","32D","34B","34C","34D","36B","36C","36D","38B","38C"],
-    "colors": ["DSR","VLTTLP"],
-    "colorname": ["DSR : DUSTY ROSE, 1599","VLTTLP : VIOLET TULIP, 1599"]
-  },
-  {
-    "name": "F121",
-    "sizes": ["32D","32Z","34C","34D","34Z","36B","36C","36D","36Z","38B","38C","38D","38Z","40B","40C","40D","40Z"],
-    "colors": ["SLI","BLACK","HOB","VINROS","LBLU"],
-    "colorname": ["SLI : SILVER LILAC, 1149,1299","BLACK : BLACK, 1149,1299","HOB : HONEY BEIGE, 1149,1299","VINROS : VINTAGE ROSE, 1149,1299","LBLU : LAPIS BLUE, 1149,1299"]
-  },
-  {
-    "name": "F122",
-    "sizes": ["34C","34D","34F","34Z","36C","36D","36F","36Z","38C","38D","38F","38Z","40C","40D","40F","40Z"],
-    "colors": ["BKC","RTE"],
-    "colorname": ["BKC : BLACKBERRY CORDIAL, 1499,1649","RTE : ROSETTE, 1499,1649"]
-  },
-  {
-    "name": "F123",
-    "sizes": ["32B","32C","32D","32Z","34B","34C","34D","34Z","36B","36C","36D","36Z","38B","38C","38D","40B","40C"],
-    "colors": ["HOB","BLACK","NSTLGR"],
-    "colorname": ["HOB : HONEY BEIGE, 1599,1749","BLACK : BLACK, 1599,1749","NSTLGR : NOSTALGIA ROSE, 1599,1749"]
-  },
-  {
-    "name": "F124",
-    "sizes": ["34C","34D","34Z","34F","34G","36C","36D","36Z","36F","36G","38C","38D","38Z","38F","38G","40C","40D","40Z","40F"],
-    "colors": ["BLACK","CEDWOD","HOB"],
-    "colorname": ["BLACK : BLACK, 1599,1699","CEDWOD : CEDAR WOOD, 1599,1699","HOB : HONEY BEIGE, 1599,1699"]
-  },
-  {
-    "name": "F131",
-    "sizes": ["32B","32C","32D","34B","34C","34D","36B","36C","36D","38B","38C","38D"],
-    "colors": ["HOB","BLACK","NSTLGR"],
-    "colorname": ["HOB : HONEY BEIGE, 999","BLACK : BLACK, 999","NSTLGR : NOSTALGIA ROSE, 999"]
-  },
-  {
-    "name": "F132",
-    "sizes": ["32B","32C","32D","32Z","34B","34C","34D","34Z","36B","36C","36D","36Z","38B","38C","38D"],
-    "colors": ["BLACK","HOB"],
-    "colorname": ["BLACK : BLACK, 1199,1299","HOB : HONEY BEIGE, 1199,1299"]
-  },
-  {
-    "name": "F133",
-    "sizes": ["32B","32C","32D","34B","34C","34D","36B","36C","36D","38B","38C"],
-    "colors": ["BLACK","RIOPRT","OLT"],
-    "colorname": ["BLACK : BLACK, 1299","RIOPRT : RIO PRINT, 1399","OLT : PEARL BLUSH, 1299"]
-  },
-  {
-    "name": "F137",
-    "sizes": ["S","M","L","XL"],
-    "colors": ["LSBNBL","PSTLIL","ALS"],
-    "colorname": ["LSBNBL : LISBON BLUE, 1499","PSTLIL : PASTEL LILAC, 1499","ALS : ALMOND SKIN, 1499"]
-  },
-  {
-    "name": "F143",
-    "sizes": ["32B","32C","32D","34B","34C","34D","36B","36C"],
-    "colors": ["MONGRY","NUDROS"],
-    "colorname": ["MONGRY : MOON GREY, 1799","NUDROS : NUDE ROSE, 1799"]
-  },
-  {
-    "name": "F151",
-    "sizes": ["32B","32C","34B","34C","36B","36C","38B","38C"],
-    "colors": ["GLDNHZ","LICMST"],
-    "colorname": ["GLDNHZ : GOLDEN HAZE, 1499","LICMST : LILAC MIST, 1499"]
-  },
-  {
-    "name": "F165",
-    "sizes": ["32B","32C","32D","34B","34C","34D","36B","36C","36D","38B","38C"],
-    "colors": ["DNT","FVP","HOB","BLACK","PCHCRL"],
-    "colorname": ["DNT : DAINTY PETAL PRINT, 1449","FVP : FESTIVE PETAL PRINT, 1399","HOB : HONEY BEIGE, 1349","BLACK : BLACK, 1349","PCHCRL : PEACH CORAL, 1349"]
-  },
-  {
-    "name": "F191",
-    "sizes": ["32B","32C","32D","34B","34C","34D","36B","36C","38B","38C"],
-    "colors": ["BLWVE","CRLWVE"],
-    "colorname": ["BLWVE : BLUE WAVE, 2299","CRLWVE : CORAL WAVE, 2299"]
-  },
-  {
-    "name": "F192",
-    "sizes": ["32B","32C","32D","34B","34C","34D","36B","36C","36D","38B","38C"],
-    "colors": ["BLWVE","CRLWVE"],
-    "colorname": ["BLWVE : BLUE WAVE, 1999","CRLWVE : CORAL WAVE, 1999"]
-  },
-  {
-    "name": "F193",
-    "sizes": ["32B","32C","32D","34B","34C","34D","36B","36C","36D","38B","38C","38D"],
-    "colors": ["PLMSWL","AQSWL"],
-    "colorname": ["PLMSWL : PLUM SWILL, 1899","AQSWL : AQUA SWILL, 1899"]
-  },
-  {
-    "name": "F194",
-    "sizes": ["32B","32C","32D","34B","34C","34D","36B","36C","36D","38B","38C"],
-    "colors": ["PLMSWL","AQSWL"],
-    "colorname": ["PLMSWL : PLUM SWILL, 2199","AQSWL : AQUA SWILL, 2199"]
-  },
-  {
-    "name": "FB06",
-    "sizes": ["34B","34C","34D","34Z","36B","36C","36D","36Z","38C","38D","38Z","40B","40C","40D","40Z","42B","42C","42D","42Z","38B"],
-    "colors": ["WHITE","BLACK","MASAI","PLS"],
-    "colorname": ["MASAI : MASAI, 1199,1299","PLS : PALE SKIN, 1199,1299","WHITE : WHITE, 1199,1299","BLACK : BLACK, 1199,1299"]
-  },
-  {
-    "name": "FB12",
-    "sizes": ["34B","34C","34D","34Z","36B","36C","36D","36Z","38B","38C","38D","38Z","40B","40C","40D","40Z"],
-    "colors": ["BUFF","ECL","GRW","MASAI","CLM","BLACK","WHITE"],
-    "colorname": ["BUFF : BUFF, 1299,1419","ECL : ECLIPSE, 1299,1419","GRW : GRAPE WINE, 1299,1419","MASAI : MASAI, 1299,1419","CLM : PINK CHAMPAGNE, 1299,1419","BLACK : BLACK, 1299,1419","WHITE : WHITE, 1299,1419"]
-  },
-  {
-    "name": "IO05",
-    "sizes": ["32B","32C","34B","34C","36B","36C","38B","38C"],
-    "colors": ["HOB","RSBLSH","ECL"],
-    "colorname": ["HOB : HONEY BEIGE, 1049","RSBLSH : ROSE BLUSH, 1049","ECL : ECLIPSE, 1049"]
-  },
-  {
-    "name": "IP12",
-    "sizes": ["S","M","L","XL","2XL"],
-    "colors": ["GRW","ECL"],
-    "colorname": ["GRW : GRAPE WINE, 499","ECL : ECLIPSE, 499"]
-  },
-  {
-    "name": "IP37",
-    "sizes": [" S"," M"," L"," XL"," 2XL"],
-    "colors": ["ALS","PSTLIL","OCH","LSBNBL","JETBLK"],
-    "colorname": ["ALS : ALMOND SKIN, 399,409","PSTLIL : PASTEL LILAC, 399,409","OCH : ORCHID SMOKE, 399,409","LSBNBL : LISBON BLUE, 399,409","JETBLK : JET BLACK, 399,409"]
-  },
-  {
-    "name": "MB01",
-    "sizes": ["S","M","L","XL","2XL"],
-    "colors": ["MCS"],
-    "colorname": ["MCS : MULTICOLORSOLID, 529,549"]
-  },
-  {
-    "name": "MH01",
-    "sizes": ["S","M","L","XL","2XL"],
-    "colors": ["MCS"],
-    "colorname": ["MCS : MULTICOLORSOLID, 529,549"]
-  },
-  {
-    "name": "MT02",
-    "sizes": ["34B","34C","34D","34Z","36B","36C","36D","36Z","38B","38C","38D","38Z","40B","40C","40D","40Z"],
-    "colors": ["CPM","GRW","ODM","SKIN"],
-    "colorname": ["CPM : CAPRI MELANGE, 949,979,1049","GRW : GRAPE WINE, 949,979,1049","ODM : ORCHID MELANGE, 949,979,1049","SKIN : SKIN, 949,979,1049"]
-  },
-  {
-    "name": "N118",
-    "sizes": ["S","M","L","XL"],
-    "colors": ["DSR","VLTTLP"],
-    "colorname": ["DSR : DUSTY ROSE, 2099","VLTTLP : VIOLET TULIP, 2099"]
-  },
-  {
-    "name": "N151",
-    "sizes": ["S","M","L","XL"],
-    "colors": ["GLDNHZ","LICMST"],
-    "colorname": ["GLDNHZ : GOLDEN HAZE, 1999","LICMST : LILAC MIST, 1999"]
-  },
-  {
-    "name": "N191",
-    "sizes": ["S","M","L","XL"],
-    "colors": ["BLWVE","CRLWVE"],
-    "colorname": ["BLWVE : BLUE WAVE, 1999","CRLWVE : CORAL WAVE, 1999"]
-  },
-  {
-    "name": "N193",
-    "sizes": ["S","M","L","XL"],
-    "colors": ["PLMSWL","AQSWL"],
-    "colorname": ["PLMSWL : PLUM SWILL, 1999","AQSWL : AQUA SWILL, 1999"]
-  },
-  {
-    "name": "P000",
-    "sizes": ["S","M","L","XL","2XL"],
-    "colors": ["ARO","SOR","AUM","BLACK","PWL","SIL","WFM"],
-    "colorname": ["AUM : AUTUMN MELODY PRINT, 469","BLACK : BLACK, 409","PWL : PINK WILD LACE PRINT, 469","SIL : SILVER ROSE PRINT, 469","WFM : WILDFLOWER MELODY, 469","ARO : AMARANTO PRINT, 469","SOR : SORRENTO PRINT, 469"]
-  },
-  {
-    "name": "P037",
-    "sizes": ["S","M","L","XL"],
-    "colors": ["LSBNBL","PSTLIL","ALS"],
-    "colorname": ["LSBNBL : LISBON BLUE, 849","PSTLIL : PASTEL LILAC, 849","ALS : ALMOND SKIN, 849"]
-  },
-  {
-    "name": "P091",
-    "sizes": ["S","M","L","XL","2XL"],
-    "colors": ["LBLU","PLUM"],
-    "colorname": ["LBLU : LAPIS BLUE, 729","PLUM : PLUM, 729"]
-  },
-  {
-    "name": "P122",
-    "sizes": ["S","M","L","XL","2XL"],
-    "colors": ["BKC","RTE"],
-    "colorname": ["BKC : BLACKBERRY CORDIAL, 499","RTE : ROSETTE, 499"]
-  },
-  {
-    "name": "P151",
-    "sizes": ["S","M","L","XL","2XL"],
-    "colors": ["GLDNHZ","LICMST"],
-    "colorname": ["GLDNHZ : GOLDEN HAZE, 499","LICMST : LILAC MIST, 499"]
-  },
-  {
-    "name": "P165",
-    "sizes": ["S","M","L","XL","2XL"],
-    "colors": ["DNT","FVP"],
-    "colorname": ["DNT : DAINTY PETAL PRINT, 569","FVP : FESTIVE PETAL PRINT, 569"]
-  },
-  {
-    "name": "P191",
-    "sizes": ["S","M","L","XL"],
-    "colors": ["BLWVE","CRLWVE"],
-    "colorname": ["BLWVE : BLUE WAVE, 699","CRLWVE : CORAL WAVE, 699"]
-  },
-  {
-    "name": "P193",
-    "sizes": ["S","M","L","XL"],
-    "colors": ["PLMSWL","AQSWL"],
-    "colorname": ["PLMSWL : PLUM SWILL, 599","AQSWL : AQUA SWILL, 599"]
-  },
-  {
-    "name": "PB40",
-    "sizes": ["S","M","L","XL","2XL"," S"," M"," L"," XL"," 2XL"],
-    "colors": ["JETBLK","HOB","QUP","JADETE","IGY","GRW","NSTLGR","FIRORC"],
-    "colorname": ["JETBLK : JET BLACK, 349,359","HOB : HONEY BEIGE, 349,359","QUP : QUEEN PINK, 349,359","JADETE : JADEITE, 349,359","IGY : INK GREY, 349,359","GRW : GRAPE WINE, 349,359","NSTLGR : NOSTALGIA ROSE, 349,359","FIRORC : FAIR ORCHID, 349,359"]
-  },
-  {
-    "name": "PH40",
-    "sizes": ["S","M","L","XL","2XL"," S"," M"," L"," XL"," 2XL"],
-    "colors": ["JETBLK","HOB","QUP","JADETE","IGY","GRW","NSTLGR","FIRORC"],
-    "colorname": ["JETBLK : JET BLACK, 349,359","HOB : HONEY BEIGE, 349,359","QUP : QUEEN PINK, 349,359","JADETE : JADEITE, 349,359","IGY : INK GREY, 349,359","GRW : GRAPE WINE, 349,359","NSTLGR : NOSTALGIA ROSE, 349,359","FIRORC : FAIR ORCHID, 349,359"]
-  },
-  {
-    "name": "PP12",
-    "sizes": ["S","M","L","XL","2XL"],
-    "colors": ["BLACK","GRW"],
-    "colorname": ["BLACK : BLACK, 449,469","GRW : GRAPE WINE, 449,469"]
-  },
-  {
-    "name": "PS40",
-    "sizes": ["S","M","L","XL","2XL"," S"," M"," L"," XL"," 2XL"],
-    "colors": ["JETBLK","HOB","QUP","JADETE","IGY","GRW","NSTLGR","FIRORC"],
-    "colorname": ["JETBLK : JET BLACK, 399,409","HOB : HONEY BEIGE, 399,409","QUP : QUEEN PINK, 399,409","JADETE : JADEITE, 399,409","IGY : INK GREY, 399,409","GRW : GRAPE WINE, 399,409","NSTLGR : NOSTALGIA ROSE, 399,409","FIRORC : FAIR ORCHID, 399,409"]
-  },
-  {
-    "name": "SB06",
-    "sizes": ["XS","S","M","L","XL","2XL"," 2XL"],
-    "colors": ["CPM","TMG","BLACK","GRYMRL","GRW","PEARL","SKIN","WHITE"],
-    "colorname": ["BLACK : BLACK, 429,449","SKIN : SKIN, 429,449","WHITE : WHITE, 429,449","PEARL : PEARL, 429,449","CPM : CAPRI MELANGE, 429,449","TMG : TOMATO MELANGE, 429,449","GRW : GRAPE WINE, 429,449","GRYMRL : GREY MELANGE, 429,449"]
-  },
-  {
-    "name": "SB08",
-    "sizes": ["S","M","L","XL"],
-    "colors": ["BLACK","GRW","GRYMEL","PEARL"],
-    "colorname": ["BLACK : BLACK, 899,929","GRW : GRAPE WINE, 899,929","GRYMEL : GREY MELANGE, 899,929","PEARL : PEARL, 899,929"]
-  },
-  {
-    "name": "SB18",
-    "sizes": ["32B","32C","32D","34B","34C","34D","34Z","36B","36C","36D","36Z","38B","38C","38D"],
-    "colors": ["BLACK","GRYMEL","NISH"],
-    "colorname": ["BLACK : BLACK, 1999","GRYMEL : GREY MELANGE, 1999","NISH : NIGHT SHADE, 1999"]
-  },
-  {
-    "name": "SB25",
-    "sizes": ["S","M","L","XL","2XL"],
-    "colors": ["GRYMEL","PEARL"],
-    "colorname": ["GRYMEL : GREY MELANGE, 1349","PEARL : PEARL, 1349"]
-  },
-  {
-    "name": "SB28",
-    "sizes": ["S","M","L","XL","LAR","MED","SMA","XLA"],
-    "colors": ["BLACK","GRYMEL","PFI","SOLBLK"],
-    "colorname": ["BLACK : BLACK, 649,669","GRYMEL : GREY MELANGE, 649,669","PFI : PARFAIT PINK, 649,669","SOLBLK : SOLID BLACK, 649"]
-  },
-  {
-    "name": "SB29",
-    "sizes": ["32B","32C","32D","32Z","34B","34C","34D","34Z","36B","36C","36D","36Z","38B","38C","38D","30D"],
-    "colors": ["BLACK","NSH"],
-    "colorname": ["BLACK : BLACK, 1999","NSH : NIGHTSHADE, 1999"]
-  },
-  {
-    "name": "SB38",
-    "sizes": ["S","M","L","XL"],
-    "colors": ["WHITE","GRA","FUCPUR"],
-    "colorname": ["WHITE : WHITE, 799","GRA : GRAPHITE, 799","FUCPUR : FUCHIA PURPLE, 799"]
-  },
-
-  {
-    "name": "TH01",
-    "sizes": ["S","M","L","XL","2XL"],
-    "colors": ["BLACK","PLS","PEI"],
-    "colorname": ["BLACK : BLACK, 899,949","PLS : PALE SKIN, 899,949","PEI : PEAR PINK, 899,949"]
-  },
-  {
-    "name": "TH02",
-    "sizes": ["S","M","L","XL","2XL"],
-    "colors": ["BLACK","PLS","PEI"],
-    "colorname": ["BLACK : BLACK, 1049,1099","PLS : PALE SKIN, 1049,1099","PEI : PEAR PINK, 1049,1099"]
-  },
-  {
-    "name": "TH03",
-    "sizes": ["S","M","L","XL","2XL"],
-    "colors": ["BLACK","PLS","PEI"],
-    "colorname": ["BLACK : BLACK, 1199,1249","PLS : PALE SKIN, 1199,1249","PEI : PEAR PINK, 1199,1249"]
-  },
-  {
-    "name": "TS09",
-    "sizes": ["M","L","XL","2XL"],
-    "colors": ["BLACK","BUFF"],
-    "colorname": ["BLACK : BLACK, 1399","BUFF : BUFF, 1399"]
-  }
-]
+let items=[];
 
 
- ;
+ // Initialize - UPDATED VERSION
+// Initialize - UPDATED VERSION with better error handling
+document.addEventListener('DOMContentLoaded', async () => {
+    try {
+        console.log('DOM Content Loaded - Starting initialization');
+        
+        // Show loading indicator
+        const loadingDiv = document.createElement('div');
+        loadingDiv.className = 'loading-overlay';
+        loadingDiv.innerHTML = '<div class="loading-spinner"></div><p>Loading items...</p>';
+        loadingDiv.style.cssText = `
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.7);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            color: white;
+        `;
+        document.body.appendChild(loadingDiv);
+        
+        // Initialize items from IndexedDB or Firebase
+        const loadedItems = await initializeItems();
+        
+        console.log(`Initialization complete. Loaded ${loadedItems.length} items`);
+        
+        if (loadedItems.length === 0) {
+            loadingDiv.innerHTML = '<p style="color: red;">No items found. Please contact administrator.</p>';
+            return;
+        }
+        
+        // Replace the global items variable
+        window.items = loadedItems;
+        
+        // Remove loading indicator
+        loadingDiv.remove();
+        
+        // Show details for first priority item or first item
+        const defaultItem = loadedItems.find(item => item.name === 'A039') || loadedItems[0];
+        if (defaultItem) {
+            console.log('Showing default item:', defaultItem.name);
+            showItemDetails(defaultItem);
+        }
+        
+        // Initialize suggestion list with priority items at top
+        updateItemList();
+        
+        // Initialize cart status
+        updateCartButtonsStatus();
+        
+        // Initialize scroll functionality
+        initializeScroll();
+        enableSuggestionScroll();
+        
+        console.log('Application ready');
+        
+    } catch (error) {
+        console.error('Critical error during initialization:', error);
+        const loadingDiv = document.querySelector('.loading-overlay');
+        if (loadingDiv) {
+            loadingDiv.innerHTML = `
+                <p style="color: red; padding: 20px; text-align: center;">
+                    Failed to load application data.<br>
+                    Error: ${error.message}<br>
+                    <button onclick="window.location.reload()" style="margin-top: 10px; padding: 10px 20px;">
+                        Retry
+                    </button>
+                </p>
+            `;
+        }
+    }
+});
+//INDEXED ITEM
+// Initialize IndexedDB
+function initIndexedDB() {
+    return new Promise((resolve, reject) => {
+        const request = indexedDB.open('EnamorDB', 1);
+        
+        request.onerror = () => reject(request.error);
+        request.onsuccess = () => resolve(request.result);
+        
+        request.onupgradeneeded = (event) => {
+            const db = event.target.result;
+            
+            // Create object store for items
+            if (!db.objectStoreNames.contains('items')) {
+                const itemStore = db.createObjectStore('items', { keyPath: 'name' });
+                itemStore.createIndex('style', 'name', { unique: false });
+            }
+            
+            // Create object store for metadata (to track last sync)
+            if (!db.objectStoreNames.contains('metadata')) {
+                db.createObjectStore('metadata', { keyPath: 'key' });
+            }
+        };
+    });
+}
 
+// Transform Firebase data structure to app structure
+// Transform Firebase data structure to app structure
+function transformFirebaseDataToAppFormat(firebaseItems) {
+    const groupedByStyle = {};
+    
+    firebaseItems.forEach(item => {
+        const style = item.Style;
+        
+        if (!groupedByStyle[style]) {
+            groupedByStyle[style] = {
+                name: style,
+                sizes: [],
+                colors: [],
+                colorname: []
+            };
+        }
+        
+        // Add size if not already present
+        if (item.Size && !groupedByStyle[style].sizes.includes(item.Size)) {
+            groupedByStyle[style].sizes.push(item.Size);
+        }
+        
+        // Add color if not already present
+        if (item.Color && !groupedByStyle[style].colors.includes(item.Color)) {
+            groupedByStyle[style].colors.push(item.Color);
+        }
+        
+        // Create colorname entry (Color : Color Name, MRP)
+        const colorName = item['Color Name'] || item.Color || '';
+        const mrp = item.MRP ? item.MRP.trim() : '';
+        const colorNameEntry = `${item.Color} : ${colorName}, ${mrp}`;
+        
+        if (item.Color && !groupedByStyle[style].colorname.some(cn => cn.startsWith(`${item.Color} :`))) {
+            groupedByStyle[style].colorname.push(colorNameEntry);
+        }
+    });
+    
+    // Sort sizes for each style with better error handling
+    Object.values(groupedByStyle).forEach(style => {
+        if (style.sizes && style.sizes.length > 0) {
+            style.sizes.sort((a, b) => {
+                // Define comprehensive size order
+                const sizeOrder = [
+                    '30A', '30B', '30C', '30D', '30DD', '30E',
+                    '32A', '32B', '32C', '32D', '32DD', '32E', '32Z',
+                    '34A', '34B', '34C', '34D', '34DD', '34E', '34Z',
+                    '36A', '36B', '36C', '36D', '36DD', '36E', '36Z',
+                    '38A', '38B', '38C', '38D', '38DD', '38E', '38Z',
+                    '40A', '40B', '40C', '40D', '40DD', '40E', '40Z',
+                    '42A', '42B', '42C', '42D', '42DD', '42E', '42Z',
+                    '44A', '44B', '44C', '44D', '44DD', '44E', '44Z',
+                    // Panty sizes
+                    'XS', 'S', 'M', 'L', 'XL', 'XXL', '3XL', '4XL', '5XL',
+                    // Numeric sizes
+                    '28', '30', '32', '34', '36', '38', '40', '42', '44'
+                ];
+                
+                // Safely handle null/undefined values
+                if (!a) return 1;
+                if (!b) return -1;
+                
+                const aIndex = sizeOrder.indexOf(a);
+                const bIndex = sizeOrder.indexOf(b);
+                
+                // If both sizes are in the order list
+                if (aIndex !== -1 && bIndex !== -1) {
+                    return aIndex - bIndex;
+                }
+                
+                // If only one is in the list
+                if (aIndex !== -1) return -1;
+                if (bIndex !== -1) return 1;
+                
+                // If neither is in the list, sort alphabetically
+                return a.localeCompare(b);
+            });
+        }
+    });
+    
+    return Object.values(groupedByStyle);
+}
+// Save items to IndexedDB
+async function saveItemsToIndexedDB(items) {
+    const db = await initIndexedDB();
+    const transaction = db.transaction(['items'], 'readwrite');
+    const itemStore = transaction.objectStore('items');
+    
+    // Clear existing items
+    await itemStore.clear();
+    
+    // Add new items
+    const addPromises = items.map(item => {
+        return new Promise((resolve, reject) => {
+            const request = itemStore.add(item);
+            request.onsuccess = () => resolve();
+            request.onerror = () => reject(request.error);
+        });
+    });
+    
+    await Promise.all(addPromises);
+    
+    // Update last sync timestamp
+    const metadataTransaction = db.transaction(['metadata'], 'readwrite');
+    const metadataStore = metadataTransaction.objectStore('metadata');
+    await metadataStore.put({ key: 'lastSync', timestamp: Date.now() });
+    
+    return items;
+}
+
+// Load items from IndexedDB
+async function loadItemsFromIndexedDB() {
+    try {
+        const db = await initIndexedDB();
+        const transaction = db.transaction(['items'], 'readonly');
+        const itemStore = transaction.objectStore('items');
+        
+        return new Promise((resolve, reject) => {
+            const request = itemStore.getAll();
+            request.onsuccess = () => resolve(request.result);
+            request.onerror = () => reject(request.error);
+        });
+    } catch (error) {
+        console.error('Error loading from IndexedDB:', error);
+        return [];
+    }
+}
+
+// Check if Firebase data has been updated since last sync
+async function checkFirebaseForUpdates() {
+    try {
+        const db = await initIndexedDB();
+        const transaction = db.transaction(['metadata'], 'readonly');
+        const metadataStore = transaction.objectStore('metadata');
+        
+        const lastSync = await new Promise((resolve, reject) => {
+            const request = metadataStore.get('lastSync');
+            request.onsuccess = () => resolve(request.result?.timestamp || 0);
+            request.onerror = () => reject(request.error);
+        });
+        
+        // Check Firebase for last modified timestamp
+        const snapshot = await firebase.database().ref('itemData/lastModified').once('value');
+        const firebaseLastModified = snapshot.val() || 0;
+        
+        return firebaseLastModified > lastSync;
+    } catch (error) {
+        console.error('Error checking Firebase updates:', error);
+        return true; // Force sync if error
+    }
+}
+
+
+// Fetch items from Firebase
+// Fetch items from Firebase
+async function fetchItemsFromFirebase() {
+    try {
+        console.log('Fetching items from Firebase...');
+        const snapshot = await firebase.database().ref('itemData/items').once('value');
+        const firebaseData = snapshot.val();
+        
+        console.log('Firebase data received:', firebaseData ? 'Data exists' : 'No data');
+        
+        if (!firebaseData) {
+            console.warn('No data found in Firebase at itemData/items');
+            return [];
+        }
+        
+        if (!Array.isArray(firebaseData)) {
+            console.error('Firebase data is not an array:', typeof firebaseData);
+            throw new Error('Invalid data structure from Firebase - expected array');
+        }
+        
+        if (firebaseData.length === 0) {
+            console.warn('Firebase returned empty array');
+            return [];
+        }
+        
+        console.log(`Processing ${firebaseData.length} items from Firebase`);
+        const transformedItems = transformFirebaseDataToAppFormat(firebaseData);
+        console.log(`Transformed into ${transformedItems.length} unique styles`);
+        
+        return transformedItems;
+    } catch (error) {
+        console.error('Error fetching from Firebase:', error);
+        console.error('Error details:', {
+            message: error.message,
+            stack: error.stack
+        });
+        throw error;
+    }
+}
+
+// Initialize items - check IndexedDB first, then Firebase if needed
+// Initialize items - check IndexedDB first, then Firebase if needed
+async function initializeItems() {
+    try {
+        console.log('Initializing items...');
+        
+        // Try loading from IndexedDB first
+        let items = await loadItemsFromIndexedDB();
+        console.log(`Loaded ${items.length} items from IndexedDB`);
+        
+        // If no items in IndexedDB or Firebase has updates, fetch from Firebase
+        if (items.length === 0 || await checkFirebaseForUpdates()) {
+            console.log('Fetching fresh data from Firebase...');
+            items = await fetchItemsFromFirebase();
+            
+            if (items.length === 0) {
+                console.error('No items received from Firebase');
+                alert('No items found in database. Please contact administrator.');
+                return [];
+            }
+            
+            await saveItemsToIndexedDB(items);
+            console.log('Items synced and saved to IndexedDB');
+        } else {
+            console.log('Using cached items from IndexedDB');
+        }
+        
+        return items;
+    } catch (error) {
+        console.error('Error initializing items:', error);
+        
+        // Try to load from IndexedDB as fallback
+        try {
+            const fallbackItems = await loadItemsFromIndexedDB();
+            if (fallbackItems.length > 0) {
+                console.log('Using cached items as fallback');
+                alert('Could not sync with server. Using cached data.');
+                return fallbackItems;
+            }
+        } catch (fallbackError) {
+            console.error('Fallback also failed:', fallbackError);
+        }
+        
+        alert('Error loading item data. Please check your internet connection and refresh the page.');
+        return [];
+    }
+}
+
+// Debug function to check Firebase structure
+async function debugFirebaseStructure() {
+    try {
+        console.log('=== Debugging Firebase Structure ===');
+        
+        // Check if itemData exists
+        const itemDataSnapshot = await firebase.database().ref('itemData').once('value');
+        console.log('itemData exists:', itemDataSnapshot.exists());
+        
+        if (itemDataSnapshot.exists()) {
+            const itemData = itemDataSnapshot.val();
+            console.log('itemData keys:', Object.keys(itemData));
+            
+            // Check items array
+            if (itemData.items) {
+                console.log('items is array:', Array.isArray(itemData.items));
+                console.log('items length:', itemData.items.length);
+                
+                if (itemData.items.length > 0) {
+                    console.log('First item sample:', itemData.items[0]);
+                    console.log('First item keys:', Object.keys(itemData.items[0]));
+                }
+            } else {
+                console.error('items field not found in itemData');
+            }
+        }
+        
+        console.log('=== End Debug ===');
+    } catch (error) {
+        console.error('Debug error:', error);
+    }
+}
+
+// Call this in browser console to debug: debugFirebaseStructure()
 
 
  function showItemDetails(item) {
@@ -1216,14 +694,17 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
   
-  function updateItemList(filteredItems = items) {
+  function updateItemList(filteredItems = null) {
     const suggestionsContainer = document.querySelector('.suggestions');
     if (!suggestionsContainer) return;
     
     suggestionsContainer.innerHTML = '';
     
+    // Use provided filtered items or global items
+    const itemsToShow = filteredItems || window.items || [];
+    
     // Sort items by priority
-    const sortedItems = [...(filteredItems || items)].sort((a, b) => {
+    const sortedItems = [...itemsToShow].sort((a, b) => {
         const aIndex = PRIORITY_ITEMS.indexOf(a.name);
         const bIndex = PRIORITY_ITEMS.indexOf(b.name);
         
@@ -1266,14 +747,18 @@ document.addEventListener('DOMContentLoaded', () => {
 }
 
 // Modified filterItems function
+// Modified filterItems function
 function filterItems(searchText) {
+    // Use global items
+    const itemsToFilter = window.items || [];
+    
     if (!searchText) {
-        return items; // The sorting will be handled by updateItemList
+        return itemsToFilter; // The sorting will be handled by updateItemList
     }
     
     const searchLower = searchText.toLowerCase();
     
-    return items
+    return itemsToFilter
         .filter(item => item.name.toLowerCase().includes(searchLower))
         .sort((a, b) => {
             // First, check if the items start with the search text
@@ -1482,77 +967,111 @@ document.addEventListener('DOMContentLoaded', () => {
 // Initialize cart array
 let cart = [];
 
+
+// Add to cart function
 // Add to cart function
 function addToCart() {
-  const itemNameDisplay = document.querySelector('.item-name-display a');
-  if (!itemNameDisplay) {
-      alert("Please select an item first.");
-      return;
-  }
-  const itemName = itemNameDisplay.textContent;
-  
-  const item = items.find(i => i.name === itemName);
-  if (!item) {
-      alert("Selected item not found.");
-      return;
-  }
+    const itemNameDisplay = document.querySelector('.item-name-display a');
+    if (!itemNameDisplay) {
+        alert("Please select an item first.");
+        return;
+    }
+    const itemName = itemNameDisplay.textContent;
+    
+    // Use global items
+    const item = (window.items || []).find(i => i.name === itemName);
+    if (!item) {
+        alert("Selected item not found.");
+        return;
+    }
 
-  const cartItem = {
-      name: itemName,
-      colors: {}
-  };
+    const cartItem = {
+        name: itemName,
+        colors: {}
+    };
 
-  let itemAdded = false;
-  let itemTotalQuantity = 0;
+    let itemAdded = false;
+    let itemTotalQuantity = 0;
 
-  // Collect quantities for each color and size
-  const colorContainers = document.querySelectorAll('.color-container');
-  colorContainers.forEach(container => {
-      const color = container.querySelector('h4').textContent;
-      const quantityInputs = container.querySelectorAll('.quantity-input');
-      
-      cartItem.colors[color] = {};
-      
-      quantityInputs.forEach(input => {
-          const size = input.name.split('_')[2];
-          const qty = parseInt(input.value) || 0;
-          
-          if (qty > 0) {
-              cartItem.colors[color][size] = qty;
-              itemAdded = true;
-              itemTotalQuantity += qty;
-          }
-      });
-  });
+    // Collect quantities for each color and size
+    const colorContainers = document.querySelectorAll('.color-container');
+    colorContainers.forEach(container => {
+        const color = container.querySelector('h4').textContent;
+        const quantityInputs = container.querySelectorAll('.quantity-input');
+        
+        cartItem.colors[color] = {};
+        
+        quantityInputs.forEach(input => {
+            const size = input.name.split('_')[2];
+            const qty = parseInt(input.value) || 0;
+            
+            if (qty > 0) {
+                cartItem.colors[color][size] = qty;
+                itemAdded = true;
+                itemTotalQuantity += qty;
+            }
+        });
+    });
 
-  if (!itemAdded) {
-      alert("Please select at least one size and quantity.");
-      return;
-  }
+    if (!itemAdded) {
+        alert("Please select at least one size and quantity.");
+        return;
+    }
 
-  // Check if item already exists in cart and merge if it does
-  const existingItemIndex = cart.findIndex(item => item.name === itemName);
-  if (existingItemIndex !== -1) {
-      Object.keys(cartItem.colors).forEach(color => {
-          if (!cart[existingItemIndex].colors[color]) {
-              cart[existingItemIndex].colors[color] = {};
-          }
-          Object.entries(cartItem.colors[color]).forEach(([size, qty]) => {
-              if (cart[existingItemIndex].colors[color][size]) {
-                  cart[existingItemIndex].colors[color][size] += qty;
-              } else {
-                  cart[existingItemIndex].colors[color][size] = qty;
-              }
-          });
-      });
-  } else {
-      cart.push(cartItem);
-  }
+    // Check if item already exists in cart and merge if it does
+    const existingItemIndex = cart.findIndex(item => item.name === itemName);
+    if (existingItemIndex !== -1) {
+        Object.keys(cartItem.colors).forEach(color => {
+            if (!cart[existingItemIndex].colors[color]) {
+                cart[existingItemIndex].colors[color] = {};
+            }
+            Object.entries(cartItem.colors[color]).forEach(([size, qty]) => {
+                if (cart[existingItemIndex].colors[color][size]) {
+                    cart[existingItemIndex].colors[color][size] += qty;
+                } else {
+                    cart[existingItemIndex].colors[color][size] = qty;
+                }
+            });
+        });
+    } else {
+        cart.push(cartItem);
+    }
 
-  updateCartSummary();
-  updateCartButtonsStatus();
-  resetQuantityInputs();
-  showAddedToCartFeedback();
+    updateCartSummary();
+    updateCartButtonsStatus();
+    resetQuantityInputs();
+    showAddedToCartFeedback();
+}
+
+// Manual sync function - can be called to force refresh from Firebase
+async function syncItemsFromFirebase() {
+    try {
+        toggleLoadingOverlay(true);
+        console.log('Syncing items from Firebase...');
+        
+        const items = await fetchItemsFromFirebase();
+        await saveItemsToIndexedDB(items);
+        
+        // Update global items
+        window.items = items;
+        
+        // Refresh UI
+        updateItemList();
+        
+        // Show first item
+        const defaultItem = items.find(item => item.name === 'A039') || items[0];
+        if (defaultItem) {
+            showItemDetails(defaultItem);
+        }
+        
+        toggleLoadingOverlay(false);
+        alert('Items synced successfully!');
+        
+    } catch (error) {
+        console.error('Error syncing items:', error);
+        toggleLoadingOverlay(false);
+        alert('Error syncing items. Please try again.');
+    }
 }
 
 // Create and update cart summary table
