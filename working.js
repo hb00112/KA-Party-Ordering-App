@@ -123,21 +123,23 @@ function showWelcomeScreen(businessName) {
     // Hide login page
     document.getElementById('loginPage').classList.add('hidden');
     
-    // Show welcome animation
+    // Show welcome screen
     const welcomeScreen = document.getElementById('welcomeScreen');
     welcomeScreen.classList.remove('hidden');
+    welcomeScreen.classList.remove('fade-out'); // Remove fade-out if it exists
     
-    // Trigger animation
+    // Let animations play (they're all CSS-based)
+    // After 5.5 seconds, fade out and show home
     setTimeout(() => {
-        welcomeScreen.classList.add('active');
-    }, 100);
+        welcomeScreen.classList.add('fade-out');
+    }, 5000);
     
-    // After animation, show home screen
+    // After fade-out completes (1 second), show home screen
     setTimeout(() => {
         welcomeScreen.classList.add('hidden');
-        welcomeScreen.classList.remove('active');
+        welcomeScreen.classList.remove('fade-out');
         initializeHomeScreen(businessName);
-    }, 3000);
+    }, 6000);
 }
 
 function initializeHomeScreen(businessName, city = '') {

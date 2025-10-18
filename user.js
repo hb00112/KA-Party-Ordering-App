@@ -1,9 +1,4 @@
-//USER.JS
-const validUsers = {
-    '1231': { password: '1231', username: 'admin' },
-  
-     '00BCDEF9012T1ZP': { password: '00BCDEF9012T1ZP', username: 'USER10' }
-}
+
 // Add this to your main JavaScript file
 
   // Wait for both DOM content and all resources (images, stylesheets, etc.) to load
