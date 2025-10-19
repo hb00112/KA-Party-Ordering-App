@@ -1251,20 +1251,64 @@ body {
 
 /* ==================== FOOTER FIX ==================== */
 
-/* Make footer relative for login/OTP pages */
-#loginPage .footer,
-#otpPage .footer {
+/* Footer styling for all screens */
+.footer {
+    background: linear-gradient(
+        135deg,
+        #0a0a0a 0%,
+        #1a1a1a 25%,
+        #0a0a0a 50%,
+        #1a1a1a 75%,
+        #0a0a0a 100%
+    );
+    background-size: 200% 100%;
+    padding: 1rem;
+    text-align: center;
+    border-top: none;
     position: relative;
-    margin-top: 2rem;
+    margin-top: auto;
+    width: 100%;
+    animation: carbonShine 8s linear infinite;
 }
 
-/* Keep footer fixed only for other screens if needed */
-.section-screen .footer,
-#homeScreen .home-footer {
-    position: fixed;
-    bottom: 0;
+.footer::before {
+    content: '';
+    position: absolute;
+    top: 0;
     left: 0;
     right: 0;
+    height: 3px;
+    background: linear-gradient(
+        90deg,
+        var(--enamor-pink),
+        #ff4db8,
+        #ff1493,
+        #ff4db8,
+        var(--enamor-pink)
+    );
+    background-size: 200% 100%;
+    animation: pinkLineFlow 3s ease-in-out infinite;
+}
+
+.footer p {
+    color: var(--enamor-gray);
+    font-size: 0.8rem;
+    margin: 0;
+}
+
+/* Home screen footer */
+.home-footer {
+    background: transparent;
+    border-radius: 1rem;
+    padding: 2rem 1.5rem;
+    text-align: center;
+    margin-top: auto;
+    margin-bottom: 2rem;
+    color: rgba(255, 255, 255, 0.6);
+    font-weight: 500;
+    font-size: 0.85rem;
+    position: relative;
+    z-index: 1;
     width: 100%;
 }
 
@@ -1274,6 +1318,7 @@ body {
     min-height: 100vh;
     display: flex;
     flex-direction: column;
+    background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
 }
 
 .otp-main-container {
@@ -1282,7 +1327,6 @@ body {
     align-items: center;
     justify-content: center;
     padding: 2rem 1rem;
-    padding-bottom: 100px; /* Space for footer */
 }
 
 .otp-container {
@@ -1301,11 +1345,15 @@ body {
     min-height: 100vh;
     display: flex;
     flex-direction: column;
+    background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
 }
 
 #loginPage .login-container {
     margin: 2rem auto;
-    margin-bottom: 100px; /* Space for footer */
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 /* ==================== HOME SCREEN FIX ==================== */
@@ -1353,7 +1401,6 @@ body {
 @media (max-width: 480px) {
     .otp-main-container {
         padding: 1rem;
-        padding-bottom: 100px;
     }
     
     .otp-container {
@@ -1362,7 +1409,14 @@ body {
     
     #loginPage .login-container {
         margin: 1.5rem 0.8rem;
-        margin-bottom: 100px;
+    }
+    
+    .footer {
+        padding: 0.8rem;
+    }
+    
+    .footer p {
+        font-size: 0.7rem;
     }
 }
 
@@ -1381,8 +1435,11 @@ body {
         margin: 1rem auto;
     }
     
-    #loginPage .footer,
-    #otpPage .footer {
-        position: relative;
+    .footer {
+        padding: 0.5rem;
+    }
+    
+    .footer p {
+        font-size: 0.7rem;
     }
 }
