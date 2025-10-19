@@ -118,71 +118,60 @@ function showUserDetailsModal(username) {
 // working.js - Updated for OTP Authentication System
 
 function showWelcomeScreen(businessName) {
-    console.log('Showing welcome screen for:', businessName);
+    showSection('welcomeScreen');
     
-    // Hide login page
-    document.getElementById('loginPage').classList.add('hidden');
-    
-    // Show welcome screen
-    const welcomeScreen = document.getElementById('welcomeScreen');
-    welcomeScreen.classList.remove('hidden');
-    welcomeScreen.classList.remove('fade-out'); // Remove fade-out if it exists
-    
-    // Let animations play (they're all CSS-based)
-    // After 5.5 seconds, fade out and show home
+    // Add fade-out animation after 4 seconds
     setTimeout(() => {
-        welcomeScreen.classList.add('fade-out');
-    }, 5000);
+        const welcomeScreen = document.getElementById('welcomeScreen');
+        if (welcomeScreen) {
+            welcomeScreen.style.animation = 'fadeToBlack 1s ease-out forwards';
+        }
+    }, 4000);
     
-    // After fade-out completes (1 second), show home screen
+    // Show home screen after 5 seconds
     setTimeout(() => {
-        welcomeScreen.classList.add('hidden');
-        welcomeScreen.classList.remove('fade-out');
         initializeHomeScreen(businessName);
-    }, 6000);
+    }, 5000);
 }
 
 function initializeHomeScreen(businessName, city = '') {
-    console.log('Initializing home screen for:', businessName);
+    showSection('homeScreen');
     
-    const homeScreen = document.getElementById('homeScreen');
-    
-    // Update header if needed
-    const ka = document.getElementById('ka');
-    if (ka) {
-        ka.textContent = 'KAMBESHWAR AGENCIES';
+    // Update firm information if available
+    const firmSection = document.querySelector('.firm-section');
+    if (firmSection && businessName) {
+        firmSection.innerHTML = `
+            <strong>${businessName}</strong>
+            ${city ? `<div class="gst">${city}</div>` : ''}
+        `;
     }
     
-    // Get session data
-    const sessionData = JSON.parse(localStorage.getItem('sessionData') || '{}');
+    updateHomeDateTime();
     
-    // Remove existing firm section if present
-    const existingFirmSection = document.querySelector('.firm-section');
-    if (existingFirmSection) {
-        existingFirmSection.remove();
+    // Update datetime every second
+    setInterval(updateHomeDateTime, 1000);
+}
+
+// Update home screen date/time
+function updateHomeDateTime() {
+    const dateTimeElement = document.getElementById('homeDateTime');
+    if (dateTimeElement) {
+        const now = new Date();
+        const options = {
+            weekday: 'short',
+            year: 'numeric',
+            month: 'short',
+            day: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit',
+            second: '2-digit'
+        };
+        dateTimeElement.textContent = now.toLocaleDateString('en-US', options);
     }
-    
-    // Add firm section
-    const firmSection = document.createElement('div');
-    firmSection.className = 'firm-section';
-    firmSection.innerHTML = `FIRM: ${businessName}`;
-    
-    const homeScreenContainer = document.querySelector('.home-screen-container');
-    const homeMain = document.querySelector('.home-main');
-    if (homeScreenContainer && homeMain) {
-        homeScreenContainer.insertBefore(firmSection, homeMain);
-    }
-    
-    // Store current user info globally for other parts of the app
-    window.currentUser = {
-        businessName: businessName,
-        city: city || sessionData.city,
-        email: sessionData.email
-    };
-    
-    // Show home screen
-    homeScreen.classList.remove('hidden');
-    updateDateTime();
+}
+
+function goBackToHome() {
+    showSection('homeScreen');
 }
 
 // Handle login (called from login.js after OTP verification)

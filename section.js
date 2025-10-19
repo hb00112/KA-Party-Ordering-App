@@ -20,23 +20,65 @@ function showHomeScreen() {
 
 // Show a specific section
 function showSection(sectionId) {
-    if (sectionId === 'homeScreen') {
-        showHomeScreen();
-    } else {
-        // Hide all sections including home
-        hideAllSections();
-        document.getElementById('homeScreen').style.display = 'none';
-
-        // Show the requested section
-        const targetSection = document.getElementById(sectionId);
-        if (targetSection) {
-            targetSection.style.display = 'block';
-            currentSection = sectionId;
+    // List of all possible sections
+    const allSections = [
+        'loginPage',
+        'otpPage',
+        'welcomeScreen',
+        'homeScreen',
+        'placeOrderScreen',
+        'recentOrdersScreen',
+        'stockCheckScreen'
+    ];
+    
+    // Hide all sections first
+    allSections.forEach(id => {
+        const element = document.getElementById(id);
+        if (element) {
+            element.classList.add('hidden');
         }
+    });
+    
+    // Show the requested section
+    const targetSection = document.getElementById(sectionId);
+    if (targetSection) {
+        targetSection.classList.remove('hidden');
+        
+        // Scroll to top when switching sections
+        window.scrollTo(0, 0);
+        
+        // Initialize section-specific functionality
+        initializeSectionFunctionality(sectionId);
     }
-    // Push state to browser history
-    history.pushState({ section: sectionId }, '', `#${sectionId}`);
 }
+
+function initializeSectionFunctionality(sectionId) {
+    switch(sectionId) {
+        case 'homeScreen':
+            updateHomeDateTime();
+            break;
+        case 'placeOrderScreen':
+            // Initialize place order functionality
+            if (typeof initializePlaceOrder === 'function') {
+                initializePlaceOrder();
+            }
+            break;
+        case 'recentOrdersScreen':
+            // Load recent orders
+            if (typeof loadRecentOrders === 'function') {
+                loadRecentOrders();
+            }
+            break;
+        case 'stockCheckScreen':
+            // Load stock data
+            if (typeof loadStockData === 'function') {
+                loadStockData();
+            }
+            break;
+    }
+}
+
+
 
 // Handle browser back button
 window.addEventListener('popstate', function(event) {
@@ -64,6 +106,23 @@ document.addEventListener('DOMContentLoaded', () => {
     history.replaceState({ section: 'homeScreen' }, '', '#homeScreen');
 });
 
+document.addEventListener('DOMContentLoaded', function() {
+    // Add click handlers for section headers (back to home)
+    const sectionHeaders = document.querySelectorAll('.section-header h2');
+    sectionHeaders.forEach(header => {
+        header.style.cursor = 'pointer';
+        header.addEventListener('click', goBackToHome);
+    });
+    
+    // Initialize with login page visible
+    showSection('loginPage');
+});
+
+// Export functions for use in other scripts
+window.showSection = showSection;
+window.showWelcomeScreen = showWelcomeScreen;
+window.initializeHomeScreen = initializeHomeScreen;
+window.goBackToHome = goBackToHome;
 
 function handleSuccessfulLogin() {
     // Hide login page

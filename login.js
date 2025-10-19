@@ -160,7 +160,39 @@ function showOTPScreen(email, isAdmin = false, businessName = '') {
         startResendTimer();
     }
     
-    // OTP form submission
+    // OTP form submission// Show OTP input screen - FIXED VERSION
+function showOTPScreen(email, isAdmin = false, businessName = '') {
+    // Hide the entire login page
+    document.getElementById('loginPage').classList.add('hidden');
+    
+    // Show the OTP page (which has its own proper header structure)
+    document.getElementById('otpPage').classList.remove('hidden');
+    
+    // Update OTP page content
+    const businessNameEl = document.getElementById('otpBusinessName');
+    if (businessNameEl && businessName) {
+        businessNameEl.textContent = businessName;
+    }
+    
+    // Store email for verification
+    window.currentLoginEmail = email;
+    window.isAdminLogin = isAdmin;
+    
+    // Reset attempts counter
+    otpAttempts = 0;
+    updateAttemptsDisplay();
+    
+    // Start resend timer if not admin
+    if (!isAdmin) {
+        startResendTimer();
+    }
+    
+    // Auto-focus OTP input
+    const otpInput = document.getElementById('otpInput');
+    if (otpInput) {
+        otpInput.focus();
+    }
+}
     document.getElementById('otpForm').addEventListener('submit', handleOTPSubmit);
     
     // Auto-focus OTP input
@@ -330,111 +362,29 @@ function updateAttemptsDisplay() {
 
 // Back to login
 // Back to login - UPDATED VERSION
+// Back to login - FIXED VERSION
 function backToLogin() {
-    const loginContainer = document.querySelector('.login-container');
+    // Hide OTP page
+    document.getElementById('otpPage').classList.add('hidden');
     
-    // Restore original login form HTML
-    loginContainer.innerHTML = `
-        <h2>Welcome Back</h2>
-        <p class="login-subtitle">Enter your registered email to receive OTP</p>
-        
-        <form id="loginForm" novalidate>
-            <div class="input-group">
-                <input 
-                    type="email" 
-                    id="userId" 
-                    placeholder="Email Address" 
-                    required 
-                    autocomplete="email"
-                >
-                <span class="error-message" id="userIdError">Please enter a valid email</span>
-            </div>
-            
-            <div id="invalidMessage" class="invalid-message"></div>
-            
-            <button type="submit" class="login-btn">Send OTP</button>
-        </form>
-        
-        <div class="login-info">
-            <p>💡 <strong>First time user?</strong><br> Contact admin to register your account</p>
-        </div>
-        
-        <a href="#" class="ka-login-help-link" id="issueLink">Need Help?</a>
-    `;
+    // Show login page
+    document.getElementById('loginPage').classList.remove('hidden');
     
-    // Re-attach event listeners
-    document.getElementById('loginForm').addEventListener('submit', async (e) => {
-        e.preventDefault();
-        
-        const email = document.getElementById('userId').value.trim();
-        const invalidMessage = document.getElementById('invalidMessage');
-        
-        resetErrors();
-        
-        if (!email) {
-            showError(document.getElementById('userId'), 'Please enter your email address');
-            return;
-        }
-        
-        // Admin bypass check
-        if (email === '1231') {
-            showOTPScreen(email, true);
-            return;
-        }
-        
-        // Basic email validation
-        if (!isValidEmail(email) && email !== '1231') {
-            showError(document.getElementById('userId'), 'Please enter a valid email address');
-            return;
-        }
-        
-        showLoading();
-        
-        try {
-            const response = await fetch(API_URL, {
-                method: 'POST',
-                body: JSON.stringify({
-                    action: 'generateOTP',
-                    email: email
-                })
-            });
-            
-            const result = await response.json();
-            
-            hideLoading();
-            
-            if (result.success) {
-                if (result.data && result.data.isAdmin) {
-                    // Admin - show OTP screen directly
-                    showOTPScreen(email, true);
-                } else {
-                    // Regular user - OTP sent
-                    showOTPScreen(email, false, result.data.businessName);
-                    showSuccessMessage('OTP sent to your email!');
-                }
-            } else {
-                invalidMessage.textContent = result.message;
-                invalidMessage.classList.add('show');
-                setTimeout(() => invalidMessage.classList.remove('show'), 5000);
-            }
-            
-        } catch (error) {
-            hideLoading();
-            console.error('Login error:', error);
-            invalidMessage.textContent = 'Connection error. Please check your internet and try again.';
-            invalidMessage.classList.add('show');
-            setTimeout(() => invalidMessage.classList.remove('show'), 5000);
-        }
-    });
-    
-    // Re-attach help modal functionality
-    document.getElementById('issueLink').addEventListener('click', function(e) {
-        e.preventDefault();
-        document.getElementById('helpModal').style.display = 'block';
-    });
-    
+    // Reset form and errors
     resetErrors();
     otpAttempts = 0;
+    
+    // Clear any existing OTP input
+    const otpInput = document.getElementById('otpInput');
+    if (otpInput) {
+        otpInput.value = '';
+    }
+    
+    // Focus back on email input
+    const emailInput = document.getElementById('userId');
+    if (emailInput) {
+        emailInput.focus();
+    }
 }
 // Email validation
 function isValidEmail(email) {
